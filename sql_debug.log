@@ -1,0 +1,511 @@
+SQL ERROR: column reference "id" is ambiguous\n
+    WITH valid_logs AS (
+      SELECT al.*, 
+        COALESCE(
+           (SELECT site_id FROM vehicles WHERE license_plate = al.license_plate LIMIT 1),
+           (SELECT site_id FROM visitors WHERE id = al.visitor_id LIMIT 1),
+           (SELECT site_id FROM gates WHERE name = al.gate_name LIMIT 1),
+           (SELECT site_id FROM residents WHERE house_number = al.house_number LIMIT 1)
+        ) as site_id
+      FROM access_logs al
+    ),
+    sessionize AS (
+      SELECT vl.*, s.provider_id,
+             SUM(CASE WHEN action = 'IN' THEN 1 ELSE 0 END) OVER (
+                 PARTITION BY COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) 
+                 ORDER BY created_at ASC
+             ) as session_id,
+             COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) as session_group
+      FROM valid_logs vl
+      LEFT JOIN sites s ON vl.site_id = s.id
+    ),
+    paired_logs AS (
+      SELECT 
+        MAX(id) as id,
+        MAX(license_plate) as license_plate,
+        MAX(house_number) as house_number,
+        MAX(type) as type,
+        MAX(visitor_id) as visitor_id,
+        MIN(CASE WHEN action = 'IN' THEN created_at END) as time_in,
+        MAX(CASE WHEN action = 'OUT' THEN created_at END) as time_out,
+        MAX(CASE WHEN action = 'IN' THEN gate_name END) as gate_in,
+        MAX(CASE WHEN action = 'OUT' THEN gate_name END) as gate_out,
+        MAX(CASE WHEN action = 'IN' THEN image_url END) as image_in,
+        MAX(CASE WHEN action = 'OUT' THEN image_url END) as image_out,
+        MAX(created_at) as last_event,
+        MAX(site_id) as site_id,
+        MAX(provider_id) as provider_id
+      FROM sessionize
+      GROUP BY session_group, session_id
+    )
+    SELECT p.*,
+       v.id as vehicle_id, v.brand as vehicle_brand, v.color as vehicle_color,
+       vl.purpose as visitor_purpose, 'N/A' as e_stamp_status,
+       pt.name as park_type_name
+    FROM paired_logs p
+    LEFT JOIN (
+       SELECT *, ROW_NUMBER() OVER(PARTITION BY license_plate ORDER BY id DESC) as rn FROM vehicles
+    ) v ON p.license_plate = v.license_plate AND v.rn = 1
+    LEFT JOIN park_types pt ON v.park_type_id = pt.id
+    LEFT JOIN visitors vl ON p.visitor_id = vl.id
+    WHERE 1=1
+   AND p.site_id = $1  ORDER BY p.last_event DESC LIMIT $2 SQL ERROR: column reference "id" is ambiguous\n
+    WITH valid_logs AS (
+      SELECT al.*, 
+        COALESCE(
+           (SELECT site_id FROM vehicles WHERE license_plate = al.license_plate LIMIT 1),
+           (SELECT site_id FROM visitors WHERE id = al.visitor_id LIMIT 1),
+           (SELECT site_id FROM gates WHERE name = al.gate_name LIMIT 1),
+           (SELECT site_id FROM residents WHERE house_number = al.house_number LIMIT 1)
+        ) as site_id
+      FROM access_logs al
+    ),
+    sessionize AS (
+      SELECT vl.*, s.provider_id,
+             SUM(CASE WHEN action = 'IN' THEN 1 ELSE 0 END) OVER (
+                 PARTITION BY COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) 
+                 ORDER BY created_at ASC
+             ) as session_id,
+             COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) as session_group
+      FROM valid_logs vl
+      LEFT JOIN sites s ON vl.site_id = s.id
+    ),
+    paired_logs AS (
+      SELECT 
+        MAX(id) as id,
+        MAX(license_plate) as license_plate,
+        MAX(house_number) as house_number,
+        MAX(type) as type,
+        MAX(visitor_id) as visitor_id,
+        MIN(CASE WHEN action = 'IN' THEN created_at END) as time_in,
+        MAX(CASE WHEN action = 'OUT' THEN created_at END) as time_out,
+        MAX(CASE WHEN action = 'IN' THEN gate_name END) as gate_in,
+        MAX(CASE WHEN action = 'OUT' THEN gate_name END) as gate_out,
+        MAX(CASE WHEN action = 'IN' THEN image_url END) as image_in,
+        MAX(CASE WHEN action = 'OUT' THEN image_url END) as image_out,
+        MAX(created_at) as last_event,
+        MAX(site_id) as site_id,
+        MAX(provider_id) as provider_id
+      FROM sessionize
+      GROUP BY session_group, session_id
+    )
+    SELECT p.*,
+       v.id as vehicle_id, v.brand as vehicle_brand, v.color as vehicle_color,
+       vl.purpose as visitor_purpose, 'N/A' as e_stamp_status,
+       pt.name as park_type_name
+    FROM paired_logs p
+    LEFT JOIN (
+       SELECT *, ROW_NUMBER() OVER(PARTITION BY license_plate ORDER BY id DESC) as rn FROM vehicles
+    ) v ON p.license_plate = v.license_plate AND v.rn = 1
+    LEFT JOIN park_types pt ON v.park_type_id = pt.id
+    LEFT JOIN visitors vl ON p.visitor_id = vl.id
+    WHERE 1=1
+   AND p.site_id = $1  ORDER BY p.last_event DESC LIMIT $2 SQL ERROR: column reference "id" is ambiguous\n
+    WITH valid_logs AS (
+      SELECT al.*, 
+        COALESCE(
+           (SELECT site_id FROM vehicles WHERE license_plate = al.license_plate LIMIT 1),
+           (SELECT site_id FROM visitors WHERE id = al.visitor_id LIMIT 1),
+           (SELECT site_id FROM gates WHERE name = al.gate_name LIMIT 1),
+           (SELECT site_id FROM residents WHERE house_number = al.house_number LIMIT 1)
+        ) as site_id
+      FROM access_logs al
+    ),
+    sessionize AS (
+      SELECT vl.*, s.provider_id,
+             SUM(CASE WHEN action = 'IN' THEN 1 ELSE 0 END) OVER (
+                 PARTITION BY COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) 
+                 ORDER BY created_at ASC
+             ) as session_id,
+             COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) as session_group
+      FROM valid_logs vl
+      LEFT JOIN sites s ON vl.site_id = s.id
+    ),
+    paired_logs AS (
+      SELECT 
+        MAX(id) as id,
+        MAX(license_plate) as license_plate,
+        MAX(house_number) as house_number,
+        MAX(type) as type,
+        MAX(visitor_id) as visitor_id,
+        MIN(CASE WHEN action = 'IN' THEN created_at END) as time_in,
+        MAX(CASE WHEN action = 'OUT' THEN created_at END) as time_out,
+        MAX(CASE WHEN action = 'IN' THEN gate_name END) as gate_in,
+        MAX(CASE WHEN action = 'OUT' THEN gate_name END) as gate_out,
+        MAX(CASE WHEN action = 'IN' THEN image_url END) as image_in,
+        MAX(CASE WHEN action = 'OUT' THEN image_url END) as image_out,
+        MAX(created_at) as last_event,
+        MAX(site_id) as site_id,
+        MAX(provider_id) as provider_id
+      FROM sessionize
+      GROUP BY session_group, session_id
+    )
+    SELECT p.*,
+       v.id as vehicle_id, v.brand as vehicle_brand, v.color as vehicle_color,
+       vl.purpose as visitor_purpose, 'N/A' as e_stamp_status,
+       pt.name as park_type_name
+    FROM paired_logs p
+    LEFT JOIN (
+       SELECT *, ROW_NUMBER() OVER(PARTITION BY license_plate ORDER BY id DESC) as rn FROM vehicles
+    ) v ON p.license_plate = v.license_plate AND v.rn = 1
+    LEFT JOIN park_types pt ON v.park_type_id = pt.id
+    LEFT JOIN visitors vl ON p.visitor_id = vl.id
+    WHERE 1=1
+   AND p.site_id = $1  ORDER BY p.last_event DESC LIMIT $2 SQL ERROR: column reference "id" is ambiguous\n
+    WITH valid_logs AS (
+      SELECT al.*, 
+        COALESCE(
+           (SELECT site_id FROM vehicles WHERE license_plate = al.license_plate LIMIT 1),
+           (SELECT site_id FROM visitors WHERE id = al.visitor_id LIMIT 1),
+           (SELECT site_id FROM gates WHERE name = al.gate_name LIMIT 1),
+           (SELECT site_id FROM residents WHERE house_number = al.house_number LIMIT 1)
+        ) as site_id
+      FROM access_logs al
+    ),
+    sessionize AS (
+      SELECT vl.*, s.provider_id,
+             SUM(CASE WHEN action = 'IN' THEN 1 ELSE 0 END) OVER (
+                 PARTITION BY COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) 
+                 ORDER BY created_at ASC
+             ) as session_id,
+             COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) as session_group
+      FROM valid_logs vl
+      LEFT JOIN sites s ON vl.site_id = s.id
+    ),
+    paired_logs AS (
+      SELECT 
+        MAX(id) as id,
+        MAX(license_plate) as license_plate,
+        MAX(house_number) as house_number,
+        MAX(type) as type,
+        MAX(visitor_id) as visitor_id,
+        MIN(CASE WHEN action = 'IN' THEN created_at END) as time_in,
+        MAX(CASE WHEN action = 'OUT' THEN created_at END) as time_out,
+        MAX(CASE WHEN action = 'IN' THEN gate_name END) as gate_in,
+        MAX(CASE WHEN action = 'OUT' THEN gate_name END) as gate_out,
+        MAX(CASE WHEN action = 'IN' THEN image_url END) as image_in,
+        MAX(CASE WHEN action = 'OUT' THEN image_url END) as image_out,
+        MAX(created_at) as last_event,
+        MAX(site_id) as site_id,
+        MAX(provider_id) as provider_id
+      FROM sessionize
+      GROUP BY session_group, session_id
+    )
+    SELECT p.*,
+       v.id as vehicle_id, v.brand as vehicle_brand, v.color as vehicle_color,
+       vl.purpose as visitor_purpose, 'N/A' as e_stamp_status,
+       pt.name as park_type_name
+    FROM paired_logs p
+    LEFT JOIN (
+       SELECT *, ROW_NUMBER() OVER(PARTITION BY license_plate ORDER BY id DESC) as rn FROM vehicles
+    ) v ON p.license_plate = v.license_plate AND v.rn = 1
+    LEFT JOIN park_types pt ON v.park_type_id = pt.id
+    LEFT JOIN visitors vl ON p.visitor_id = vl.id
+    WHERE 1=1
+   AND p.site_id = $1  ORDER BY p.last_event DESC LIMIT $2 SQL ERROR: column reference "id" is ambiguous\n
+    WITH valid_logs AS (
+      SELECT al.*, 
+        COALESCE(
+           (SELECT site_id FROM vehicles WHERE license_plate = al.license_plate LIMIT 1),
+           (SELECT site_id FROM visitors WHERE id = al.visitor_id LIMIT 1),
+           (SELECT site_id FROM gates WHERE name = al.gate_name LIMIT 1),
+           (SELECT site_id FROM residents WHERE house_number = al.house_number LIMIT 1)
+        ) as site_id
+      FROM access_logs al
+    ),
+    sessionize AS (
+      SELECT vl.*, s.provider_id,
+             SUM(CASE WHEN action = 'IN' THEN 1 ELSE 0 END) OVER (
+                 PARTITION BY COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) 
+                 ORDER BY created_at ASC
+             ) as session_id,
+             COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) as session_group
+      FROM valid_logs vl
+      LEFT JOIN sites s ON vl.site_id = s.id
+    ),
+    paired_logs AS (
+      SELECT 
+        MAX(id) as id,
+        MAX(license_plate) as license_plate,
+        MAX(house_number) as house_number,
+        MAX(type) as type,
+        MAX(visitor_id) as visitor_id,
+        MIN(CASE WHEN action = 'IN' THEN created_at END) as time_in,
+        MAX(CASE WHEN action = 'OUT' THEN created_at END) as time_out,
+        MAX(CASE WHEN action = 'IN' THEN gate_name END) as gate_in,
+        MAX(CASE WHEN action = 'OUT' THEN gate_name END) as gate_out,
+        MAX(CASE WHEN action = 'IN' THEN image_url END) as image_in,
+        MAX(CASE WHEN action = 'OUT' THEN image_url END) as image_out,
+        MAX(created_at) as last_event,
+        MAX(site_id) as site_id,
+        MAX(provider_id) as provider_id
+      FROM sessionize
+      GROUP BY session_group, session_id
+    )
+    SELECT p.*,
+       v.id as vehicle_id, v.brand as vehicle_brand, v.color as vehicle_color,
+       vl.purpose as visitor_purpose, 'N/A' as e_stamp_status,
+       pt.name as park_type_name
+    FROM paired_logs p
+    LEFT JOIN (
+       SELECT *, ROW_NUMBER() OVER(PARTITION BY license_plate ORDER BY id DESC) as rn FROM vehicles
+    ) v ON p.license_plate = v.license_plate AND v.rn = 1
+    LEFT JOIN park_types pt ON v.park_type_id = pt.id
+    LEFT JOIN visitors vl ON p.visitor_id = vl.id
+    WHERE 1=1
+   AND p.site_id = $1  ORDER BY p.last_event DESC LIMIT $2 SQL ERROR: column reference "id" is ambiguous\n
+    WITH valid_logs AS (
+      SELECT al.*, 
+        COALESCE(
+           (SELECT site_id FROM vehicles WHERE license_plate = al.license_plate LIMIT 1),
+           (SELECT site_id FROM visitors WHERE id = al.visitor_id LIMIT 1),
+           (SELECT site_id FROM gates WHERE name = al.gate_name LIMIT 1),
+           (SELECT site_id FROM residents WHERE house_number = al.house_number LIMIT 1)
+        ) as site_id
+      FROM access_logs al
+    ),
+    sessionize AS (
+      SELECT vl.*, s.provider_id,
+             SUM(CASE WHEN action = 'IN' THEN 1 ELSE 0 END) OVER (
+                 PARTITION BY COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) 
+                 ORDER BY created_at ASC
+             ) as session_id,
+             COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) as session_group
+      FROM valid_logs vl
+      LEFT JOIN sites s ON vl.site_id = s.id
+    ),
+    paired_logs AS (
+      SELECT 
+        MAX(id) as id,
+        MAX(license_plate) as license_plate,
+        MAX(house_number) as house_number,
+        MAX(type) as type,
+        MAX(visitor_id) as visitor_id,
+        MIN(CASE WHEN action = 'IN' THEN created_at END) as time_in,
+        MAX(CASE WHEN action = 'OUT' THEN created_at END) as time_out,
+        MAX(CASE WHEN action = 'IN' THEN gate_name END) as gate_in,
+        MAX(CASE WHEN action = 'OUT' THEN gate_name END) as gate_out,
+        MAX(CASE WHEN action = 'IN' THEN image_url END) as image_in,
+        MAX(CASE WHEN action = 'OUT' THEN image_url END) as image_out,
+        MAX(created_at) as last_event,
+        MAX(site_id) as site_id,
+        MAX(provider_id) as provider_id
+      FROM sessionize
+      GROUP BY session_group, session_id
+    )
+    SELECT p.*,
+       v.id as vehicle_id, v.brand as vehicle_brand, v.color as vehicle_color,
+       vl.purpose as visitor_purpose, 'N/A' as e_stamp_status,
+       pt.name as park_type_name
+    FROM paired_logs p
+    LEFT JOIN (
+       SELECT *, ROW_NUMBER() OVER(PARTITION BY license_plate ORDER BY id DESC) as rn FROM vehicles
+    ) v ON p.license_plate = v.license_plate AND v.rn = 1
+    LEFT JOIN park_types pt ON v.park_type_id = pt.id
+    LEFT JOIN visitors vl ON p.visitor_id = vl.id
+    WHERE 1=1
+   AND p.site_id = $1  ORDER BY p.last_event DESC LIMIT $2 SQL ERROR: column reference "id" is ambiguous\n
+    WITH valid_logs AS (
+      SELECT al.*, 
+        COALESCE(
+           (SELECT site_id FROM vehicles WHERE license_plate = al.license_plate LIMIT 1),
+           (SELECT site_id FROM visitors WHERE id = al.visitor_id LIMIT 1),
+           (SELECT site_id FROM gates WHERE name = al.gate_name LIMIT 1),
+           (SELECT site_id FROM residents WHERE house_number = al.house_number LIMIT 1)
+        ) as site_id
+      FROM access_logs al
+    ),
+    sessionize AS (
+      SELECT vl.*, s.provider_id,
+             SUM(CASE WHEN action = 'IN' THEN 1 ELSE 0 END) OVER (
+                 PARTITION BY COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) 
+                 ORDER BY created_at ASC
+             ) as session_id,
+             COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) as session_group
+      FROM valid_logs vl
+      LEFT JOIN sites s ON vl.site_id = s.id
+    ),
+    paired_logs AS (
+      SELECT 
+        MAX(id) as id,
+        MAX(license_plate) as license_plate,
+        MAX(house_number) as house_number,
+        MAX(type) as type,
+        MAX(visitor_id) as visitor_id,
+        MIN(CASE WHEN action = 'IN' THEN created_at END) as time_in,
+        MAX(CASE WHEN action = 'OUT' THEN created_at END) as time_out,
+        MAX(CASE WHEN action = 'IN' THEN gate_name END) as gate_in,
+        MAX(CASE WHEN action = 'OUT' THEN gate_name END) as gate_out,
+        MAX(CASE WHEN action = 'IN' THEN image_url END) as image_in,
+        MAX(CASE WHEN action = 'OUT' THEN image_url END) as image_out,
+        MAX(created_at) as last_event,
+        MAX(site_id) as site_id,
+        MAX(provider_id) as provider_id
+      FROM sessionize
+      GROUP BY session_group, session_id
+    )
+    SELECT p.*,
+       v.id as vehicle_id, v.brand as vehicle_brand, v.color as vehicle_color,
+       vl.purpose as visitor_purpose, 'N/A' as e_stamp_status,
+       pt.name as park_type_name
+    FROM paired_logs p
+    LEFT JOIN (
+       SELECT *, ROW_NUMBER() OVER(PARTITION BY license_plate ORDER BY id DESC) as rn FROM vehicles
+    ) v ON p.license_plate = v.license_plate AND v.rn = 1
+    LEFT JOIN park_types pt ON v.park_type_id = pt.id
+    LEFT JOIN visitors vl ON p.visitor_id = vl.id
+    WHERE 1=1
+   AND p.site_id = $1  ORDER BY p.last_event DESC LIMIT $2 SQL ERROR: column reference "id" is ambiguous\n
+    WITH valid_logs AS (
+      SELECT al.*, 
+        COALESCE(
+           (SELECT site_id FROM vehicles WHERE license_plate = al.license_plate LIMIT 1),
+           (SELECT site_id FROM visitors WHERE id = al.visitor_id LIMIT 1),
+           (SELECT site_id FROM gates WHERE name = al.gate_name LIMIT 1),
+           (SELECT site_id FROM residents WHERE house_number = al.house_number LIMIT 1)
+        ) as site_id
+      FROM access_logs al
+    ),
+    sessionize AS (
+      SELECT vl.*, s.provider_id,
+             SUM(CASE WHEN action = 'IN' THEN 1 ELSE 0 END) OVER (
+                 PARTITION BY COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) 
+                 ORDER BY created_at ASC
+             ) as session_id,
+             COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) as session_group
+      FROM valid_logs vl
+      LEFT JOIN sites s ON vl.site_id = s.id
+    ),
+    paired_logs AS (
+      SELECT 
+        MAX(id) as id,
+        MAX(license_plate) as license_plate,
+        MAX(house_number) as house_number,
+        MAX(type) as type,
+        MAX(visitor_id) as visitor_id,
+        MIN(CASE WHEN action = 'IN' THEN created_at END) as time_in,
+        MAX(CASE WHEN action = 'OUT' THEN created_at END) as time_out,
+        MAX(CASE WHEN action = 'IN' THEN gate_name END) as gate_in,
+        MAX(CASE WHEN action = 'OUT' THEN gate_name END) as gate_out,
+        MAX(CASE WHEN action = 'IN' THEN image_url END) as image_in,
+        MAX(CASE WHEN action = 'OUT' THEN image_url END) as image_out,
+        MAX(created_at) as last_event,
+        MAX(site_id) as site_id,
+        MAX(provider_id) as provider_id
+      FROM sessionize
+      GROUP BY session_group, session_id
+    )
+    SELECT p.*,
+       v.id as vehicle_id, v.brand as vehicle_brand, v.color as vehicle_color,
+       vl.purpose as visitor_purpose, 'N/A' as e_stamp_status,
+       pt.name as park_type_name
+    FROM paired_logs p
+    LEFT JOIN (
+       SELECT *, ROW_NUMBER() OVER(PARTITION BY license_plate ORDER BY id DESC) as rn FROM vehicles
+    ) v ON p.license_plate = v.license_plate AND v.rn = 1
+    LEFT JOIN park_types pt ON v.park_type_id = pt.id
+    LEFT JOIN visitors vl ON p.visitor_id = vl.id
+    WHERE 1=1
+   AND p.site_id = $1  ORDER BY p.last_event DESC LIMIT $2 SQL ERROR: column reference "id" is ambiguous\n
+    WITH valid_logs AS (
+      SELECT al.*, 
+        COALESCE(
+           (SELECT site_id FROM vehicles WHERE license_plate = al.license_plate LIMIT 1),
+           (SELECT site_id FROM visitors WHERE id = al.visitor_id LIMIT 1),
+           (SELECT site_id FROM gates WHERE name = al.gate_name LIMIT 1),
+           (SELECT site_id FROM residents WHERE house_number = al.house_number LIMIT 1)
+        ) as site_id
+      FROM access_logs al
+    ),
+    sessionize AS (
+      SELECT vl.*, s.provider_id,
+             SUM(CASE WHEN action = 'IN' THEN 1 ELSE 0 END) OVER (
+                 PARTITION BY COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) 
+                 ORDER BY created_at ASC
+             ) as session_id,
+             COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) as session_group
+      FROM valid_logs vl
+      LEFT JOIN sites s ON vl.site_id = s.id
+    ),
+    paired_logs AS (
+      SELECT 
+        MAX(id) as id,
+        MAX(license_plate) as license_plate,
+        MAX(house_number) as house_number,
+        MAX(type) as type,
+        MAX(visitor_id) as visitor_id,
+        MIN(CASE WHEN action = 'IN' THEN created_at END) as time_in,
+        MAX(CASE WHEN action = 'OUT' THEN created_at END) as time_out,
+        MAX(CASE WHEN action = 'IN' THEN gate_name END) as gate_in,
+        MAX(CASE WHEN action = 'OUT' THEN gate_name END) as gate_out,
+        MAX(CASE WHEN action = 'IN' THEN image_url END) as image_in,
+        MAX(CASE WHEN action = 'OUT' THEN image_url END) as image_out,
+        MAX(created_at) as last_event,
+        MAX(site_id) as site_id,
+        MAX(provider_id) as provider_id
+      FROM sessionize
+      GROUP BY session_group, session_id
+    )
+    SELECT p.*,
+       v.id as vehicle_id, v.brand as vehicle_brand, v.color as vehicle_color,
+       vl.purpose as visitor_purpose, 'N/A' as e_stamp_status,
+       pt.name as park_type_name
+    FROM paired_logs p
+    LEFT JOIN (
+       SELECT *, ROW_NUMBER() OVER(PARTITION BY license_plate ORDER BY id DESC) as rn FROM vehicles
+    ) v ON p.license_plate = v.license_plate AND v.rn = 1
+    LEFT JOIN park_types pt ON v.park_type_id = pt.id
+    LEFT JOIN visitors vl ON p.visitor_id = vl.id
+    WHERE 1=1
+   AND p.site_id = $1  ORDER BY p.last_event DESC LIMIT $2 SQL ERROR: column reference "id" is ambiguous\n
+    WITH valid_logs AS (
+      SELECT al.*, 
+        COALESCE(
+           (SELECT site_id FROM vehicles WHERE license_plate = al.license_plate LIMIT 1),
+           (SELECT site_id FROM visitors WHERE id = al.visitor_id LIMIT 1),
+           (SELECT site_id FROM gates WHERE name = al.gate_name LIMIT 1),
+           (SELECT site_id FROM residents WHERE house_number = al.house_number LIMIT 1)
+        ) as site_id
+      FROM access_logs al
+    ),
+    sessionize AS (
+      SELECT vl.*, s.provider_id,
+             SUM(CASE WHEN action = 'IN' THEN 1 ELSE 0 END) OVER (
+                 PARTITION BY COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) 
+                 ORDER BY created_at ASC
+             ) as session_id,
+             COALESCE(NULLIF(license_plate, 'UNKNOWN'), 'VISITOR_' || visitor_id::text, 'LOG_' || id::text) as session_group
+      FROM valid_logs vl
+      LEFT JOIN sites s ON vl.site_id = s.id
+    ),
+    paired_logs AS (
+      SELECT 
+        MAX(id) as id,
+        MAX(license_plate) as license_plate,
+        MAX(house_number) as house_number,
+        MAX(type) as type,
+        MAX(visitor_id) as visitor_id,
+        MIN(CASE WHEN action = 'IN' THEN created_at END) as time_in,
+        MAX(CASE WHEN action = 'OUT' THEN created_at END) as time_out,
+        MAX(CASE WHEN action = 'IN' THEN gate_name END) as gate_in,
+        MAX(CASE WHEN action = 'OUT' THEN gate_name END) as gate_out,
+        MAX(CASE WHEN action = 'IN' THEN image_url END) as image_in,
+        MAX(CASE WHEN action = 'OUT' THEN image_url END) as image_out,
+        MAX(created_at) as last_event,
+        MAX(site_id) as site_id,
+        MAX(provider_id) as provider_id
+      FROM sessionize
+      GROUP BY session_group, session_id
+    )
+    SELECT p.*,
+       v.id as vehicle_id, v.brand as vehicle_brand, v.color as vehicle_color,
+       vl.purpose as visitor_purpose, 'N/A' as e_stamp_status,
+       pt.name as park_type_name
+    FROM paired_logs p
+    LEFT JOIN (
+       SELECT *, ROW_NUMBER() OVER(PARTITION BY license_plate ORDER BY id DESC) as rn FROM vehicles
+    ) v ON p.license_plate = v.license_plate AND v.rn = 1
+    LEFT JOIN park_types pt ON v.park_type_id = pt.id
+    LEFT JOIN visitors vl ON p.visitor_id = vl.id
+    WHERE 1=1
+   AND p.site_id = $1  ORDER BY p.last_event DESC LIMIT $2 Query returned: 9 rows. Site: 1\nQuery returned: 9 rows. Site: 1\nQuery returned: 9 rows. Site: 1\nQuery returned: 9 rows. Site: 1\nQuery returned: 9 rows. Site: 1\nQuery returned: 9 rows. Site: 1\nQuery returned: 9 rows. Site: 1\nQuery returned: 9 rows. Site: 1\nQuery returned: 9 rows. Site: 1\nQuery returned: 9 rows. Site: 1\n

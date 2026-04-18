@@ -1,0 +1,137 @@
+import { addGate } from "@/app/actions/gates";
+import { getZones } from "@/app/actions/zones";
+import { getGateTypes } from "@/app/actions/gate-types";
+import Link from "next/link";
+
+export default async function AddGatePage() {
+  const zones = await getZones();
+  const activeZones = zones.filter(z => z.is_active);
+
+  const gateTypes = await getGateTypes();
+  const activeTypes = gateTypes.filter(t => t.is_active);
+
+  return (
+    <div className="min-h-full font-sans selection:bg-blue-500/30">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="mb-8">
+            <Link href="/gates" className="inline-flex items-center gap-2 text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors mb-4 text-sm font-semibold">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                กลับไปหน้าอุปกรณ์
+            </Link>
+            <h1 className="text-3xl font-bold tracking-tight">เพิ่มอุปกรณ์ใหม่</h1>
+            <p className="text-zinc-500 dark:text-zinc-400 mt-2">
+                กำหนดจุดติดตั้งอุปกรณ์ เช่น กล้อง LPR หรือจุดตรวจลงในโซนพื้นที่
+            </p>
+        </div>
+
+        <div className="bg-white dark:bg-[#121212] rounded-3xl shadow-sm border border-zinc-200 dark:border-zinc-800/80 p-8 md:p-10 ring-1 ring-zinc-900/5 dark:ring-white/5 relative overflow-hidden group">
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-sky-500/10 dark:bg-sky-500/5 rounded-full blur-3xl group-hover:bg-sky-500/20 transition-all duration-700 pointer-events-none"></div>
+            
+            <form action={addGate} className="space-y-6 relative z-10 max-w-2xl">
+                <div className="space-y-2">
+                    <label htmlFor="zoneId" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                    โซนพื้นที่ที่ติดตั้ง <span className="text-rose-500">*</span>
+                    </label>
+                    <div className="relative">
+                        <select
+                        name="zoneId"
+                        id="zoneId"
+                        required
+                        className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all font-medium"
+                        >
+                        <option value="">-- เลือกโซนพื้นที่ --</option>
+                        {activeZones.map((zone) => (
+                            <option key={zone.id} value={zone.id}>
+                            {zone.name} ({zone.site_name})
+                            </option>
+                        ))}
+                        </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-zinc-500">
+                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                        </div>
+                    </div>
+                    {activeZones.length === 0 && (
+                        <p className="text-xs text-rose-500 mt-1.5 flex items-center gap-1">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                        ต้องเพิ่มข้อมูลโซนพื้นที่ก่อน
+                        </p>
+                    )}
+                </div>
+
+                <div className="space-y-2">
+                    <label htmlFor="name" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                    ชื่อจุดติดตั้ง / Terminal Name <span className="text-rose-500">*</span>
+                    </label>
+                    <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    required
+                    placeholder="เช่น IN_CAM_01"
+                    className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all font-mono"
+                    />
+                </div>
+                
+                <div className="space-y-2">
+                    <label htmlFor="typeId" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                    ประเภทอุปกรณ์ <span className="text-zinc-400 font-normal">(ไม่บังคับ)</span>
+                    </label>
+                    <div className="relative">
+                        <select
+                        name="typeId"
+                        id="typeId"
+                        className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all font-medium"
+                        >
+                        <option value="">-- ไม่ระบุ (อุปกรณ์ทั่วไป) --</option>
+                        {activeTypes.map((t) => (
+                            <option key={t.id} value={t.id}>
+                            {t.code ? `[${t.code}] ` : ''}{t.name}
+                            </option>
+                        ))}
+                        </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-zinc-500">
+                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="space-y-2">
+                    <label htmlFor="description" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                    ข้อมูลเชิงลึกทางเทคนิค / IP
+                    </label>
+                    <input
+                    type="text"
+                    name="description"
+                    id="description"
+                    placeholder="เช่น 192.168.1.100 - RTSP Access"
+                    className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all"
+                    />
+                </div>
+                
+                <div className="pt-4 flex items-center gap-3">
+                    <button
+                        type="submit"
+                        disabled={activeZones.length === 0}
+                        className={`font-bold py-3.5 px-8 rounded-xl transition-all flex items-center justify-center gap-2 ${
+                            activeZones.length > 0
+                            ? "bg-sky-600 hover:bg-sky-700 text-white shadow-md shadow-sky-600/20 hover:shadow-lg active:scale-[0.98]"
+                            : "bg-zinc-200 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-600 cursor-not-allowed"
+                        }`}
+                    >
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+                        </svg>
+                        บันทึกข้อมูล
+                    </button>
+                    <Link href="/gates" className="py-3.5 px-8 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold transition-all">
+                        ยกเลิก
+                    </Link>
+                </div>
+            </form>
+        </div>
+      </main>
+    </div>
+  );
+}
