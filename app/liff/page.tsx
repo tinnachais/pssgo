@@ -782,7 +782,7 @@ export default function LiffProfilePage() {
                                   {news.image_url && (
                                     <div className="mt-3 rounded-xl overflow-hidden border border-slate-100 shadow-sm relative w-full" style={{ aspectRatio: '16/9' }}>
                                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img src={news.image_url} alt={news.title} className="object-cover w-full h-full" />
+                                        <img src={typeof window !== 'undefined' ? `${window.location.origin}${news.image_url.startsWith('/') ? '' : '/'}${news.image_url}` : news.image_url} alt={news.title} className="object-cover w-full h-full" />
                                     </div>
                                   )}
                                   {!news.is_read && (
@@ -1093,7 +1093,7 @@ export default function LiffProfilePage() {
                                                   <>
                                                       <div className="flex gap-3 mt-1 animate-in slide-in-from-top-1 fade-in duration-200">
                                                           {appt.image_url && (
-                                                              <img src={appt.image_url} alt="Vehicle" className="w-16 h-16 object-cover rounded-lg border border-slate-100 flex-shrink-0" />
+                                                              <img src={typeof window !== 'undefined' ? `${window.location.origin}${appt.image_url.startsWith('/') ? '' : '/'}${appt.image_url}` : appt.image_url} alt="Vehicle" className="w-16 h-16 object-cover rounded-lg border border-slate-100 flex-shrink-0" />
                                                           )}
                                                           <div className="flex flex-col gap-1 flex-1">
                                                               {appt.purpose && <div className="text-slate-500">ธุระ: {appt.purpose}</div>}
@@ -1310,7 +1310,7 @@ export default function LiffProfilePage() {
                                                   <img 
                                                       src={(() => {
                                                           const cleanUrl = '/' + log.image_url.replace(/^[\\/]+/, '').replace(/\\/g, '/');
-                                                          const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+                                                          const baseUrl = typeof window !== 'undefined' ? window.location.origin : (process.env.NEXT_PUBLIC_BASE_URL || '');
                                                           return `${baseUrl}${cleanUrl}?rev=${log.id}`;
                                                       })()}
                                                       alt="LPR" 
@@ -1470,7 +1470,7 @@ export default function LiffProfilePage() {
                                             <img 
                                                 src={(() => {
                                                     const cleanUrl = '/' + v.image_url.replace(/^[\\/]+/, '').replace(/\\/g, '/');
-                                                    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+                                                    const baseUrl = typeof window !== 'undefined' ? window.location.origin : (process.env.NEXT_PUBLIC_BASE_URL || '');
                                                     return `${baseUrl}${cleanUrl}?rev=${v.id}`;
                                                 })()}
                                                 alt="Car" 
