@@ -59,6 +59,19 @@ export default async function VehicleDetailsPage(props: { params: Promise<{ id: 
             </div>
         </div>
 
+        {vehicle.image_url && (
+            <div className="bg-white dark:bg-[#121212] rounded-3xl shadow-sm border border-zinc-200 dark:border-zinc-800/80 p-8 md:p-10 ring-1 ring-zinc-900/5 dark:ring-white/5 relative overflow-hidden group mt-8">
+                <h2 className="text-xl font-bold mb-6">ภาพถ่ายยานพาหนะ</h2>
+                <div className="max-w-2xl rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900">
+                    <img 
+                      src={vehicle.image_url} 
+                      alt="หน้าตารถ" 
+                      className="w-full h-auto object-cover max-h-[400px]"
+                    />
+                </div>
+            </div>
+        )}
+
         <div className="bg-white dark:bg-[#121212] rounded-3xl shadow-sm border border-zinc-200 dark:border-zinc-800/80 p-8 md:p-10 ring-1 ring-zinc-900/5 dark:ring-white/5 relative overflow-hidden group mt-8">
             <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
                 แก้ไขข้อมูลยานพาหนะ
