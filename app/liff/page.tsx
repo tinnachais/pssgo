@@ -961,9 +961,21 @@ export default function LiffProfilePage() {
                                           </button>
                                       </div>
                                       {!member.line_user_id && (
-                                          <div className="bg-amber-50 text-amber-700 text-[10px] font-bold px-2 py-1 rounded border border-amber-200 flex items-center gap-1.5 w-max">
-                                              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                                              รอผู้ใช้งานกดรับคำเชิญ
+                                          <div className="flex items-center justify-between mt-1 pt-2 border-t border-slate-100">
+                                              <div className="bg-amber-50 text-amber-700 text-[10px] font-bold px-2 py-1 rounded border border-amber-200 flex items-center gap-1.5">
+                                                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                                                  รอผู้ใช้งานกดรับคำเชิญ
+                                              </div>
+                                              <a 
+                                                  href={`https://line.me/R/msg/text/?${encodeURIComponent(`แจ้งเตือนจากเจ้าสถานที่/ห้อง ${profileData?.resident?.house_number}\nขอเรียนเชิญคุณเข้าร่วมบ้านใน PSS GO\nรหัสเชิญของคุณคือ: ${member.invite_code}\n\nกรุณากดลิงก์นี้เพื่อดำเนินการลงทะเบียน:\nhttps://liff.line.me/${process.env.NEXT_PUBLIC_LIFF_ID || "1234567890-AbcdEfgh"}?inviteCode=${member.invite_code}`)}`}
+                                                  target="_blank"
+                                                  className="bg-[#06C755]/10 text-[#06C755] hover:bg-[#06C755]/20 text-[10px] font-bold px-3 py-1 rounded border border-[#06C755]/30 flex items-center gap-1 transition-colors"
+                                              >
+                                                  <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                                                      <path d="M22.288 11.08c0-4.996-4.966-9.055-11.055-9.055-6.096 0-11.054 4.059-11.054 9.055 0 4.417 3.753 8.163 8.877 8.924.346.074.815.228.937.525.109.263.072.673.033.945l-.176 1.055c-.055.334-.258 1.258 1.103.684s7.332-4.316 9.544-7.147c1.171-1.488 1.791-3.13 1.791-4.986z" />
+                                                  </svg>
+                                                  ส่งคำเชิญ
+                                              </a>
                                           </div>
                                       )}
                                   </div>
