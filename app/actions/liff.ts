@@ -212,32 +212,57 @@ export async function linkLineAccount(formData: FormData) {
     const pictureUrl = formData.get("pictureUrl") as string;
     const imageFile = formData.get("image") as File | null;
 
-    if (!inviteCode || !lineUserId) {
+    if (!lineUserId) {
       return { success: false, message: "ข้อมูลไม่ครบถ้วน กรุณาลองใหม่" };
     }
 
-    // 1. ค้นหาผู้เช่า/ร้าน/บริษัทจาก Invite Code 
-    const res = await query(
-      `SELECT id, house_number, license_plate, line_user_id, site_id FROM residents WHERE invite_code = $1 AND is_active = true`,
-      [inviteCode]
-    );
+    let resident;
 
-    if (res.rows.length === 0) {
-      return { success: false, message: "รหัส Invite Code ไม่ถูกต้อง หรือไม่มีอยู่ในระบบ" };
+    if (inviteCode) {
+        // 1. ค้นหาผู้เช่า/ร้าน/บริษัทจาก Invite Code 
+        const res = await query(
+          `SELECT id, house_number, license_plate, line_user_id, site_id FROM residents WHERE invite_code = $1 AND is_active = true`,
+          [inviteCode]
+        );
+
+        if (res.rows.length === 0) {
+          return { success: false, message: "รหัส Invite Code ไม่ถูกต้อง หรือไม่มีอยู่ในระบบ" };
+        }
+
+        resident = res.rows[0];
+
+        // 2. ตรวจสอบเงื่อนไขว่ารหัสนี้ถูกผูกไปหรือยัง
+        if (resident.line_user_id && resident.line_user_id !== lineUserId) {
+          return { success: false, message: "รหัส Invite Code นี้ถูกใช้งานโดยบัญชีอื่นไปแล้ว" };
+        }
+
+        // 3. อัปเดตข้อมูลผูกบัญชี LINE 
+        await query(
+          `UPDATE residents SET line_user_id = $1, line_display_name = $2, line_picture_url = $3 WHERE id = $4`,
+          [lineUserId, displayName, pictureUrl, resident.id]
+        );
+    } else {
+        // 4. สร้างผู้ใช้งานบริการทั่วไป (Service User) หากไม่มี Invite Code
+        // ตรวจสอบก่อนว่าเคยสมัครแบบไม่มี Invite Code ไปแล้วหรือยัง
+        const checkRes = await query(`SELECT id, house_number, license_plate, line_user_id, site_id FROM residents WHERE line_user_id = $1 AND is_active = true`, [lineUserId]);
+        if (checkRes.rows.length > 0) {
+            resident = checkRes.rows[0];
+        } else {
+            const shortId = lineUserId.substring(0, 6).toUpperCase();
+            import("crypto").then(async crypto => {
+               // Ignore in top-level but we use it here just in case! 
+            });
+            const { randomBytes } = require('crypto');
+            const genInviteCode = randomBytes(4).toString('hex').toUpperCase();
+            
+            const newRes = await query(`
+                INSERT INTO residents (house_number, license_plate, owner_name, line_user_id, line_display_name, line_picture_url, is_active, is_owner, parent_id, invite_code)
+                VALUES ($1, $2, $3, $4, $5, $6, true, false, NULL, $7)
+                RETURNING id, house_number, license_plate, line_user_id, site_id
+            `, [`ผู้ใช้บริการ-${shortId}`, `USER-${shortId}`, displayName || "ผู้ใช้งานใหม่", lineUserId, displayName, pictureUrl, genInviteCode]);
+            resident = newRes.rows[0];
+        }
     }
-
-    const resident = res.rows[0];
-
-    // 2. ตรวจสอบเงื่อนไขว่ารหัสนี้ถูกผูกไปหรือยัง
-    if (resident.line_user_id && resident.line_user_id !== lineUserId) {
-      return { success: false, message: "รหัส Invite Code นี้ถูกใช้งานโดยบัญชีอื่นไปแล้ว" };
-    }
-
-    // 3. อัปเดตข้อมูลผูกบัญชี LINE 
-    await query(
-      `UPDATE residents SET line_user_id = $1, line_display_name = $2, line_picture_url = $3 WHERE id = $4`,
-      [lineUserId, displayName, pictureUrl, resident.id]
-    );
 
     let detectedPlate = formData.get("detectedPlate") as string || resident.license_plate;
     let detectedColor = formData.get("detectedColor") as string || "ไม่ระบุ";

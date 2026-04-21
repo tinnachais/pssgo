@@ -1604,11 +1604,10 @@ export default function LiffProfilePage() {
                         <p className="text-xs text-slate-500 mb-2">กรุณากรอกรหัสที่คุณได้รับจากนิติบุคคล/ส่วนกลาง เพื่อยืนยันตัวตน</p>
                         <input 
                             type="text" 
-                            required
                             disabled={result?.success || isSubmitting || isAnalyzing}
                             value={inviteCode}
                             onChange={(e) => setInviteCode(e.target.value)}
-                            placeholder="Ex. PSS-1234-ABCD"
+                            placeholder="เว้นว่างได้ หากคุณเป็นผู้ใช้บริการทั่วไป"
                             className="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl focus:ring-[#06C755] focus:border-[#06C755] block p-3.5 transition-colors disabled:opacity-50 font-mono tracking-wider mb-4"
                         />
                         </div>
@@ -1708,7 +1707,7 @@ export default function LiffProfilePage() {
                     {!result?.success && (
                         <button 
                         type="submit" 
-                        disabled={isSubmitting || (!profileData?.isRegistered && !inviteCode) || isAnalyzing}
+                        disabled={isSubmitting || isAnalyzing || (!profileData?.isRegistered && detectedPlate === '')}
                         className="w-full text-white bg-[#06C755] hover:bg-[#05b34c] focus:ring-4 focus:outline-none focus:ring-[#06C755]/30 font-bold rounded-xl text-md px-5 py-4 text-center mt-6 shadow-lg shadow-[#06C755]/20 disabled:opacity-50 transition-all flex justify-center items-center gap-2"
                         >
                         {isSubmitting ? (
