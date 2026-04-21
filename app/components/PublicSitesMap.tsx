@@ -17,8 +17,16 @@ export default function PublicSitesMap({ sites }: { sites: any[] }) {
 
     const [selectedSite, setSelectedSite] = useState<any | null>(null);
 
-    // Filter out sites without lat/lng
-    const validSites = useMemo(() => sites.filter(s => s.lat && s.lng), [sites]);
+    // Filter out sites without lat/lng and parse them to floats
+    const validSites = useMemo(() => {
+        return sites
+            .filter(s => s.lat && s.lng)
+            .map(s => ({
+                ...s,
+                lat: parseFloat(s.lat),
+                lng: parseFloat(s.lng)
+            }));
+    }, [sites]);
 
     const center = useMemo(() => {
         if (validSites.length > 0) {
