@@ -121,6 +121,8 @@ export async function addResident(formData: FormData) {
   const ownerName = formData.get("ownerName") as string || null;
   const phoneNumber = formData.get("phoneNumber") as string || null;
   const siteId = formData.get("siteId") as string || null;
+  const houseMaxVehiclesRaw = formData.get("houseMaxVehicles") as string || null;
+  const houseMaxVehicles = houseMaxVehiclesRaw !== null && houseMaxVehiclesRaw !== "" ? parseInt(houseMaxVehiclesRaw, 10) : null;
   const maxVehiclesRaw = formData.get("maxVehicles") as string || null;
   const maxVehicles = maxVehiclesRaw !== null && maxVehiclesRaw !== "" ? parseInt(maxVehiclesRaw, 10) : null;
   const licensePlate = lpInput ? lpInput.trim() : `รอลงทะเบียน-${Date.now()}`;
@@ -134,13 +136,14 @@ export async function addResident(formData: FormData) {
   await query("ALTER TABLE residents ADD COLUMN IF NOT EXISTS phone_number VARCHAR(50)");
   await query("ALTER TABLE residents ADD COLUMN IF NOT EXISTS site_id INT DEFAULT NULL");
   await query("ALTER TABLE residents ADD COLUMN IF NOT EXISTS max_vehicles INT DEFAULT NULL");
+  await query("ALTER TABLE residents ADD COLUMN IF NOT EXISTS house_max_vehicles INT DEFAULT NULL");
 
   // สร้าง Invite Code แบบสุ่ม (ตัวอย่าง: PSS-A1B2C3)
   const inviteCode = "PSS-" + crypto.randomBytes(3).toString("hex").toUpperCase();
 
   const insertedRes = await query(
-    "INSERT INTO residents (house_number, license_plate, invite_code, owner_name, phone_number, site_id, max_vehicles) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id",
-    [houseNumber, licensePlate, inviteCode, ownerName, phoneNumber, siteId ? parseInt(siteId, 10) : null, maxVehicles]
+    "INSERT INTO residents (house_number, license_plate, invite_code, owner_name, phone_number, site_id, max_vehicles, house_max_vehicles) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id",
+    [houseNumber, licensePlate, inviteCode, ownerName, phoneNumber, siteId ? parseInt(siteId, 10) : null, maxVehicles, houseMaxVehicles]
   );
   const newResidentId = insertedRes.rows[0].id;
 
@@ -182,10 +185,14 @@ export async function updateResidentProfile(id: number, formData: FormData) {
 export async function updateHouseData(id: number, formData: FormData) {
   const houseNumber = formData.get("houseNumber") as string;
   const siteId = formData.get("siteId") as string || null;
+  const houseMaxVehiclesRaw = formData.get("houseMaxVehicles") as string || null;
+  const houseMaxVehicles = houseMaxVehiclesRaw !== null && houseMaxVehiclesRaw !== "" ? parseInt(houseMaxVehiclesRaw, 10) : null;
 
   if (!houseNumber) {
     throw new Error("Missing required fields");
   }
+
+  await query("ALTER TABLE residents ADD COLUMN IF NOT EXISTS house_max_vehicles INT DEFAULT NULL");
 
   // Get current house number to update vehicles and family members later
   const currentResident = await query("SELECT house_number, is_owner FROM residents WHERE id = $1", [id]);
@@ -195,10 +202,10 @@ export async function updateHouseData(id: number, formData: FormData) {
 
   const oldHouseNumber = currentResident.rows[0].house_number;
 
-  // Update this resident and all family members
+  // Update this resident and all family members with the house fields
   await query(
-    "UPDATE residents SET house_number = $1, site_id = $2 WHERE id = $3 OR parent_id = $3",
-    [houseNumber, siteId ? parseInt(siteId, 10) : null, id]
+    "UPDATE residents SET house_number = $1, site_id = $2, house_max_vehicles = $3 WHERE id = $4 OR parent_id = $4",
+    [houseNumber, siteId ? parseInt(siteId, 10) : null, houseMaxVehicles, id]
   );
 
   // Update vehicles associated with the old house number (ensure they move to the new house number)

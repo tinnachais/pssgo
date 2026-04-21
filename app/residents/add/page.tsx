@@ -93,18 +93,34 @@ export default async function AddResidentPage() {
                     />
                 </div>
 
-                <div className="space-y-2">
-                    <label htmlFor="maxVehicles" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                    โควต้ารถ (ใส่เฉพาะกรณีสถานที่ตั้งโควต้าเป็น 0)
-                    </label>
-                    <input
-                    type="number"
-                    name="maxVehicles"
-                    id="maxVehicles"
-                    min="1"
-                    placeholder="ปล่อยว่างเพื่อยึดตามค่าสถานที่"
-                    className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm font-medium text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
-                    />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                        <label htmlFor="houseMaxVehicles" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                        โควต้ารวมของบ้าน <span className="text-zinc-400 font-normal">(อ้างอิงเมื่อสถานที่ตั้งค่าเป็น 0)</span>
+                        </label>
+                        <input
+                        type="number"
+                        name="houseMaxVehicles"
+                        id="houseMaxVehicles"
+                        min="1"
+                        placeholder="ปล่อยว่างเพื่อยึดตามค่าสถานที่"
+                        className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm font-medium text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                        />
+                    </div>
+                
+                    <div className="space-y-2">
+                        <label htmlFor="maxVehicles" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                        โควต้ารถรายบุคคล <span className="text-zinc-400 font-normal">(เฉพาะเจาะจงบุคคลนี้)</span>
+                        </label>
+                        <input
+                        type="number"
+                        name="maxVehicles"
+                        id="maxVehicles"
+                        min="0"
+                        placeholder="ปล่อยว่างเพื่อยึดตามค่าบ้าน/สถานที่"
+                        className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm font-medium text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                        />
+                    </div>
                 </div>
                 
                 <div className="pt-4 flex items-center gap-3">

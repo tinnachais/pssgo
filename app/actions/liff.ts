@@ -150,21 +150,25 @@ export async function getLiffProfileData(lineUserId: string) {
         } else {
             siteLimitQuery = await query(`SELECT max_vehicles, max_residents FROM sites LIMIT 1`);
         }
-        let maxVehicles = 1;
+        let houseLimit = 1;
+        let maxVehicles = 1; // Used for UI display (Personal limit)
         if (siteLimitQuery.rows.length > 0) {
             const siteMax = siteLimitQuery.rows[0].max_vehicles;
             if (siteMax === 0) {
+                const ownerRes = await query(`SELECT house_max_vehicles, max_vehicles FROM residents WHERE id = $1`, [resident.is_owner ? resident.id : resident.parent_id]);
+                houseLimit = ownerRes.rows[0]?.house_max_vehicles || ownerRes.rows[0]?.max_vehicles || 1;
+                
                 if (resident.max_vehicles !== null) {
                     maxVehicles = resident.max_vehicles;
                 } else {
-                    const ownerRes = await query(`SELECT max_vehicles FROM residents WHERE id = $1`, [resident.is_owner ? resident.id : resident.parent_id]);
-                    maxVehicles = ownerRes.rows[0]?.max_vehicles || 1;
+                    maxVehicles = houseLimit;
                 }
             } else {
+                houseLimit = siteMax || 1;
                 maxVehicles = siteMax || 1;
             }
         }
-        const maxResidents = maxVehicles;
+        const maxResidents = houseLimit;
 
         const familyMembersQuery = await query("SELECT id, owner_name, line_user_id, line_display_name, line_picture_url, is_active, created_at, invite_code FROM residents WHERE parent_id = $1 ORDER BY created_at DESC", [resident.id]);
         const familyMembers = familyMembersQuery.rows;
@@ -267,26 +271,37 @@ export async function linkLineAccount(formData: FormData) {
              } else {
                  siteLimitQuery = await query(`SELECT max_vehicles FROM sites LIMIT 1`);
              }
-             let maxVehicles = 1;
+             let houseLimit = 1;
+             let personLimit = 1;
              if (siteLimitQuery.rows.length > 0) {
                  const siteMax = siteLimitQuery.rows[0].max_vehicles;
                  if (siteMax === 0) {
+                     const ownerRes = await query(`SELECT house_max_vehicles, max_vehicles FROM residents WHERE id = $1`, [resident.is_owner ? resident.id : resident.parent_id]);
+                     houseLimit = ownerRes.rows[0]?.house_max_vehicles || ownerRes.rows[0]?.max_vehicles || 1;
+                     
                      if (resident.max_vehicles !== null) {
-                         maxVehicles = resident.max_vehicles;
+                         personLimit = resident.max_vehicles;
                      } else {
-                         const ownerRes = await query(`SELECT max_vehicles FROM residents WHERE id = $1`, [resident.is_owner ? resident.id : resident.parent_id]);
-                         maxVehicles = ownerRes.rows[0]?.max_vehicles || 1;
+                         personLimit = houseLimit;
                      }
                  } else {
-                     maxVehicles = siteMax || 1;
+                     houseLimit = siteMax || 1;
+                     personLimit = siteMax || 1;
                  }
              }
              
-             const vehicleCountQuery = await query(`SELECT COUNT(*) as count FROM vehicles WHERE house_number = $1 AND is_active = true`, [resident.house_number]);
-             const currentVehicles = parseInt(vehicleCountQuery.rows[0].count, 10);
-             
-             if (currentVehicles >= maxVehicles) {
-                 return { success: false, message: `ไม่สามารถเพิ่มรถได้ เนื่องจากบ้านของคุณเพิ่มรถครบจำนวนสูงสุดแล้ว (${maxVehicles} คัน)`, accountLinked: true };
+             // Check House Limit
+             const houseVehicleCountQuery = await query(`SELECT COUNT(*) as count FROM vehicles WHERE house_number = $1 AND is_active = true`, [resident.house_number]);
+             const houseVehiclesCount = parseInt(houseVehicleCountQuery.rows[0].count, 10);
+             if (houseVehiclesCount >= houseLimit) {
+                 return { success: false, message: `ไม่สามารถเพิ่มรถได้ เนื่องจากบ้านของคุณเพิ่มรถครบจำนวนโควต้าสูงสุดแล้ว (${houseLimit} คัน)`, accountLinked: true };
+             }
+
+             // Check Person Limit
+             const personVehicleCountQuery = await query(`SELECT COUNT(*) as count FROM vehicles WHERE resident_id = $1 AND is_active = true`, [resident.id]);
+             const personVehiclesCount = parseInt(personVehicleCountQuery.rows[0].count, 10);
+             if (personVehiclesCount >= personLimit) {
+                 return { success: false, message: `ไม่สามารถเพิ่มรถได้ เนื่องจากคุณใช้โควต้าส่วนตัวครบแล้ว (${personLimit} คัน)`, accountLinked: true };
              }
 
              // Layer 2: Total Village Package Max
@@ -394,28 +409,29 @@ export async function generateFamilyInvite(ownerId: number, memberName: string) 
         const houseNumber = ownerRes.rows[0].house_number;
         const siteId = ownerRes.rows[0].site_id;
 
-        // ดึงโควต้า "จำนวนรถสูงสุดต่อบ้าน" มาใช้เป็นจำนวนผู้เช่า/ร้าน/บริษัทสูงสุดต่อบ้านด้วยเลย
+        // ดึงโควต้า "จำนวนรถรวมสูงสุดต่อบ้าน" มาใช้เป็นจำนวนผู้ใช้ประจำสูงสุด
         let limitQuery;
         if (siteId) {
             limitQuery = await query(`SELECT max_vehicles FROM sites WHERE id = $1`, [siteId]);
         } else {
             limitQuery = await query(`SELECT max_vehicles FROM sites LIMIT 1`);
         }
-        let maxLimit = 1;
+        
+        let houseLimit = 1;
         if (limitQuery.rows.length > 0) {
             const siteMax = limitQuery.rows[0].max_vehicles;
             if (siteMax === 0) {
-                maxLimit = ownerRes.rows[0].max_vehicles || 1;
+                houseLimit = ownerRes.rows[0].house_max_vehicles || ownerRes.rows[0].max_vehicles || 1;
             } else {
-                maxLimit = siteMax || 1;
+                houseLimit = siteMax || 1;
             }
         }
         
         const familyCountQuery = await query("SELECT COUNT(*) FROM residents WHERE parent_id = $1 OR id = $1", [ownerId]);
         const currentCount = parseInt(familyCountQuery.rows[0].count, 10);
         
-        if (currentCount >= maxLimit) {
-             return { success: false, message: `ไม่สามารถเพิ่มผู้ใช้ประจำได้เกินโควต้า (${maxLimit} คน ตามจำนวนรถ)` };
+        if (currentCount >= houseLimit) {
+             return { success: false, message: `ไม่สามารถเพิ่มผู้ใช้ประจำได้เกินโควต้า (${houseLimit} คน ตามโควต้ารวมของบ้าน)` };
         }
 
         const inviteCode = "PSS-FAM-" + crypto.randomBytes(3).toString("hex").toUpperCase();
