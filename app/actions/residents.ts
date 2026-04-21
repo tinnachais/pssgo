@@ -226,10 +226,18 @@ export async function toggleResidentStatus(id: number, isActive: boolean) {
   revalidatePath("/", "layout");
 }
 
-// ลบข้อมูลรถออกจากระบบ
 export async function deleteResident(id: number) {
   await query("DELETE FROM residents WHERE id = $1", [id]);
   revalidatePath("/residents");
+  revalidatePath("/", "layout");
+}
+
+export async function unlinkLineFromResident(id: number) {
+  // สร้าง Invite code ใหม่เสมอเพื่อความปลอดภัย (ถ้าต้องการ) หรือสามารถคงอันเดิมไว้ก็ได้
+  // เราคงอันเดิมไว้เพื่อให้ตรงกับความต้องการที่ว่า "เหลือลิงก์ที่แชร์ไปให้ไลน์ใหม่"
+  await query("UPDATE residents SET line_user_id = NULL, line_display_name = NULL, line_picture_url = NULL WHERE id = $1", [id]);
+  revalidatePath("/residents");
+  revalidatePath("/liff-users");
   revalidatePath("/", "layout");
 }
 

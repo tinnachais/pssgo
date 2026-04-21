@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { toggleResidentStatus, deleteResident, logResidentAccess, deleteHouse, toggleHouseStatus } from "@/app/actions/residents";
+import { toggleResidentStatus, deleteResident, logResidentAccess, deleteHouse, toggleHouseStatus, unlinkLineFromResident } from "@/app/actions/residents";
 
 export default function HouseRow({ house }: { house: any }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -91,10 +91,17 @@ export default function HouseRow({ house }: { house: any }) {
                                         <span className="flex items-center gap-1.5"><svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>{member.phone_number}</span>
                                     )}
                                     {member.line_user_id ? (
-                                        <span className="flex items-center gap-1.5 text-[#06C755] font-semibold bg-[#06C755]/10 px-2 py-0.5 rounded-md" title={member.line_display_name}>
-                                            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M22.288 11.08c0-4.996-4.966-9.055-11.055-9.055-6.096 0-11.054 4.059-11.054 9.055 0 4.417 3.753 8.163 8.877 8.924.346.074.815.228.937.525.109.263.072.673.033.945l-.176 1.055c-.055.334-.258 1.258 1.103.684s7.332-4.316 9.544-7.147c1.171-1.488 1.791-3.13 1.791-4.986z" /></svg>
-                                            <span className="truncate max-w-[100px] block">{member.line_display_name}</span>
-                                        </span>
+                                        <div className="flex items-center gap-1.5" title={member.line_display_name}>
+                                            <span className="flex items-center gap-1.5 text-[#06C755] font-semibold bg-[#06C755]/10 px-2 py-0.5 rounded-md">
+                                                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M22.288 11.08c0-4.996-4.966-9.055-11.055-9.055-6.096 0-11.054 4.059-11.054 9.055 0 4.417 3.753 8.163 8.877 8.924.346.074.815.228.937.525.109.263.072.673.033.945l-.176 1.055c-.055.334-.258 1.258 1.103.684s7.332-4.316 9.544-7.147c1.171-1.488 1.791-3.13 1.791-4.986z" /></svg>
+                                                <span className="truncate max-w-[90px] block">{member.line_display_name}</span>
+                                            </span>
+                                            <form action={async () => { await unlinkLineFromResident(member.id); }}>
+                                                <button type="submit" onClick={(e) => { e.stopPropagation(); if(!confirm('ยืนยันการยกเลิกผูกบัญชี LINE สำหรับผู้ใช้นี้?')) e.preventDefault(); }} className="text-zinc-400 hover:text-rose-500 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 shadow-sm p-1 rounded-md transition-all relative z-10 hover:border-rose-200 dark:hover:border-rose-800" title="ยกเลิกผูกบัญชี LINE">
+                                                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
+                                                </button>
+                                            </form>
+                                        </div>
                                     ) : (
                                         member.invite_code && (
                                         <div className="flex items-center gap-1.5 bg-zinc-100 dark:bg-zinc-800/60 px-2 py-0.5 rounded-md text-zinc-600 dark:text-zinc-400">
