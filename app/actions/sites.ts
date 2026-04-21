@@ -167,9 +167,19 @@ export async function addSite(formData: FormData) {
       const zoneRes = await query("INSERT INTO zones (site_id, name) VALUES ($1, $2) RETURNING id", [siteId, 'โซนหลัก']);
       const zoneId = zoneRes.rows.length > 0 ? zoneRes.rows[0].id : null;
       
-      // 2. Create default Gate
-      await query("INSERT INTO gates (site_id, zone_id, name) VALUES ($1, $2, $3)", [siteId, zoneId, 'ประตูหลัก (ทางเข้า)']);
-      await query("INSERT INTO gates (site_id, zone_id, name) VALUES ($1, $2, $3)", [siteId, zoneId, 'ประตูหลัก (ทางออก)']);
+      // 2. Add Gate Types and Gates
+      await query("ALTER TABLE gate_types ADD COLUMN IF NOT EXISTS site_id INTEGER REFERENCES sites(id) ON DELETE CASCADE");
+      await query("ALTER TABLE gate_types ADD COLUMN IF NOT EXISTS code TEXT");
+      await query("ALTER TABLE gates ADD COLUMN IF NOT EXISTS type_id INTEGER REFERENCES gate_types(id) ON DELETE SET NULL");
+
+      let typeInRes = await query("SELECT id FROM gate_types WHERE code = 'IN' LIMIT 1");
+      let typeInId = typeInRes.rows.length > 0 ? typeInRes.rows[0].id : (await query("INSERT INTO gate_types (code, name, site_id) VALUES ('IN', 'กล้อง/ไม้กั้น (ขาเข้า)', $1) RETURNING id", [siteId])).rows[0].id;
+      
+      let typeOutRes = await query("SELECT id FROM gate_types WHERE code = 'OUT' LIMIT 1");
+      let typeOutId = typeOutRes.rows.length > 0 ? typeOutRes.rows[0].id : (await query("INSERT INTO gate_types (code, name, site_id) VALUES ('OUT', 'กล้อง/ไม้กั้น (ขาออก)', $1) RETURNING id", [siteId])).rows[0].id;
+
+      await query("INSERT INTO gates (site_id, zone_id, name, type_id) VALUES ($1, $2, $3, $4)", [siteId, zoneId, 'ประตูหลัก (ทางเข้า)', typeInId]);
+      await query("INSERT INTO gates (site_id, zone_id, name, type_id) VALUES ($1, $2, $3, $4)", [siteId, zoneId, 'ประตูหลัก (ทางออก)', typeOutId]);
       
       // Ensure providers table has these columns before querying
       await query("ALTER TABLE providers ADD COLUMN IF NOT EXISTS contact_name TEXT DEFAULT NULL");
