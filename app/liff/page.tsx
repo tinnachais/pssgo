@@ -744,7 +744,9 @@ export default function LiffProfilePage() {
                           </svg>
                       </div>
                       <h1 className="text-2xl font-bold tracking-tight">ประกาศ & ข่าวสาร</h1>
-                      <p className="text-sm text-slate-500">{profileData?.resident?.site_name}</p>
+                      <p className="text-sm text-slate-500">
+                          {profileData?.resident?.house_number?.startsWith("ผู้ใช้บริการ-") ? "ผู้ใช้บริการทั่วไป" : profileData?.resident?.site_name}
+                      </p>
                   </div>
 
                   <div className="space-y-4">
@@ -1375,9 +1377,18 @@ export default function LiffProfilePage() {
                   )}
 
                   <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200 mb-6 text-center shadow-inner">
-                      <div className="text-sm font-bold text-[#06C755] mb-0.5">{profileData.resident.site_name || 'ไม่ระบุสถานที่'}</div>
-                      <div className="text-xs text-slate-500 mb-1">รหัสสถานที่/ห้อง</div>
-                      <div className="text-3xl font-black text-slate-800">{profileData.resident.house_number}</div>
+                      {profileData.resident.house_number?.startsWith("ผู้ใช้บริการ-") ? (
+                          <>
+                              <div className="text-sm font-bold text-blue-500 mb-0.5">สถานะบัญชี</div>
+                              <div className="text-xl font-black text-slate-800 mt-1 pb-1">ผู้ใช้บริการบุคคลทั่วไป</div>
+                          </>
+                      ) : (
+                          <>
+                              <div className="text-sm font-bold text-[#06C755] mb-0.5">{profileData.resident.site_name || 'ไม่ระบุสถานที่'}</div>
+                              <div className="text-xs text-slate-500 mb-1">รหัสสถานที่/ห้อง</div>
+                              <div className="text-3xl font-black text-slate-800">{profileData.resident.house_number}</div>
+                          </>
+                      )}
                   </div>
 
                   <div className="mb-4 flex flex-row items-center justify-between">
