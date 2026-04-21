@@ -210,6 +210,8 @@ export async function linkLineAccount(formData: FormData) {
     const lineUserId = formData.get("lineUserId") as string;
     const displayName = formData.get("displayName") as string;
     const pictureUrl = formData.get("pictureUrl") as string;
+    const ownerNameInput = formData.get("ownerName") as string;
+    const phoneNumberInput = formData.get("phoneNumber") as string;
     const imageFile = formData.get("image") as File | null;
 
     if (!lineUserId) {
@@ -238,8 +240,8 @@ export async function linkLineAccount(formData: FormData) {
 
         // 3. อัปเดตข้อมูลผูกบัญชี LINE 
         await query(
-          `UPDATE residents SET line_user_id = $1, line_display_name = $2, line_picture_url = $3 WHERE id = $4`,
-          [lineUserId, displayName, pictureUrl, resident.id]
+          `UPDATE residents SET line_user_id = $1, line_display_name = $2, line_picture_url = $3, owner_name = COALESCE($5, owner_name), phone_number = COALESCE($6, phone_number) WHERE id = $4`,
+          [lineUserId, displayName, pictureUrl, resident.id, ownerNameInput || null, phoneNumberInput || null]
         );
     } else {
         // 4. สร้างผู้ใช้งานบริการทั่วไป (Service User) หากไม่มี Invite Code
@@ -256,10 +258,10 @@ export async function linkLineAccount(formData: FormData) {
             const genInviteCode = randomBytes(4).toString('hex').toUpperCase();
             
             const newRes = await query(`
-                INSERT INTO residents (house_number, license_plate, owner_name, line_user_id, line_display_name, line_picture_url, is_active, is_owner, parent_id, invite_code)
-                VALUES ($1, $2, $3, $4, $5, $6, true, false, NULL, $7)
+                INSERT INTO residents (house_number, license_plate, owner_name, phone_number, line_user_id, line_display_name, line_picture_url, is_active, is_owner, parent_id, invite_code)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, true, false, NULL, $8)
                 RETURNING id, house_number, license_plate, line_user_id, site_id
-            `, [`ผู้ใช้บริการ-${shortId}`, `USER-${shortId}`, displayName || "ผู้ใช้งานใหม่", lineUserId, displayName, pictureUrl, genInviteCode]);
+            `, [`ผู้ใช้บริการ-${shortId}`, `USER-${shortId}`, ownerNameInput || displayName || "ผู้ใช้งานใหม่", phoneNumberInput || null, lineUserId, displayName, pictureUrl, genInviteCode]);
             resident = newRes.rows[0];
         }
     }

@@ -282,6 +282,11 @@ export default function LiffProfilePage() {
         formData.append("image", imageFile);
     }
 
+    if (!profileData?.isRegistered) {
+        if (editOwnerName) formData.append("ownerName", editOwnerName.trim());
+        if (editPhoneNumber) formData.append("phoneNumber", editPhoneNumber.trim());
+    }
+
     // เรียกใช้งาน Server Action เพื่อผูกบัญชีและอัปเดตลงตารางย่อย
     const res = await linkLineAccount(formData);
 
@@ -1610,6 +1615,34 @@ export default function LiffProfilePage() {
                             placeholder="เว้นว่างได้ หากคุณเป็นผู้ใช้บริการทั่วไป"
                             className="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl focus:ring-[#06C755] focus:border-[#06C755] block p-3.5 transition-colors disabled:opacity-50 font-mono tracking-wider mb-4"
                         />
+                        
+                        <div className="space-y-3 mb-6 bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-left">
+                            <h3 className="text-sm font-bold text-slate-700 border-b border-slate-100 pb-2">ข้อมูลส่วนตัว</h3>
+                            <div>
+                                <label className="block text-xs font-bold text-slate-600 mb-1">ชื่อ-นามสกุล <span className="text-red-500">*</span></label>
+                                <input 
+                                    type="text"
+                                    required
+                                    disabled={result?.success || isSubmitting || isAnalyzing}
+                                    value={editOwnerName}
+                                    onChange={(e) => setEditOwnerName(e.target.value)}
+                                    placeholder="เช่น สมชาย ใจดี"
+                                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-lg focus:ring-[#06C755] focus:border-[#06C755] block p-2.5 transition-colors disabled:opacity-50"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs font-bold text-slate-600 mb-1">เบอร์โทรศัพท์ <span className="text-red-500">*</span></label>
+                                <input 
+                                    type="tel"
+                                    required
+                                    disabled={result?.success || isSubmitting || isAnalyzing}
+                                    value={editPhoneNumber}
+                                    onChange={(e) => setEditPhoneNumber(e.target.value)}
+                                    placeholder="เช่น 0812345678"
+                                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-lg focus:ring-[#06C755] focus:border-[#06C755] block p-2.5 transition-colors disabled:opacity-50 font-mono"
+                                />
+                            </div>
+                        </div>
                         </div>
                     )}
 
