@@ -4,6 +4,7 @@ import { query } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import crypto from "crypto";
 
 export async function getSites() {
   const cookieStore = await cookies();
@@ -148,9 +149,12 @@ export async function addSite(formData: FormData) {
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS lng DECIMAL(11, 8)');
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS contact_link VARCHAR(255)');
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS package_id INT REFERENCES packages(id) ON DELETE SET NULL');
+  await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS api_token VARCHAR(255) UNIQUE');
+
+  const apiToken = crypto.randomBytes(32).toString('hex');
 
   const result = await query(
-    "INSERT INTO sites (name, address, provider_id, max_vehicles, lat, lng, contact_link, package_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id",
+    "INSERT INTO sites (name, address, provider_id, max_vehicles, lat, lng, contact_link, package_id, api_token) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id",
     [
       name, 
       address || null, 
@@ -159,7 +163,8 @@ export async function addSite(formData: FormData) {
       lat ? parseFloat(lat) : null,
       lng ? parseFloat(lng) : null,
       contactLink || null,
-      packageId ? parseInt(packageId, 10) : null
+      packageId ? parseInt(packageId, 10) : null,
+      apiToken
     ]
   );
   
@@ -258,9 +263,12 @@ export async function updateSite(id: number, formData: FormData) {
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS lng DECIMAL(11, 8)');
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS contact_link VARCHAR(255)');
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS package_id INT REFERENCES packages(id) ON DELETE SET NULL');
+  await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS api_token VARCHAR(255) UNIQUE');
+
+  const fallbackToken = crypto.randomBytes(32).toString('hex');
 
   await query(
-    "UPDATE sites SET name = $1, address = $2, provider_id = $3, max_vehicles = $4, lat = $5, lng = $6, contact_link = $7, package_id = $8 WHERE id = $9",
+    "UPDATE sites SET name = $1, address = $2, provider_id = $3, max_vehicles = $4, lat = $5, lng = $6, contact_link = $7, package_id = $8, api_token = COALESCE(api_token, $10) WHERE id = $9",
     [
       name, 
       address || null, 
@@ -270,7 +278,8 @@ export async function updateSite(id: number, formData: FormData) {
       lng ? parseFloat(lng) : null,
       contactLink || null,
       packageId ? parseInt(packageId, 10) : null,
-      id
+      id,
+      fallbackToken
     ]
   );
   revalidatePath("/sites");

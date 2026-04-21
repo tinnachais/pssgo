@@ -173,6 +173,28 @@ export default async function SiteDetailsPage(props: { params: Promise<{ id: str
                     </div>
                 
                 <div className="space-y-2">
+                    <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                    API Token สำหรับอุปกรณ์เชื่อมต่อ (อ่านอย่างเดียว)
+                    </label>
+                    <div className="relative">
+                        <input
+                            type="text"
+                            readOnly
+                            value={site.api_token || "ระบบยังไม่ได้สร้าง Token (โปรดอัปเดตข้อมูลสถานที่ 1 ครั้งเพื่อสร้าง)"}
+                            className={`w-full rounded-2xl border ${site.api_token ? 'border-emerald-300 dark:border-emerald-700 bg-emerald-50/50 dark:bg-emerald-900/10 text-emerald-800 dark:text-emerald-400 font-mono tracking-wider' : 'border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 text-zinc-500'} px-5 py-3.5 text-sm focus:outline-none transition-all`}
+                        />
+                        {site.api_token && (
+                            <div className="absolute inset-y-0 right-0 flex items-center pr-4">
+                                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-500/20 px-2 py-1 rounded">DO NOT SHARE</span>
+                            </div>
+                        )}
+                    </div>
+                    <p className="text-xs text-zinc-500 mt-1.5">
+                        Token นี้ใช้สำหรับเชื่อมต่ออุปกรณ์ Hardware (เช่น กล้อง LPR, ระบบไม้กั้น) กรณีไม่มีระบบจะสร้างให้เมื่อท่านกดบันทึกการเปลี่ยนแปลง
+                    </p>
+                </div>
+
+                <div className="space-y-2">
                     <label htmlFor="contactLink" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
                     ลิงก์ติดต่อเจ้าหน้าที่สถานที่ (เช่น LINE OA)
                     </label>
