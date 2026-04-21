@@ -288,11 +288,14 @@ export default function LiffProfilePage() {
     setResult(res);
     setIsSubmitting(false);
 
-    // หากสำเร็จ ปิดหน้าต่าง LIFF อัตโนมัติใน 3 วินาที หรือถ้าเพิ่งเพิ่มรถ ให้โหลดโปรไฟล์ใหม่
-    if (res.success) {
+    // หากผูกบัญชีสำเร็จ หรือมี error เกี่ยวกับโควต้ารถ (แปลว่าผูกบัญชีไปแล้ว)
+    const isPartialSuccess = !res.success && res.accountLinked;
+
+    if (res.success || isPartialSuccess) {
         if (profileData?.isRegistered) {
-            // ถ้าเป็นการเพิ่มรถ ให้ซ่อนฟอร์มและรีโหลดข้อมูล แต่ไม่ปิดแอป
-            setShowAddCarForm(false);
+            // ถ้าเป็นการเพิ่มรถ ให้ซ่อนฟอร์มเมื่อสำเร็จ
+            if (res.success) setShowAddCarForm(false);
+            
             setDetectedPlate("");
             setDetectedProvince("");
             setDetectedColor("");
@@ -300,13 +303,13 @@ export default function LiffProfilePage() {
             
             const newData = await getLiffProfileData(profile.userId);
             setProfileData(newData);
-            setTimeout(() => setResult(null), 3000);
+            setTimeout(() => setResult(null), res.success ? 3000 : 5000);
         } else {
-            // ถ้าเป็นการลงทะเบียนใหม่ รอมันโหลดสัก 2 วิแล้วโหลดโปรไฟล์ใหม่
+            // ถ้าเป็นการลงทะเบียนใหม่ ให้โหลดโปรไฟล์ใหม่
             setTimeout(async () => {
                 const newData = await getLiffProfileData(profile.userId);
                 setProfileData(newData);
-                setResult(null);
+                if (res.success) setResult(null);
             }, 2000);
         }
     }

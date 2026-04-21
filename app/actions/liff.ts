@@ -276,7 +276,7 @@ export async function linkLineAccount(formData: FormData) {
              const currentVehicles = parseInt(vehicleCountQuery.rows[0].count, 10);
              
              if (currentVehicles >= maxVehicles) {
-                 return { success: false, message: `ไม่สามารถเพิ่มรถได้ เนื่องจากบ้านของคุณเพิ่มรถครบจำนวนสูงสุดแล้ว (${maxVehicles} คัน)` };
+                 return { success: false, message: `ไม่สามารถเพิ่มรถได้ เนื่องจากบ้านของคุณเพิ่มรถครบจำนวนสูงสุดแล้ว (${maxVehicles} คัน)`, accountLinked: true };
              }
 
              // Layer 2: Total Village Package Max
@@ -291,7 +291,7 @@ export async function linkLineAccount(formData: FormData) {
                      const tvQuery = await query("SELECT COUNT(*) as count FROM vehicles WHERE site_id = $1 AND is_active = true", [resident.site_id]);
                      const totalVillCars = parseInt(tvQuery.rows[0].count, 10);
                      if (totalVillCars >= packageMax) {
-                         return { success: false, message: `ไม่สามารถเพิ่มรถได้ เนื่องจากหมู่บ้าน/อาคารของคุณใช้โควต้ายานพาหนะรวมเต็มจำนวนแล้ว กรุณาติดต่อส่วนกลาง` };
+                         return { success: false, message: `ไม่สามารถเพิ่มรถได้ เนื่องจากหมู่บ้าน/อาคารของคุณใช้โควต้ายานพาหนะรวมเต็มจำนวนแล้ว กรุณาติดต่อส่วนกลาง`, accountLinked: true };
                      }
                  }
              }
@@ -345,7 +345,7 @@ export async function linkLineAccount(formData: FormData) {
          } else {
              // ถ้ารถมีอยู่แล้ว เช็คว่าเป็นของบ้านตัวเองหรือไม่
              if (existingVehicle.rows[0].house_number !== resident.house_number) {
-                 return { success: false, message: `ป้ายทะเบียนนี้ถูกลงทะเบียนไว้แล้วโดยสถานที่/ห้อง ${existingVehicle.rows[0].house_number} ในสถานที่นี้` };
+                 return { success: false, message: `ป้ายทะเบียนนี้ถูกลงทะเบียนไว้แล้วโดยสถานที่/ห้อง ${existingVehicle.rows[0].house_number} ในสถานที่นี้`, accountLinked: true };
              }
          }
 
