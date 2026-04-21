@@ -122,6 +122,22 @@ export default async function AddSitePage() {
                     className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all font-medium"
                     />
                 </div>
+                <div className="space-y-3 pt-2">
+                    <label className="relative flex items-start gap-3 cursor-pointer group">
+                        <div className="flex items-center h-6">
+                            <input
+                                type="checkbox"
+                                name="autoSetup"
+                                defaultChecked
+                                className="w-5 h-5 rounded border-zinc-300 text-indigo-600 focus:ring-indigo-600 transition-all cursor-pointer"
+                            />
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-sm font-semibold text-zinc-900 dark:text-white">สร้างข้อมูลเริ่มต้นอัตโนมัติ</span>
+                            <span className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">ระบบจะสร้าง โซนหลัก, ประตูหลัก, และนำข้อมูลผู้ให้บริการมาสร้างเป็นบ้านนิติบุคคลให้อัตโนมัติ เพื่อให้พร้อมใช้งานทันที</span>
+                        </div>
+                    </label>
+                </div>
                 
                 <div className="pt-4 flex items-center gap-3">
                     <button

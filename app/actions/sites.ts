@@ -136,6 +136,7 @@ export async function addSite(formData: FormData) {
   const lat = formData.get("lat") as string;
   const lng = formData.get("lng") as string;
   const contactLink = formData.get("contactLink") as string;
+  const autoSetup = formData.get("autoSetup") as string;
 
   if (!name) {
     throw new Error("Missing required fields");
@@ -146,8 +147,8 @@ export async function addSite(formData: FormData) {
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS lng DECIMAL(11, 8)');
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS contact_link VARCHAR(255)');
 
-  await query(
-    "INSERT INTO sites (name, address, provider_id, max_vehicles, lat, lng, contact_link) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+  const result = await query(
+    "INSERT INTO sites (name, address, provider_id, max_vehicles, lat, lng, contact_link) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id",
     [
       name, 
       address || null, 
@@ -158,6 +159,35 @@ export async function addSite(formData: FormData) {
       contactLink || null
     ]
   );
+  
+  const siteId = result.rows[0].id;
+
+  if (autoSetup === "on" && providerId) {
+      // 1. Create default Zone
+      const zoneRes = await query("INSERT INTO zones (site_id, name) VALUES ($1, $2) RETURNING id", [siteId, 'โซนหลัก']);
+      
+      // 2. Create default Gate
+      await query("INSERT INTO gates (site_id, name) VALUES ($1, $2)", [siteId, 'ประตูหลัก']);
+      
+      // 3. Create Resident using Provider Info
+      const pRes = await query("SELECT name, phone_number, contact_name FROM providers WHERE id = $1", [parseInt(providerId, 10)]);
+      if (pRes.rows.length > 0) {
+          const provider = pRes.rows[0];
+          const crypto = await import("crypto");
+          const inviteCode = "PSS-" + crypto.randomBytes(3).toString("hex").toUpperCase();
+          const ownerName = provider.contact_name || provider.name;
+          
+          await query("ALTER TABLE residents ADD COLUMN IF NOT EXISTS owner_name VARCHAR(150)");
+          await query("ALTER TABLE residents ADD COLUMN IF NOT EXISTS phone_number VARCHAR(50)");
+          await query("ALTER TABLE residents ADD COLUMN IF NOT EXISTS site_id INT DEFAULT NULL");
+
+          await query(
+            "INSERT INTO residents (site_id, house_number, phone_number, owner_name, license_plate, invite_code) VALUES ($1, $2, $3, $4, $5, $6)", 
+            [siteId, 'นิติบุคคล', provider.phone_number || null, ownerName, `รอลงทะเบียน-${Date.now()}`, inviteCode]
+          );
+      }
+  }
+
   revalidatePath("/sites");
   redirect("/sites");
 }
