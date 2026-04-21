@@ -136,6 +136,7 @@ export async function addSite(formData: FormData) {
   const lat = formData.get("lat") as string;
   const lng = formData.get("lng") as string;
   const contactLink = formData.get("contactLink") as string;
+  const packageId = formData.get("packageId") as string;
   const autoSetup = formData.get("autoSetup") as string;
 
   if (!name) {
@@ -146,9 +147,10 @@ export async function addSite(formData: FormData) {
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS lat DECIMAL(10, 8)');
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS lng DECIMAL(11, 8)');
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS contact_link VARCHAR(255)');
+  await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS package_id INT REFERENCES packages(id) ON DELETE SET NULL');
 
   const result = await query(
-    "INSERT INTO sites (name, address, provider_id, max_vehicles, lat, lng, contact_link) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id",
+    "INSERT INTO sites (name, address, provider_id, max_vehicles, lat, lng, contact_link, package_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id",
     [
       name, 
       address || null, 
@@ -156,7 +158,8 @@ export async function addSite(formData: FormData) {
       maxVehicles ? parseInt(maxVehicles, 10) : 1, 
       lat ? parseFloat(lat) : null,
       lng ? parseFloat(lng) : null,
-      contactLink || null
+      contactLink || null,
+      packageId ? parseInt(packageId, 10) : null
     ]
   );
   
@@ -244,6 +247,7 @@ export async function updateSite(id: number, formData: FormData) {
   const lat = formData.get("lat") as string;
   const lng = formData.get("lng") as string;
   const contactLink = formData.get("contactLink") as string;
+  const packageId = formData.get("packageId") as string;
 
   if (!name) {
     throw new Error("Missing required fields");
@@ -253,9 +257,10 @@ export async function updateSite(id: number, formData: FormData) {
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS lat DECIMAL(10, 8)');
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS lng DECIMAL(11, 8)');
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS contact_link VARCHAR(255)');
+  await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS package_id INT REFERENCES packages(id) ON DELETE SET NULL');
 
   await query(
-    "UPDATE sites SET name = $1, address = $2, provider_id = $3, max_vehicles = $4, lat = $5, lng = $6, contact_link = $7 WHERE id = $8",
+    "UPDATE sites SET name = $1, address = $2, provider_id = $3, max_vehicles = $4, lat = $5, lng = $6, contact_link = $7, package_id = $8 WHERE id = $9",
     [
       name, 
       address || null, 
@@ -264,6 +269,7 @@ export async function updateSite(id: number, formData: FormData) {
       lat ? parseFloat(lat) : null,
       lng ? parseFloat(lng) : null,
       contactLink || null,
+      packageId ? parseInt(packageId, 10) : null,
       id
     ]
   );

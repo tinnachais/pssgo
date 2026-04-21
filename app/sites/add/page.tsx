@@ -1,11 +1,13 @@
 import { addSite } from "@/app/actions/sites";
 import { getProviders } from "@/app/actions/providers";
+import { getPackages } from "@/app/actions/packages";
 import Link from "next/link";
 import MapPicker from "@/app/components/MapPicker";
 
 export default async function AddSitePage() {
-  const providers = await getProviders();
-  const activeProviders = providers.filter(p => p.is_active);
+  const [providers, packages] = await Promise.all([getProviders(), getPackages()]);
+  const activeProviders = providers.filter((p: any) => p.is_active);
+  const activePackages = packages.filter((p: any) => p.is_active !== false);
 
   return (
     <div className="min-h-full font-sans selection:bg-blue-500/30">
@@ -55,6 +57,30 @@ export default async function AddSitePage() {
                         ต้องเพิ่มข้อมูลนิติบุคคล/ผู้ให้บริการก่อน
                         </p>
                     )}
+                </div>
+
+                <div className="space-y-2">
+                    <label htmlFor="packageId" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                    แพ็กเกจ <span className="text-rose-500">*</span>
+                    </label>
+                    <div className="relative">
+                        <select
+                        name="packageId"
+                        id="packageId"
+                        required
+                        className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all font-medium"
+                        >
+                        <option value="">-- เลือกแพ็กเกจ --</option>
+                        {activePackages.map((pkg: any) => (
+                            <option key={pkg.id} value={pkg.id}>
+                            {pkg.name} (สูงสุด {pkg.max_vehicles} คัน)
+                            </option>
+                        ))}
+                        </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-zinc-500">
+                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="space-y-2">
