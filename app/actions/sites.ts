@@ -165,9 +165,11 @@ export async function addSite(formData: FormData) {
   if (autoSetup === "on" && providerId) {
       // 1. Create default Zone
       const zoneRes = await query("INSERT INTO zones (site_id, name) VALUES ($1, $2) RETURNING id", [siteId, 'โซนหลัก']);
+      const zoneId = zoneRes.rows.length > 0 ? zoneRes.rows[0].id : null;
       
       // 2. Create default Gate
-      await query("INSERT INTO gates (site_id, name) VALUES ($1, $2)", [siteId, 'ประตูหลัก']);
+      await query("INSERT INTO gates (site_id, zone_id, name) VALUES ($1, $2, $3)", [siteId, zoneId, 'ประตูหลัก (ทางเข้า)']);
+      await query("INSERT INTO gates (site_id, zone_id, name) VALUES ($1, $2, $3)", [siteId, zoneId, 'ประตูหลัก (ทางออก)']);
       
       // Ensure providers table has these columns before querying
       await query("ALTER TABLE providers ADD COLUMN IF NOT EXISTS contact_name TEXT DEFAULT NULL");
