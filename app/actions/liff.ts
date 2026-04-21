@@ -154,7 +154,12 @@ export async function getLiffProfileData(lineUserId: string) {
         if (siteLimitQuery.rows.length > 0) {
             const siteMax = siteLimitQuery.rows[0].max_vehicles;
             if (siteMax === 0) {
-                maxVehicles = resident.max_vehicles || 1;
+                if (resident.max_vehicles !== null) {
+                    maxVehicles = resident.max_vehicles;
+                } else {
+                    const ownerRes = await query(`SELECT max_vehicles FROM residents WHERE id = $1`, [resident.is_owner ? resident.id : resident.parent_id]);
+                    maxVehicles = ownerRes.rows[0]?.max_vehicles || 1;
+                }
             } else {
                 maxVehicles = siteMax || 1;
             }
@@ -266,7 +271,12 @@ export async function linkLineAccount(formData: FormData) {
              if (siteLimitQuery.rows.length > 0) {
                  const siteMax = siteLimitQuery.rows[0].max_vehicles;
                  if (siteMax === 0) {
-                     maxVehicles = resident.max_vehicles || 1;
+                     if (resident.max_vehicles !== null) {
+                         maxVehicles = resident.max_vehicles;
+                     } else {
+                         const ownerRes = await query(`SELECT max_vehicles FROM residents WHERE id = $1`, [resident.is_owner ? resident.id : resident.parent_id]);
+                         maxVehicles = ownerRes.rows[0]?.max_vehicles || 1;
+                     }
                  } else {
                      maxVehicles = siteMax || 1;
                  }

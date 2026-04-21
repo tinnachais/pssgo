@@ -162,13 +162,16 @@ export async function addResident(formData: FormData) {
 export async function updateResidentProfile(id: number, formData: FormData) {
   const ownerName = formData.get("ownerName") as string || null;
   const phoneNumber = formData.get("phoneNumber") as string || null;
+  const maxVehiclesRaw = formData.get("maxVehicles") as string || null;
+  const maxVehicles = maxVehiclesRaw !== null && maxVehiclesRaw !== "" ? parseInt(maxVehiclesRaw, 10) : null;
 
   await query("ALTER TABLE residents ADD COLUMN IF NOT EXISTS owner_name VARCHAR(150)");
   await query("ALTER TABLE residents ADD COLUMN IF NOT EXISTS phone_number VARCHAR(50)");
+  await query("ALTER TABLE residents ADD COLUMN IF NOT EXISTS max_vehicles INT DEFAULT NULL");
 
   await query(
-    "UPDATE residents SET owner_name = $1, phone_number = $2 WHERE id = $3",
-    [ownerName, phoneNumber, id]
+    "UPDATE residents SET owner_name = $1, phone_number = $2, max_vehicles = $3 WHERE id = $4",
+    [ownerName, phoneNumber, maxVehicles, id]
   );
 
   revalidatePath("/residents");
@@ -179,15 +182,10 @@ export async function updateResidentProfile(id: number, formData: FormData) {
 export async function updateHouseData(id: number, formData: FormData) {
   const houseNumber = formData.get("houseNumber") as string;
   const siteId = formData.get("siteId") as string || null;
-  const maxVehiclesRaw = formData.get("maxVehicles") as string || null;
-  const maxVehicles = maxVehiclesRaw !== null && maxVehiclesRaw !== "" ? parseInt(maxVehiclesRaw, 10) : null;
 
   if (!houseNumber) {
     throw new Error("Missing required fields");
   }
-
-  // Ensure schema
-  await query("ALTER TABLE residents ADD COLUMN IF NOT EXISTS max_vehicles INT DEFAULT NULL");
 
   // Get current house number to update vehicles and family members later
   const currentResident = await query("SELECT house_number, is_owner FROM residents WHERE id = $1", [id]);
@@ -199,8 +197,8 @@ export async function updateHouseData(id: number, formData: FormData) {
 
   // Update this resident and all family members
   await query(
-    "UPDATE residents SET house_number = $1, site_id = $2, max_vehicles = $3 WHERE id = $4 OR parent_id = $4",
-    [houseNumber, siteId ? parseInt(siteId, 10) : null, maxVehicles, id]
+    "UPDATE residents SET house_number = $1, site_id = $2 WHERE id = $3 OR parent_id = $3",
+    [houseNumber, siteId ? parseInt(siteId, 10) : null, id]
   );
 
   // Update vehicles associated with the old house number (ensure they move to the new house number)
