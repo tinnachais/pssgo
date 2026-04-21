@@ -552,7 +552,19 @@ export async function deleteLiffVehicle(vehicleId: number, residentId: number) {
         }
         return { success: true, message: "ลบรถคันนี้สำเร็จ" };
     } catch (err: any) {
-        return { success: false, message: "เกิดข้อผิดพลาดในการลบรถ" };
+        return { success: false, message: err instanceof Error ? err.message : "เกิดข้อผิดพลาดในการดึงข้อมูล" };
+    }
+}
+
+export async function getPublicSites() {
+    try {
+        const res = await query(
+            "SELECT id, name, address, lat, lng FROM sites WHERE type = 'PUBLIC' AND is_active = true AND lat IS NOT NULL AND lng IS NOT NULL"
+        );
+        return res.rows;
+    } catch (e) {
+        console.error("Failed to get public sites", e);
+        return [];
     }
 }
 

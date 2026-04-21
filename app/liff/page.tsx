@@ -2,7 +2,7 @@
 
 import { useLiff } from "@/app/components/LiffProvider";
 import { useState, useEffect } from "react";
-import { linkLineAccount, analyzeCarImage, getLiffProfileData, generateFamilyInvite, revokeFamilyMember, updateLiffProfile, deleteLiffVehicle, togglePrivacyMode, getResidentAccessLogs, eStampVisitor } from "@/app/actions/liff";
+import { linkLineAccount, analyzeCarImage, getLiffProfileData, generateFamilyInvite, revokeFamilyMember, updateLiffProfile, deleteLiffVehicle, togglePrivacyMode, getResidentAccessLogs, eStampVisitor, getPublicSites } from "@/app/actions/liff";
 import { getResidentAppointments, createVisitorInvite, cancelVisitorInvite } from "@/app/actions/visitors";
 import { getLiffNews, markNewsAsRead } from "@/app/actions/news";
 import logoPic from "@/public/logo.png";
@@ -32,7 +32,7 @@ export default function LiffProfilePage() {
   const [editOwnerName, setEditOwnerName] = useState("");
   const [editPhoneNumber, setEditPhoneNumber] = useState("");
   const [isPrivacyMode, setIsPrivacyMode] = useState(false);
-  const [view, setView] = useState<'menu' | 'profile' | 'family' | 'appointment' | 'access' | 'news'>('menu');
+  const [view, setView] = useState<'menu' | 'profile' | 'family' | 'appointment' | 'access' | 'news' | 'parking_map'>('menu');
   const [newMemberName, setNewMemberName] = useState("");
   const [familyResult, setFamilyResult] = useState<{success: boolean, message: string, inviteCode?: string} | null>(null);
 
@@ -49,6 +49,9 @@ export default function LiffProfilePage() {
 
   const [newsList, setNewsList] = useState<any[]>([]);
   const [isLoadingNews, setIsLoadingNews] = useState(false);
+
+  const [publicSites, setPublicSites] = useState<any[]>([]);
+  const [isLoadingSites, setIsLoadingSites] = useState(false);
 
   const [apptName, setApptName] = useState("");
   const [apptType, setApptType] = useState<"ONCE" | "RANGE">("ONCE");
@@ -109,6 +112,9 @@ export default function LiffProfilePage() {
       }
       if (view === 'news') {
           loadNews();
+      }
+      if (view === 'parking_map') {
+          loadPublicSites();
       }
   }, [view, isInitialized]);
 
@@ -174,6 +180,13 @@ export default function LiffProfilePage() {
       const news = await getLiffNews(profileData.resident.id, profileData.resident.site_id);
       setNewsList(news || []);
       setIsLoadingNews(false);
+  };
+
+  const loadPublicSites = async () => {
+      setIsLoadingSites(true);
+      const rows = await getPublicSites();
+      setPublicSites(rows || []);
+      setIsLoadingSites(false);
   };
 
   useEffect(() => {
@@ -711,8 +724,89 @@ export default function LiffProfilePage() {
                       </div>
                       <span className="text-[12px] font-semibold text-slate-700 text-center leading-tight tracking-tight">ติดต่อเจ้าหน้าที่</span>
                   </div>
+
+                  {/* Icon 8: Find Parking */}
+                  <div className="flex flex-col items-center gap-2 cursor-pointer transition-transform hover:scale-105 active:scale-95" onClick={() => setView('parking_map')}>
+                      <div className="w-[76px] h-[76px] rounded-[18px] bg-gradient-to-b from-[#14b8a6] to-[#0f766e] shadow-md flex items-center justify-center ring-1 ring-black/5">
+                          <svg className="w-10 h-10 text-white/95" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                      </div>
+                      <span className="text-[12px] font-semibold text-slate-700 text-center leading-tight tracking-tight">ค้นหาที่จอดรถ</span>
+                  </div>
               </div>
               <p className="text-center text-xs text-slate-400 mt-6 pb-6 w-full">PSS GO &copy; Powered by PSS</p>
+          </div>
+      );
+  }
+
+  // --- Parking Map View ---
+  if (view === 'parking_map') {
+      return (
+          <div className="min-h-screen bg-[#F4F4F4] text-slate-800 p-4 font-sans pb-20">
+              <div className="max-w-md mx-auto h-full flex flex-col">
+                  <div className="flex items-center justify-between mb-4 sticky top-0 bg-[#F4F4F4] z-10 py-2">
+                      <button 
+                          onClick={() => setView('menu')} 
+                          className="w-10 h-10 flex items-center justify-center bg-white rounded-full shadow-sm text-slate-600 hover:text-slate-900 transition-colors border border-slate-100"
+                      >
+                          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                          </svg>
+                      </button>
+                      <h1 className="text-xl font-bold tracking-tight">ค้นหาที่จอดรถส่วนกลาง</h1>
+                      <div className="w-10"></div>
+                  </div>
+
+                  <div className="bg-white rounded-3xl p-4 shadow-sm border border-slate-100 mb-6 flex-grow flex flex-col">
+                      <p className="text-sm text-slate-500 mb-4 text-center">สถานที่บริการที่จอดรถสาธารณะทั้งหมด</p>
+                      
+                      {isLoadingSites ? (
+                          <div className="flex flex-col items-center justify-center py-20">
+                               <svg className="w-10 h-10 text-[#14b8a6] animate-spin" fill="none" viewBox="0 0 24 24">
+                                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                              </svg>
+                              <p className="text-sm font-medium text-slate-500 mt-4">กำลังโหลดแผนที่...</p>
+                          </div>
+                      ) : (
+                          <div className="space-y-4 flex-grow">
+                              {publicSites.length === 0 ? (
+                                  <div className="bg-slate-50 rounded-2xl p-6 text-center border border-slate-100">
+                                      <p className="text-slate-500 font-medium text-sm">ยังไม่มีจุดจอดรถสาธารณะที่เปิดให้บริการในขณะนี้</p>
+                                  </div>
+                              ) : (
+                                  publicSites.map((site: any) => (
+                                      <div key={site.id} className="bg-slate-50 border border-slate-100 rounded-2xl p-4 relative flex flex-col gap-3">
+                                          <div className="flex items-start gap-3">
+                                              <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#14b8a6] to-[#0f766e] flex items-center justify-center text-white shadow-sm flex-shrink-0">
+                                                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                  </svg>
+                                              </div>
+                                              <div>
+                                                  <h3 className="font-bold text-slate-800 leading-tight">{site.name}</h3>
+                                                  <p className="text-xs text-slate-500 mt-1 line-clamp-2">{site.address || 'ไม่มีรายละเอียดที่อยู่'}</p>
+                                              </div>
+                                          </div>
+                                          <button 
+                                              onClick={() => window.location.href = `https://www.google.com/maps/dir/?api=1&destination=${site.lat},${site.lng}`}
+                                              className="w-full bg-[#14b8a6] text-white font-bold py-3 rounded-xl hover:bg-[#0f766e] active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-2"
+                                          >
+                                              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                                              </svg>
+                                              เปิดนำทาง (Google Maps)
+                                          </button>
+                                      </div>
+                                  ))
+                              )}
+                          </div>
+                      )}
+                  </div>
+              </div>
           </div>
       );
   }
