@@ -212,6 +212,39 @@ export async function addSite(formData: FormData) {
       }
   }
 
+  if (packageId) {
+      await query(`
+        CREATE TABLE IF NOT EXISTS provider_revenues (
+            id SERIAL PRIMARY KEY,
+            site_id INT REFERENCES sites(id) ON DELETE CASCADE,
+            package_id INT REFERENCES packages(id) ON DELETE SET NULL,
+            billing_cycle VARCHAR(20) NOT NULL,
+            amount DECIMAL(10,2) NOT NULL,
+            status VARCHAR(20) DEFAULT 'PAID',
+            period_start TIMESTAMP,
+            period_end TIMESTAMP,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
+      await query("ALTER TABLE provider_revenues ADD COLUMN IF NOT EXISTS status VARCHAR(20) DEFAULT 'PAID'");
+      await query("ALTER TABLE provider_revenues ADD COLUMN IF NOT EXISTS period_start TIMESTAMP");
+      await query("ALTER TABLE provider_revenues ADD COLUMN IF NOT EXISTS period_end TIMESTAMP");
+
+      const pkgQuery = await query("SELECT monthly_price FROM packages WHERE id = $1", [parseInt(packageId, 10)]);
+      if (pkgQuery.rows.length > 0) {
+          const pkg = pkgQuery.rows[0];
+          let amount = parseFloat(pkg.monthly_price);
+          
+          let periodStart = new Date();
+          let periodEnd = new Date(periodStart.getFullYear(), periodStart.getMonth() + 1, 0, 23, 59, 59, 999);
+          
+          await query(
+            "INSERT INTO provider_revenues (site_id, package_id, billing_cycle, amount, status, period_start, period_end) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+            [siteId, parseInt(packageId, 10), 'MONTHLY', amount, 'PENDING', periodStart.toISOString(), periodEnd.toISOString()]
+          );
+      }
+  }
+
   revalidatePath("/sites");
   redirect("/sites");
 }
