@@ -324,18 +324,18 @@ export async function getLiffUsers() {
   let paramCount = 1;
 
   if (selectedSiteId && selectedSiteId !== "all") {
-      queryStr += ` AND r.site_id = $${paramCount}`;
+      queryStr += ` AND (r.site_id = $${paramCount} OR r.site_id IS NULL)`;
       params.push(parseInt(selectedSiteId, 10));
       paramCount++;
   }
 
   if (allowedProviderIds && allowedProviderIds.length > 0) {
       if (allowedProviderIds.length === 1) {
-          queryStr += ` AND s.provider_id = $${paramCount}`;
+          queryStr += ` AND (s.provider_id = $${paramCount} OR r.site_id IS NULL)`;
           params.push(allowedProviderIds[0]);
           paramCount++;
       } else {
-          queryStr += ` AND s.provider_id = ANY($${paramCount})`;
+          queryStr += ` AND (s.provider_id = ANY($${paramCount}) OR r.site_id IS NULL)`;
           params.push(allowedProviderIds);
           paramCount++;
       }
