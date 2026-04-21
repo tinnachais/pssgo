@@ -30,7 +30,7 @@ export default async function ZonesPage() {
               <span className="px-3 py-1 bg-teal-100 dark:bg-teal-500/10 text-teal-700 dark:text-teal-400 text-xs font-bold rounded-full uppercase tracking-wider">Zones</span>
             </div>
             <p className="text-zinc-500 dark:text-zinc-400">
-              จดการโซนพื้นที่ย่อยในแต่ละโครงการ เพื่อใช้กำหนดทางเข้าออกและสิทธิ์
+              จดการโซนพื้นที่ย่อยในแต่ละสถานที่ เพื่อใช้กำหนดทางเข้าออกและสิทธิ์
             </p>
           </div>
           <Link href="/zones/add" className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md shadow-teal-600/20 hover:shadow-lg active:scale-[0.98] flex items-center justify-center gap-2 flex-shrink-0">
@@ -47,7 +47,7 @@ export default async function ZonesPage() {
                 <thead>
                     <tr className="bg-zinc-50/50 dark:bg-[#1A1A1A]/50 border-b border-zinc-200 dark:border-zinc-800">
                     <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-[40%]">ข้อมูลโซนและประตูทางเข้า</th>
-                    <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-1/4">โครงการ</th>
+                    <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-1/4">สถานที่</th>
                     <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-1/6">สถานะ</th>
                     <th className="px-6 py-5 text-right text-xs font-semibold text-zinc-500 uppercase tracking-widest">จัดการ</th>
                     </tr>
@@ -63,7 +63,7 @@ export default async function ZonesPage() {
                             </svg>
                             </div>
                             <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-lg">ยังไม่มีข้อมูลโซน</p>
-                            <p className="text-zinc-400 dark:text-zinc-500 text-sm mt-1 mb-6">สร้างโซนเพื่อจัดกลุ่มจุดผ่านเข้าออก (Gates) ในโครงการ</p>
+                            <p className="text-zinc-400 dark:text-zinc-500 text-sm mt-1 mb-6">สร้างโซนเพื่อจัดกลุ่มจุดผ่านเข้าออก (Gates) ในสถานที่</p>
                             <Link href="/zones/add" className="text-teal-600 hover:text-teal-700 font-bold border border-teal-200 dark:border-teal-800 bg-teal-50 dark:bg-teal-900/20 px-4 py-2 rounded-lg transition-colors">
                                 + สร้างโซนแรก
                             </Link>
@@ -99,7 +99,7 @@ export default async function ZonesPage() {
                             <td className="px-6 py-4 whitespace-nowrap">
                                 <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 rounded-full text-xs font-semibold border border-indigo-200 dark:border-indigo-500/20">
                                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                                {zone.site_name || 'ไม่มีโครงการ'}
+                                {zone.site_name || 'ไม่มีสถานที่'}
                                 </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">

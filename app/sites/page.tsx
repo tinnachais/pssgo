@@ -44,18 +44,18 @@ export default async function SitesPage() {
         <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <h1 className="text-3xl font-bold tracking-tight">โครงการ</h1>
+              <h1 className="text-3xl font-bold tracking-tight">สถานที่</h1>
               <span className="px-3 py-1 bg-indigo-100 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 text-xs font-bold rounded-full uppercase tracking-wider">Projects</span>
             </div>
             <p className="text-zinc-500 dark:text-zinc-400">
-              ตั้งค่าและจัดการโครงการต่างๆ รวมถึงคอนโด หรือหมู่บ้านในระบบ
+              ตั้งค่าและจัดการสถานที่ต่างๆ รวมถึงคอนโด หรือหมู่บ้านในระบบ
             </p>
           </div>
           <Link href="/sites/add" className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md shadow-indigo-600/20 hover:shadow-lg active:scale-[0.98] flex items-center justify-center gap-2 flex-shrink-0">
             <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
             </svg>
-            เพิ่มโครงการใหม่
+            เพิ่มสถานที่ใหม่
           </Link>
         </div>
 
@@ -64,7 +64,7 @@ export default async function SitesPage() {
                 <table className="w-full text-left border-collapse">
                 <thead>
                     <tr className="bg-zinc-50/50 dark:bg-[#1A1A1A]/50 border-b border-zinc-200 dark:border-zinc-800">
-                    <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-[35%]">ชื่อโครงการและโซน</th>
+                    <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-[35%]">ชื่อสถานที่และโซน</th>
                     <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-[20%]">สถิติภาพรวม</th>
                     <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-[15%]">ผู้ให้บริการ</th>
                     <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-[15%]">แพ็กเกจ</th>
@@ -82,10 +82,10 @@ export default async function SitesPage() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 001 1m-6 0h6" />
                             </svg>
                             </div>
-                            <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-lg">ยังไม่มีข้อมูลโครงการ</p>
-                            <p className="text-zinc-400 dark:text-zinc-500 text-sm mt-1 mb-6">เริ่มตั้งค่าระบบโดยการเพิ่มโครงการเพื่อแบ่งพื้นที่การบริการ</p>
+                            <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-lg">ยังไม่มีข้อมูลสถานที่</p>
+                            <p className="text-zinc-400 dark:text-zinc-500 text-sm mt-1 mb-6">เริ่มตั้งค่าระบบโดยการเพิ่มสถานที่เพื่อแบ่งพื้นที่การบริการ</p>
                             <Link href="/sites/add" className="text-indigo-600 hover:text-indigo-700 font-bold border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-900/20 px-4 py-2 rounded-lg transition-colors">
-                                + เพิ่มโครงการแรก
+                                + เพิ่มสถานที่แรก
                             </Link>
                         </div>
                         </td>

@@ -49,7 +49,7 @@ export default async function NewsPage() {
                             <thead>
                                 <tr className="bg-slate-50/50 dark:bg-zinc-900/50">
                                     <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">ประกาศ / เนื้อหา</th>
-                                    <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">โครงการ</th>
+                                    <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">สถานที่</th>
                                     <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">วันที่ประกาศ</th>
                                     <th className="px-6 py-4 text-right text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">จัดการ</th>
                                 </tr>
@@ -79,7 +79,7 @@ export default async function NewsPage() {
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-800 dark:bg-zinc-800 dark:text-zinc-300">
-                                                    {news.site_name || 'ไม่ระบุโครงการ'}
+                                                    {news.site_name || 'ไม่ระบุสถานที่'}
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">

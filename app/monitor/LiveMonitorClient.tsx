@@ -173,7 +173,7 @@ export default function LiveMonitorClient({ initialLogs, initialStats }: { initi
                             {!log.time_out ? (
                                 <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400 font-bold tracking-wider rounded-md text-xs border border-emerald-200 dark:border-emerald-500/30">
                                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                    อยู่ในโครงการ
+                                    อยู่ในสถานที่
                                 </span>
                             ) : (
                                 <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400 font-bold tracking-wider rounded-md text-xs border border-zinc-200 dark:border-zinc-700/50">

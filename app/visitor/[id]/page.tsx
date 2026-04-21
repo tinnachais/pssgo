@@ -121,7 +121,7 @@ export default async function VisitorDetailsPage(props: { params: Promise<{ id: 
                 </div>
                 {visitor.image_url && (
                     <div className="md:col-span-2 lg:col-span-4">
-                        <div className="text-sm text-zinc-500 mb-2">รูปรถที่ใช้เข้าโครงการ</div>
+                        <div className="text-sm text-zinc-500 mb-2">รูปรถที่ใช้เข้าสถานที่</div>
                         <img src={visitor.image_url} alt="Vehicle" className="w-full max-w-sm rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm object-cover" />
                     </div>
                 )}
@@ -151,7 +151,7 @@ export default async function VisitorDetailsPage(props: { params: Promise<{ id: 
                     <div className="relative border-l-2 border-transparent ml-0 pl-6 mt-2">
                         <div className="absolute w-4 h-4 bg-rose-500 rounded-full -left-[9px] top-1 outline outline-4 outline-white dark:outline-[#121212] animate-pulse shadow-[0_0_10px_rgba(244,63,94,0.5)]"></div>
                         <div className="text-rose-600 dark:text-rose-400 font-bold mb-1">สถานะปัจจุบัน</div>
-                        <div className="text-zinc-600 dark:text-zinc-300">ยังอยู่ภายในพื้นที่โครงการ</div>
+                        <div className="text-zinc-600 dark:text-zinc-300">ยังอยู่ภายในพื้นที่สถานที่</div>
                     </div>
                 )}
             </div>

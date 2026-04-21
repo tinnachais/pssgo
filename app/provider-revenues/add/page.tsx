@@ -28,8 +28,8 @@ export default async function AddProviderRevenuePage() {
               </svg>
             </div>
             <div>
-              <h1 className="text-2xl font-black tracking-tight text-zinc-900 dark:text-white">ออกบิลเรียกเก็บโครงการ</h1>
-              <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">รับชำระค่าบริการและกำหนดแพ็กเกจให้โครงการ</p>
+              <h1 className="text-2xl font-black tracking-tight text-zinc-900 dark:text-white">ออกบิลเรียกเก็บสถานที่</h1>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">รับชำระค่าบริการและกำหนดแพ็กเกจให้สถานที่</p>
             </div>
           </div>
         </div>

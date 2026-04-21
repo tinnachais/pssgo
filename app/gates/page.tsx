@@ -39,7 +39,7 @@ export default async function GatesPage() {
                 <thead>
                     <tr className="bg-zinc-50/50 dark:bg-[#1A1A1A]/50 border-b border-zinc-200 dark:border-zinc-800">
                     <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-1/3">ชื่ออุปกรณ์และรายละเอียด</th>
-                    <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-1/3">ข้อมูลพื้นที่ (โครงการ / โซน)</th>
+                    <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-1/3">ข้อมูลพื้นที่ (สถานที่ / โซน)</th>
                     <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-1/6">สถานะการทำงาน</th>
                     <th className="px-6 py-5 text-right text-xs font-semibold text-zinc-500 uppercase tracking-widest">จัดการ</th>
                     </tr>

@@ -228,7 +228,7 @@ export async function deleteSite(id: number) {
               }
           }
       } catch (e: any) {
-          if (e.message === "L3_RESTRICTION") throw new Error("ผู้ใช้งานระดับ L3 ไม่มีสิทธิ์ลบโครงการได้");
+          if (e.message === "L3_RESTRICTION") throw new Error("ผู้ใช้งานระดับ L3 ไม่มีสิทธิ์ลบสถานที่ได้");
       }
   }
 

@@ -37,7 +37,7 @@ export default async function AddRevenuePage() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="space-y-2 md:col-span-3">
                         <label htmlFor="siteId" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                        สถานที่ / โครงการ (Site) <span className="text-rose-500">*</span>
+                        สถานที่ / สถานที่ (Site) <span className="text-rose-500">*</span>
                         </label>
                         <div className="relative">
                             <select

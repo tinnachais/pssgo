@@ -108,7 +108,7 @@ export default async function VisitorPage() {
               <span className="px-3 py-1 bg-purple-100 dark:bg-purple-500/10 text-purple-700 dark:text-purple-400 text-xs font-bold rounded-full uppercase tracking-wider">Visitor</span>
             </div>
             <p className="text-zinc-500 dark:text-zinc-400">
-              จดบันทึกการแลกบัตรประชาชน/ใบขับขี่ และบันทึกเวลาเข้า-ออก โครงการ
+              จดบันทึกการแลกบัตรประชาชน/ใบขับขี่ และบันทึกเวลาเข้า-ออก สถานที่
             </p>
           </div>
           <Link href="/visitor/add" className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md shadow-purple-600/20 hover:shadow-lg active:scale-[0.98] flex items-center justify-center gap-2 flex-shrink-0">

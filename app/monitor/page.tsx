@@ -27,7 +27,7 @@ export default async function MonitorPage() {
               </span>
             </div>
             <p className="text-zinc-500 dark:text-zinc-400">
-              ตรวจสอบการเข้า-ออกโครงการแบบเรียลไทม์ (Live Logs)
+              ตรวจสอบการเข้า-ออกสถานที่แบบเรียลไทม์ (Live Logs)
             </p>
           </div>
         </div>

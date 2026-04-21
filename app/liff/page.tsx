@@ -365,13 +365,13 @@ export default function LiffProfilePage() {
       let mapLinkText = "";
       if (mapUrl) {
           if (profileData?.resident?.site_lat && profileData?.resident?.site_lng) {
-              mapLinkText = `\n\n📍 พิกัดที่ตั้งโครงการ (${profileData.resident.site_lat}, ${profileData.resident.site_lng}):\n${mapUrl}`;
+              mapLinkText = `\n\n📍 พิกัดที่ตั้งสถานที่ (${profileData.resident.site_lat}, ${profileData.resident.site_lng}):\n${mapUrl}`;
           } else {
-              mapLinkText = `\n\n📍 พิกัดที่ตั้งโครงการ:\n${mapUrl}`;
+              mapLinkText = `\n\n📍 พิกัดที่ตั้งสถานที่:\n${mapUrl}`;
           }
       }
 
-      const messageText = `คุณได้รับคำเชิญการมาเยือนที่ ${profileData?.resident?.site_name || 'โครงการ'} (บ้านเลขที่ ${profileData?.resident?.house_number})\nสำหรับ: ${apptName}${mapLinkText}\n\nกรุณากรอกข้อมูลเพื่อความสะดวกรวดเร็วในการเข้าโครงการที่ลิงก์นี้:\n${link}`;
+      const messageText = `คุณได้รับคำเชิญการมาเยือนที่ ${profileData?.resident?.site_name || 'สถานที่'} (บ้านเลขที่ ${profileData?.resident?.house_number})\nสำหรับ: ${apptName}${mapLinkText}\n\nกรุณากรอกข้อมูลเพื่อความสะดวกรวดเร็วในการเข้าสถานที่ที่ลิงก์นี้:\n${link}`;
 
       const footerContents: any[] = [
           {
@@ -391,7 +391,7 @@ export default function LiffProfilePage() {
           "type": "button",
           "action": {
               "type": "uri",
-              "label": "📍 แผนที่โครงการ",
+              "label": "📍 แผนที่สถานที่",
               "uri": mapUrl
           },
           "style": "secondary",
@@ -405,7 +405,7 @@ export default function LiffProfilePage() {
                   await liffObject.shareTargetPicker([
                       {
                         "type": "flex",
-                        "altText": `คำเชิญการมาเยือน ${profileData?.resident?.site_name || 'โครงการ'}`,
+                        "altText": `คำเชิญการมาเยือน ${profileData?.resident?.site_name || 'สถานที่'}`,
                         "contents": {
                             "type": "bubble",
                             "size": "mega",
@@ -415,7 +415,7 @@ export default function LiffProfilePage() {
                             "contents": [
                                 {
                                 "type": "text",
-                                "text": "🎫 คำเชิญเข้าพื้นที่โครงการ",
+                                "text": "🎫 คำเชิญเข้าพื้นที่สถานที่",
                                 "weight": "bold",
                                 "color": "#ffffff",
                                 "size": "md"
@@ -429,7 +429,7 @@ export default function LiffProfilePage() {
                             "contents": [
                                 {
                                 "type": "text",
-                                "text": profileData?.resident?.site_name || 'หมู่บ้าน/โครงการ',
+                                "text": profileData?.resident?.site_name || 'หมู่บ้าน/สถานที่',
                                 "weight": "bold",
                                 "size": "xl",
                                 "wrap": true
@@ -528,7 +528,7 @@ export default function LiffProfilePage() {
                                 },
                                 {
                                 "type": "text",
-                                "text": "กรุณาลงทะเบียนข้อมูลรถยนต์ล่วงหน้า เพื่อความรวดเร็วในการแลกบัตรเข้าพื้นที่โครงการ",
+                                "text": "กรุณาลงทะเบียนข้อมูลรถยนต์ล่วงหน้า เพื่อความรวดเร็วในการแลกบัตรเข้าพื้นที่สถานที่",
                                 "wrap": true,
                                 "color": "#aaaaaa",
                                 "size": "xs",
@@ -554,7 +554,7 @@ export default function LiffProfilePage() {
           }
 
       } else if (type === 'email') {
-          const subject = encodeURIComponent(`คำเชิญการมาเยือน ${profileData?.resident?.site_name || 'โครงการ'}`);
+          const subject = encodeURIComponent(`คำเชิญการมาเยือน ${profileData?.resident?.site_name || 'สถานที่'}`);
           const body = encodeURIComponent(messageText);
           window.location.href = `mailto:?subject=${subject}&body=${body}`;
       }
@@ -585,7 +585,7 @@ export default function LiffProfilePage() {
                   </div>
                   <h2 className="text-xl font-black text-slate-800 mb-2">ระงับการให้บริการชั่วคราว</h2>
                   <p className="text-sm text-slate-500 leading-relaxed max-w-xs mx-auto mb-8">
-                      ระบบโครงการของท่านยังไม่พร้อมใช้งาน หรือหมดอายุการใช้งานแล้ว กรุณาติดต่อนิติบุคคลเพื่อดำเนินการต่ออายุครับ
+                      ระบบสถานที่ของท่านยังไม่พร้อมใช้งาน หรือหมดอายุการใช้งานแล้ว กรุณาติดต่อนิติบุคคลเพื่อดำเนินการต่ออายุครับ
                   </p>
                   {profileData?.resident?.site_contact_link && (
                       <a href={profileData.resident.site_contact_link} className="block w-full text-center bg-indigo-600 hover:bg-indigo-700 transition-colors font-bold py-3.5 px-4 rounded-xl text-white shadow-md shadow-indigo-600/20">
@@ -619,7 +619,7 @@ export default function LiffProfilePage() {
                   <h1 className="text-xl font-bold text-slate-800 tracking-tight">สวัสดี, {profile?.displayName || 'ลูกบ้าน'}</h1>
                   {profileData?.isRegistered && profileData?.resident && (
                       <div className="mt-1 flex flex-col items-center">
-                          <p className="text-sm font-bold text-[#06C755]">{profileData.resident.site_name || 'ไม่ระบุโครงการ'}</p>
+                          <p className="text-sm font-bold text-[#06C755]">{profileData.resident.site_name || 'ไม่ระบุสถานที่'}</p>
                           <p className="text-xs text-slate-500 font-medium mt-0.5">บ้านเลขที่ {profileData.resident.house_number}</p>
                       </div>
                   )}
@@ -705,7 +705,7 @@ export default function LiffProfilePage() {
                       if (profileData?.resident?.site_contact_link) {
                           window.location.href = profileData.resident.site_contact_link;
                       } else {
-                          alert('โครงการนี้ยังไม่ได้กำหนดช่องทางติดต่อเจ้าหน้าที่');
+                          alert('สถานที่นี้ยังไม่ได้กำหนดช่องทางติดต่อเจ้าหน้าที่');
                       }
                   }}>
                       <div className="w-[76px] h-[76px] rounded-[18px] bg-gradient-to-b from-[#6366f1] to-[#4338ca] shadow-md flex items-center justify-center ring-1 ring-black/5">
@@ -863,7 +863,7 @@ export default function LiffProfilePage() {
                               </svg>
                           </div>
                           <div>
-                              <div className="text-xs font-bold text-pink-600 mb-0.5">{profileData?.resident?.site_name || 'ไม่ระบุโครงการ'}</div>
+                              <div className="text-xs font-bold text-pink-600 mb-0.5">{profileData?.resident?.site_name || 'ไม่ระบุสถานที่'}</div>
                               <h1 className="text-xl font-bold tracking-tight">สมาชิกบ้านเลขที่ {profileData?.resident?.house_number}</h1>
                               <p className="text-sm text-slate-500">โควต้า: {currentCount} / {totalAllowed} คน</p>
                           </div>
@@ -1148,7 +1148,7 @@ export default function LiffProfilePage() {
                                                                       ยกเลิกคำเชิญ
                                                                   </button>
                                                                   <a 
-                                                                      href={`https://line.me/R/msg/text/?${encodeURIComponent(`คุณได้รับคำเชิญการมาเยือนที่ ${profileData?.resident?.site_name || 'โครงการ'} (บ้านเลขที่ ${profileData?.resident?.house_number})\nสำหรับ: ${appt.full_name}\n\nกรุณากรอกข้อมูลเพื่อความสะดวกรวดเร็วในการเข้าโครงการที่ลิงก์นี้:\n${isInitialized ? window.location.origin : 'https://pssgo.com'}/visitor/preregister?token=${appt.invite_token}`)}`}
+                                                                      href={`https://line.me/R/msg/text/?${encodeURIComponent(`คุณได้รับคำเชิญการมาเยือนที่ ${profileData?.resident?.site_name || 'สถานที่'} (บ้านเลขที่ ${profileData?.resident?.house_number})\nสำหรับ: ${appt.full_name}\n\nกรุณากรอกข้อมูลเพื่อความสะดวกรวดเร็วในการเข้าสถานที่ที่ลิงก์นี้:\n${isInitialized ? window.location.origin : 'https://pssgo.com'}/visitor/preregister?token=${appt.invite_token}`)}`}
                                                                       target="_blank"
                                                                       onClick={(e) => e.stopPropagation()}
                                                                       className="text-white bg-[#06C755] hover:bg-[#05b34c] px-3 py-1.5 rounded-lg text-[11px] font-bold shadow-sm transition-all flex items-center gap-1.5 shrink-0"
@@ -1230,7 +1230,7 @@ export default function LiffProfilePage() {
                                       
                                       <div className="w-full">
                                           <a 
-                                              href={`https://line.me/R/msg/text/?${encodeURIComponent(`คุณได้รับคำเชิญการมาเยือนที่ ${profileData?.resident?.site_name || 'โครงการ'} (บ้านเลขที่ ${profileData?.resident?.house_number})\nสำหรับ: ${apptName}\n\nกรุณากรอกข้อมูลเพื่อความสะดวกรวดเร็วในการเข้าโครงการที่ลิงก์นี้:\n${isInitialized ? window.location.origin : 'https://pssgo.com'}/visitor/preregister?token=${apptToken}`)}`}
+                                              href={`https://line.me/R/msg/text/?${encodeURIComponent(`คุณได้รับคำเชิญการมาเยือนที่ ${profileData?.resident?.site_name || 'สถานที่'} (บ้านเลขที่ ${profileData?.resident?.house_number})\nสำหรับ: ${apptName}\n\nกรุณากรอกข้อมูลเพื่อความสะดวกรวดเร็วในการเข้าสถานที่ที่ลิงก์นี้:\n${isInitialized ? window.location.origin : 'https://pssgo.com'}/visitor/preregister?token=${apptToken}`)}`}
                                               target="_blank"
                                               className="w-full bg-[#06C755] hover:bg-[#05b34c] text-white font-bold py-3.5 px-4 rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 text-sm"
                                           >
@@ -1304,7 +1304,7 @@ export default function LiffProfilePage() {
                                                       </span>
                                                   </div>
                                                   <div className="font-bold text-lg text-slate-800">{log.license_plate}</div>
-                                                  <div className="text-xs text-slate-500">{log.gate_name || 'เข้า/ออกโครงการ'}</div>
+                                                  <div className="text-xs text-slate-500">{log.gate_name || 'เข้า/ออกสถานที่'}</div>
                                               </div>
                                               {log.image_url && (
                                                   <img 
@@ -1373,7 +1373,7 @@ export default function LiffProfilePage() {
                   )}
 
                   <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200 mb-6 text-center shadow-inner">
-                      <div className="text-sm font-bold text-[#06C755] mb-0.5">{profileData.resident.site_name || 'ไม่ระบุโครงการ'}</div>
+                      <div className="text-sm font-bold text-[#06C755] mb-0.5">{profileData.resident.site_name || 'ไม่ระบุสถานที่'}</div>
                       <div className="text-xs text-slate-500 mb-1">บ้านเลขที่</div>
                       <div className="text-3xl font-black text-slate-800">{profileData.resident.house_number}</div>
                   </div>
@@ -1533,7 +1533,7 @@ export default function LiffProfilePage() {
 
                   {profileData.isVillageFull ? (
                       <div className="text-center p-4 bg-red-50 text-red-600 rounded-xl text-sm font-bold border border-red-100">
-                          หมู่บ้าน/โครงการนี้เพิ่มรถครบโควต้าเต็มจำนวนแล้ว
+                          หมู่บ้าน/สถานที่นี้เพิ่มรถครบโควต้าเต็มจำนวนแล้ว
                       </div>
                   ) : (!profileData.vehicles || profileData.vehicles.length < profileData.maxVehicles) ? (
                       <button 

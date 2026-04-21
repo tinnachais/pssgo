@@ -63,10 +63,10 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
                 {/* Info Grid */}
                 <div className="grid grid-cols-2 gap-12 mb-16">
                     <div>
-                        <h3 className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">ลูกค้า / โครงการ (Customer/Site)</h3>
+                        <h3 className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">ลูกค้า / สถานที่ (Customer/Site)</h3>
                         <div className="rounded-xl bg-zinc-50 border border-zinc-100 p-5">
                             <p className="font-bold text-zinc-900 text-lg mb-1">{site_name || '-'}</p>
-                            <p className="text-sm text-zinc-600">ชำระค่าบริการระบบจัดการโครงการ PSS GO</p>
+                            <p className="text-sm text-zinc-600">ชำระค่าบริการระบบจัดการสถานที่ PSS GO</p>
                         </div>
                     </div>
                     <div>
@@ -99,7 +99,7 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
                                 <td className="py-5">
                                     <p className="font-bold text-zinc-900 mb-1">ค่าบริการระบบ PSS GO: {package_name || 'ไม่ระบุ'}</p>
                                     <p className="text-xs text-zinc-500">
-                                        ต่ออายุแพ็กเกจโครงการอัตโนมัติ 
+                                        ต่ออายุแพ็กเกจสถานที่อัตโนมัติ 
                                         {revenue.period_start && revenue.period_end && (
                                             <span className="ml-1 text-indigo-600 font-semibold bg-indigo-50 px-1.5 py-0.5 rounded">
                                                 ครอบคลุมวันที่ {dayjs(revenue.period_start).format('DD MMM')} - {dayjs(revenue.period_end).format('DD MMM YYYY')}

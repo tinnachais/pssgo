@@ -200,7 +200,7 @@ export default async function WebPayPage({ params }: { params: Promise<{ id: str
                 </div>
                 <div className="bg-indigo-700/5 px-4 py-2 border-b border-slate-100 flex items-center justify-center gap-1.5 text-xs font-bold text-indigo-900/70 shadow-inner">
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                    <span className="opacity-70 font-medium">โครงการ:</span> {siteName}
+                    <span className="opacity-70 font-medium">สถานที่:</span> {siteName}
                 </div>
                 
                 <div className="p-5">
@@ -338,7 +338,7 @@ export default async function WebPayPage({ params }: { params: Promise<{ id: str
                         </div>
                     ) : (
                         <div className="animate-pulse bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-center">
-                            <p className="text-emerald-700 text-sm font-bold">สามารถขับรถออกจากโครงการได้เลย 🚗</p>
+                            <p className="text-emerald-700 text-sm font-bold">สามารถขับรถออกจากสถานที่ได้เลย 🚗</p>
                             <p className="text-emerald-600/80 text-[11px] mt-0.5">ขอบคุณที่มาเยี่ยมเยียนกรุณาขับขี่อย่างปลอดภัย</p>
                         </div>
                     )}

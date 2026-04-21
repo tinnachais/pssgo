@@ -18,7 +18,7 @@ export default async function AddZonePage() {
             </Link>
             <h1 className="text-3xl font-bold tracking-tight">เพิ่มโซนใหม่</h1>
             <p className="text-zinc-500 dark:text-zinc-400 mt-2">
-                สร้างโซนพื้นที่ย่อยในแต่ละโครงการ เพื่อใช้กำหนดทางเข้าออกและสิทธิ์
+                สร้างโซนพื้นที่ย่อยในแต่ละสถานที่ เพื่อใช้กำหนดทางเข้าออกและสิทธิ์
             </p>
         </div>
 
@@ -28,7 +28,7 @@ export default async function AddZonePage() {
             <form action={addZone} className="space-y-6 relative z-10 max-w-2xl">
                 <div className="space-y-2">
                     <label htmlFor="siteId" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                    โครงการเป้าหมาย <span className="text-rose-500">*</span>
+                    สถานที่เป้าหมาย <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                         <select
@@ -37,7 +37,7 @@ export default async function AddZonePage() {
                         required
                         className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500 transition-all font-medium"
                         >
-                        <option value="">-- เลือกโครงการ --</option>
+                        <option value="">-- เลือกสถานที่ --</option>
                         {activeSites.map((site) => (
                             <option key={site.id} value={site.id}>
                             {site.name} ({site.provider_name})
@@ -51,7 +51,7 @@ export default async function AddZonePage() {
                     {activeSites.length === 0 && (
                         <p className="text-xs text-rose-500 mt-1.5 flex items-center gap-1">
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                        ต้องเพิ่มข้อมูลโครงการก่อน
+                        ต้องเพิ่มข้อมูลสถานที่ก่อน
                         </p>
                     )}
                 </div>

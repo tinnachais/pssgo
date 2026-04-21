@@ -40,7 +40,7 @@ export default async function ProvidersPage() {
                     <tr className="bg-zinc-50/50 dark:bg-[#1A1A1A]/50 border-b border-zinc-200 dark:border-zinc-800">
                     <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-[35%]">ข้อมูลบริษัท</th>
                     <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-1/5">เลขผู้เสียภาษี</th>
-                    <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-1/6">จำนวนโครงการ</th>
+                    <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-1/6">จำนวนสถานที่</th>
                     <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-1/6">สถานะ</th>
                     <th className="px-6 py-5 text-right text-xs font-semibold text-zinc-500 uppercase tracking-widest">จัดการ</th>
                     </tr>
@@ -99,7 +99,7 @@ export default async function ProvidersPage() {
                                     </div>
                                     <div>
                                         <div className="text-sm font-bold text-zinc-900 dark:text-white">{provider.sites_count || 0}</div>
-                                        <div className="text-xs text-zinc-500 dark:text-zinc-400">โครงการ</div>
+                                        <div className="text-xs text-zinc-500 dark:text-zinc-400">สถานที่</div>
                                     </div>
                                 </div>
                             </td>

@@ -15,11 +15,11 @@ export default async function AddSitePage() {
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                กลับไปหน้าโครงการเป้าหมาย
+                กลับไปหน้าสถานที่เป้าหมาย
             </Link>
-            <h1 className="text-3xl font-bold tracking-tight">เพิ่มโครงการใหม่</h1>
+            <h1 className="text-3xl font-bold tracking-tight">เพิ่มสถานที่ใหม่</h1>
             <p className="text-zinc-500 dark:text-zinc-400 mt-2">
-                ตั้งค่าและจัดการโครงการต่างๆ รวมถึงคอนโด หรือหมู่บ้านในระบบ เพื่อใช้แยกสิทธิ์และรายได้
+                ตั้งค่าและจัดการสถานที่ต่างๆ รวมถึงคอนโด หรือหมู่บ้านในระบบ เพื่อใช้แยกสิทธิ์และรายได้
             </p>
         </div>
 
@@ -29,7 +29,7 @@ export default async function AddSitePage() {
             <form action={addSite} className="space-y-6 relative z-10 max-w-2xl">
                 <div className="space-y-2">
                     <label htmlFor="providerId" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                    นิติบุคคลที่ดูแลโครงการ <span className="text-rose-500">*</span>
+                    นิติบุคคลที่ดูแลสถานที่ <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                         <select
@@ -59,21 +59,21 @@ export default async function AddSitePage() {
 
                 <div className="space-y-2">
                     <label htmlFor="name" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                    ชื่อโครงการ <span className="text-rose-500">*</span>
+                    ชื่อสถานที่ <span className="text-rose-500">*</span>
                     </label>
                     <input
                     type="text"
                     name="name"
                     id="name"
                     required
-                    placeholder="เช่น โครงการหมู่บ้านพฤกษา..."
+                    placeholder="เช่น สถานที่หมู่บ้านพฤกษา..."
                     className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all font-medium"
                     />
                 </div>
                 
                 <div className="space-y-2">
                     <label htmlFor="address" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                    ที่อยู่ / รายละเอียดของโครงการ
+                    ที่อยู่ / รายละเอียดของสถานที่
                     </label>
                     <textarea
                     name="address"
@@ -106,13 +106,13 @@ export default async function AddSitePage() {
                         />
                         <p className="text-xs text-amber-600 dark:text-amber-500 font-medium mt-1.5 flex items-start gap-1">
                             <svg className="w-4 h-4 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                            <span><strong className="block mb-0.5">ข้อควรระวัง:</strong>การตั้งจำนวนรถต่อบ้าน ควรคำนวณให้สัมพันธ์กับแพ็กเกจโครงการ (เช่น ถ้าแพ็กเกจให้ 500 คัน บ้านมี 100 หลัง ไม่ควรตั้งให้เกินบ้านละ 5 คัน)</span>
+                            <span><strong className="block mb-0.5">ข้อควรระวัง:</strong>การตั้งจำนวนรถต่อบ้าน ควรคำนวณให้สัมพันธ์กับแพ็กเกจสถานที่ (เช่น ถ้าแพ็กเกจให้ 500 คัน บ้านมี 100 หลัง ไม่ควรตั้งให้เกินบ้านละ 5 คัน)</span>
                         </p>
                     </div>
                 
                 <div className="space-y-2">
                     <label htmlFor="contactLink" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                    ลิงก์ติดต่อเจ้าหน้าที่โครงการ (เช่น LINE OA)
+                    ลิงก์ติดต่อเจ้าหน้าที่สถานที่ (เช่น LINE OA)
                     </label>
                     <input
                     type="url"
@@ -152,7 +152,7 @@ export default async function AddSitePage() {
                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
                         </svg>
-                        บันทึกโครงการ
+                        บันทึกสถานที่
                     </button>
                     <Link href="/sites" className="py-3.5 px-8 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold transition-all">
                         ยกเลิก

@@ -13,13 +13,13 @@ export default async function PackagesPage() {
         <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">แพ็กเกจโครงการ</h1>
+              <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">แพ็กเกจสถานที่</h1>
               <span className="px-3 py-1 bg-indigo-100 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 text-xs font-bold rounded-full uppercase tracking-wider">
                 Packages
               </span>
             </div>
             <p className="text-zinc-500 dark:text-zinc-400">
-              ตั้งค่าโครงสร้างราคาแบบ Subscription สำหรับแต่ละโครงการ (รายเดือน / รายปี)
+              ตั้งค่าโครงสร้างราคาแบบ Subscription สำหรับแต่ละสถานที่ (รายเดือน / รายปี)
             </p>
           </div>
           <Link

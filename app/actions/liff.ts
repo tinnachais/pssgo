@@ -232,7 +232,7 @@ export async function linkLineAccount(formData: FormData) {
     if (detectedPlate && detectedPlate !== "N/A") {
          const provinceToSave = detectedProvince && detectedProvince !== "N/A" ? detectedProvince : null;
          
-         // 1. ตรวจสอบว่ามีรถคันนี้อยู่ในระบบแล้วหรือไม่ (ทะเบียนและจังหวัดเดียวกันในโครงการเดียวกัน)
+         // 1. ตรวจสอบว่ามีรถคันนี้อยู่ในระบบแล้วหรือไม่ (ทะเบียนและจังหวัดเดียวกันในสถานที่เดียวกัน)
          let existingVehicle;
          if (resident.site_id) {
              existingVehicle = await query(
@@ -329,7 +329,7 @@ export async function linkLineAccount(formData: FormData) {
          } else {
              // ถ้ารถมีอยู่แล้ว เช็คว่าเป็นของบ้านตัวเองหรือไม่
              if (existingVehicle.rows[0].house_number !== resident.house_number) {
-                 return { success: false, message: `ป้ายทะเบียนนี้ถูกลงทะเบียนไว้แล้วโดยบ้านเลขที่ ${existingVehicle.rows[0].house_number} ในโครงการนี้` };
+                 return { success: false, message: `ป้ายทะเบียนนี้ถูกลงทะเบียนไว้แล้วโดยบ้านเลขที่ ${existingVehicle.rows[0].house_number} ในสถานที่นี้` };
              }
          }
 
@@ -460,7 +460,7 @@ export async function deleteLiffVehicle(vehicleId: number, residentId: number) {
             [vehicleLicensePlate]
         );
         if (latestLog.rows.length > 0 && latestLog.rows[0].action === 'IN') {
-             return { success: false, message: "ไม่สามารถลบ/เปลี่ยนรถได้ เนื่องจากรถคันดังกล่าวยังจอดอยู่ในพื้นที่โครงการ" };
+             return { success: false, message: "ไม่สามารถลบ/เปลี่ยนรถได้ เนื่องจากรถคันดังกล่าวยังจอดอยู่ในพื้นที่สถานที่" };
         }
 
         if (resident.is_owner) {

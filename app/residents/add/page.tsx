@@ -28,7 +28,7 @@ export default async function AddResidentPage() {
             </Link>
             <h1 className="text-3xl font-bold tracking-tight">เพิ่มข้อมูลลูกบ้าน</h1>
             <p className="text-zinc-500 dark:text-zinc-400 mt-2">
-                บันทึกบ้านเลขที่และผูกข้อมูลเข้ากับโครงการ
+                บันทึกบ้านเลขที่และผูกข้อมูลเข้ากับสถานที่
             </p>
         </div>
 

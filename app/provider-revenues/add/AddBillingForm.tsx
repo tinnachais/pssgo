@@ -41,7 +41,7 @@ export default function AddBillingForm({ sites, activePackages, addProviderReven
             <div className="space-y-6">
                 <div className="space-y-2">
                     <label htmlFor="siteId" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                        โครงการที่ชำระเงิน <span className="text-rose-500">*</span>
+                        สถานที่ที่ชำระเงิน <span className="text-rose-500">*</span>
                     </label>
                     <select
                         name="siteId"
@@ -52,7 +52,7 @@ export default function AddBillingForm({ sites, activePackages, addProviderReven
                         className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all font-medium appearance-none"
                         style={{ backgroundImage: "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%239BA3AF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')", backgroundRepeat: "no-repeat", backgroundPosition: "right 1.25rem top 50%", backgroundSize: "0.65rem auto" }}
                     >
-                        <option value="">-- เลือกโครงการ --</option>
+                        <option value="">-- เลือกสถานที่ --</option>
                         {sites.map((site: any) => (
                             <option key={site.id} value={site.id}>
                                 {site.name} (ผู้มาติดต่อสะสม {site.total_vehicles || 0} คัน)
@@ -140,7 +140,7 @@ export default function AddBillingForm({ sites, activePackages, addProviderReven
                 </div>
                 
                 <p className="text-xs text-zinc-500 dark:text-zinc-400 pl-1 -mt-2 mb-6">
-                    หมายเหตุ: ยอดเงินจะถูกคำนวณแบบ <b>Pro-rate</b> อัตโนมัติ โดยคิดเฉพาะจำนวนวันที่เหลือถึงสิ้นเดือน (หรือปี) สำหรับโครงการใหม่/หมดอายุ และระบบจะตั้งวันหมดอายุไปตกที่วันสิ้นเดือนเวลา 23:59 น. เสมอ
+                    หมายเหตุ: ยอดเงินจะถูกคำนวณแบบ <b>Pro-rate</b> อัตโนมัติ โดยคิดเฉพาะจำนวนวันที่เหลือถึงสิ้นเดือน (หรือปี) สำหรับสถานที่ใหม่/หมดอายุ และระบบจะตั้งวันหมดอายุไปตกที่วันสิ้นเดือนเวลา 23:59 น. เสมอ
                 </p>
             </div>
             

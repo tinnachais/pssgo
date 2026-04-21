@@ -144,13 +144,13 @@ export default function AddUserForm({ providers, sites, dbRoles = [], currentUse
                                     <option value="Level2">Level 2 - ผู้ให้บริการลานจอด (Provider Admin)</option>
                                 </>
                             )}
-                            <option value="Level3">Level 3 - เจ้าหน้าที่โครงการ (Site User)</option>
+                            <option value="Level3">Level 3 - เจ้าหน้าที่สถานที่ (Site User)</option>
                         </select>
                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-zinc-500">
                         <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                         </div>
                     </div>
-                    {currentUserLevel === "Level2" && <p className="text-[10px] text-zinc-400 mt-1 italic">* ระดับ Level 2 สามารถสร้างได้เฉพาะเจ้าหน้าที่โครงการ (Level 3) เท่านั้น</p>}
+                    {currentUserLevel === "Level2" && <p className="text-[10px] text-zinc-400 mt-1 italic">* ระดับ Level 2 สามารถสร้างได้เฉพาะเจ้าหน้าที่สถานที่ (Level 3) เท่านั้น</p>}
                 </div>
 
                 {(level === "Level2" || level === "Level3") && (
@@ -183,13 +183,13 @@ export default function AddUserForm({ providers, sites, dbRoles = [], currentUse
             {level === "Level3" && (
                 <div className="space-y-2 animate-in fade-in slide-in-from-top-2 duration-300 mt-4">
                     <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                    กำหนดสิทธิ์การเข้าถึงโครงการ (Sites)
+                    กำหนดสิทธิ์การเข้าถึงสถานที่ (Sites)
                     </label>
                     <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-3">
-                        เลือกเฉพาะโครงการที่รับผิดชอบ {selectedProviders.length > 0 && "(กรองจาก Provider ที่เลือกไว้บนสุด)"}
+                        เลือกเฉพาะสถานที่ที่รับผิดชอบ {selectedProviders.length > 0 && "(กรองจาก Provider ที่เลือกไว้บนสุด)"}
                     </p>
                     {availableSites.length === 0 ? (
-                        <div className="text-sm text-zinc-500 p-4 bg-zinc-100 dark:bg-zinc-800 rounded-xl">ไม่พบข้อมูลโครงการ กรุณาเลือก Provider ก่อน หรือเพิ่มโครงการในระบบ</div>
+                        <div className="text-sm text-zinc-500 p-4 bg-zinc-100 dark:bg-zinc-800 rounded-xl">ไม่พบข้อมูลสถานที่ กรุณาเลือก Provider ก่อน หรือเพิ่มสถานที่ในระบบ</div>
                     ) : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-60 overflow-y-auto p-2 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-zinc-50/50 dark:bg-zinc-900/50">
                             {availableSites.map(site => (

@@ -75,7 +75,7 @@ export default async function RevenuesPage() {
                             </svg>
                             </div>
                             <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-lg">ยังไม่มีข้อมูลรายการรับชำระเงิน</p>
-                            <p className="text-zinc-400 dark:text-zinc-500 text-sm mt-1 mb-6">เริ่มบันทึกรายได้ ค่าจอดรถ และค่าส่วนกลางของโครงการ</p>
+                            <p className="text-zinc-400 dark:text-zinc-500 text-sm mt-1 mb-6">เริ่มบันทึกรายได้ ค่าจอดรถ และค่าส่วนกลางของสถานที่</p>
                             <Link href="/revenues/add" className="text-amber-600 hover:text-amber-700 font-bold border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-900/20 px-4 py-2 rounded-lg transition-colors">
                                 + บันทึกบิลแรก
                             </Link>

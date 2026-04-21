@@ -153,7 +153,7 @@ function PreRegisterForm() {
                         </svg>
                     </div>
                     <h2 className="text-xl font-bold text-slate-800 mb-2">ลงทะเบียนเรียบร้อย</h2>
-                    <p className="text-sm text-slate-500 mb-6">กรุณาแจ้ง รปภ. ว่าลงทะเบียนล่วงหน้าเรียบร้อยแล้ว เมื่อถึงป้อมหน้าโครงการ</p>
+                    <p className="text-sm text-slate-500 mb-6">กรุณาแจ้ง รปภ. ว่าลงทะเบียนล่วงหน้าเรียบร้อยแล้ว เมื่อถึงป้อมหน้าสถานที่</p>
                 </div>
             </div>
         );
@@ -173,7 +173,7 @@ function PreRegisterForm() {
                     </div>
                     <h1 className="text-2xl font-bold tracking-tight mt-4 text-center">ลงทะเบียนล่วงหน้า</h1>
                     <p className="text-sm text-slate-500 text-center mt-2 px-6">
-                        กรุณากรอกข้อมูลของท่านเพื่อความสะดวกรวดเร็วในการแลกบัตรเข้าโครงการ
+                        กรุณากรอกข้อมูลของท่านเพื่อความสะดวกรวดเร็วในการแลกบัตรเข้าสถานที่
                     </p>
                 </div>
 

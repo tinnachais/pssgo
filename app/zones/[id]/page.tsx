@@ -57,7 +57,7 @@ export default async function ZoneDetailsPage(props: { params: Promise<{ id: str
                 
                 <div className="space-y-2">
                     <label htmlFor="siteId" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                    โครงการเป้าหมาย <span className="text-rose-500">*</span>
+                    สถานที่เป้าหมาย <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                         <select
@@ -67,7 +67,7 @@ export default async function ZoneDetailsPage(props: { params: Promise<{ id: str
                         defaultValue={zone.site_id || ''}
                         className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500 transition-all font-medium"
                         >
-                        <option value="">-- เลือกโครงการ --</option>
+                        <option value="">-- เลือกสถานที่ --</option>
                         {activeSites.map((site) => (
                             <option key={site.id} value={site.id}>
                             {site.name} ({site.provider_name})

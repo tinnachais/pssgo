@@ -166,16 +166,16 @@ export default async function SiteMapPage() {
         <div className="mb-6 flex flex-col md:flex-row md:items-end justify-between gap-6 shrink-0">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <h1 className="text-3xl font-bold tracking-tight">แผนที่โครงการ</h1>
+              <h1 className="text-3xl font-bold tracking-tight">แผนที่สถานที่</h1>
               <span className="px-3 py-1 bg-teal-100 dark:bg-teal-500/10 text-teal-700 dark:text-teal-400 text-xs font-bold rounded-full uppercase tracking-wider">Maps</span>
             </div>
             <p className="text-zinc-500 dark:text-zinc-400">
-              ตรวจสอบพิกัดที่ตั้งของโครงการ หรือลานจอดรถที่ให้บริการบนแผนที่ร่วมกันแบบภาพรวม
+              ตรวจสอบพิกัดที่ตั้งของสถานที่ หรือลานจอดรถที่ให้บริการบนแผนที่ร่วมกันแบบภาพรวม
             </p>
           </div>
           <Link href="/sites" className="text-teal-600 hover:text-teal-700 font-bold border border-teal-200 dark:border-teal-800 bg-teal-50 dark:bg-teal-900/20 px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-            แก้ไขพิกัดโครงการ
+            แก้ไขพิกัดสถานที่
           </Link>
         </div>
 
@@ -188,8 +188,8 @@ export default async function SiteMapPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                      </div>
-                     <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-lg">ไม่พบข้อมูลโครงการ</p>
-                     <p className="text-zinc-400 dark:text-zinc-500 text-sm mt-1">กรุณาเพิ่มโครงการ หรือตั้งค่าพิกัดเพื่อให้ระบบปักหมุดบนแผนที่</p>
+                     <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-lg">ไม่พบข้อมูลสถานที่</p>
+                     <p className="text-zinc-400 dark:text-zinc-500 text-sm mt-1">กรุณาเพิ่มสถานที่ หรือตั้งค่าพิกัดเพื่อให้ระบบปักหมุดบนแผนที่</p>
                  </div>
             ) : (
                  <div className="flex-1 w-full h-full relative">
@@ -204,7 +204,7 @@ export default async function SiteMapPage() {
                         <div className="absolute top-4 left-4 right-4 md:right-auto md:w-80 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md p-4 rounded-2xl shadow-lg border border-amber-200 dark:border-amber-900/30 z-[400] pointer-events-auto">
                             <div className="flex items-center gap-2 mb-2 text-amber-600 dark:text-amber-500 font-bold text-sm">
                                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                                โครงการที่ไม่ได้ระบุพิกัด ({displaySites.filter(s => !s.lat || !s.lng).length})
+                                สถานที่ที่ไม่ได้ระบุพิกัด ({displaySites.filter(s => !s.lat || !s.lng).length})
                             </div>
                             <ul className="space-y-1.5 max-h-32 overflow-y-auto pr-2 custom-scrollbar">
                                 {displaySites.filter(s => !s.lat || !s.lng).map(site => (

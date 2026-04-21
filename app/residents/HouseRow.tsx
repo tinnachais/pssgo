@@ -100,7 +100,7 @@ export default function HouseRow({ house }: { house: any }) {
                                         <div className="flex items-center gap-1.5 bg-zinc-100 dark:bg-zinc-800/60 px-2 py-0.5 rounded-md text-zinc-600 dark:text-zinc-400">
                                             <span className="font-mono font-bold tracking-wider text-blue-600 dark:text-blue-400 select-all">{member.invite_code}</span>
                                             <a 
-                                                href={`https://line.me/R/msg/text/?${encodeURIComponent(`แจ้งเตือนจากนิติบุคคล โครงการ ${house.site_name || "PSS GO"} 🏢\nขอเรียนเชิญบ้านเลขที่ ${house.house_number} ลงทะเบียนใช้งานระบบพื้นที่\nรหัสเชิญของคุณคือ: ${member.invite_code}\n\nกรุณากดลิงก์นี้เพื่อดำเนินการ:\nhttps://liff.line.me/${process.env.NEXT_PUBLIC_LIFF_ID || "1234567890-AbcdEfgh"}?inviteCode=${member.invite_code}`)}`}
+                                                href={`https://line.me/R/msg/text/?${encodeURIComponent(`แจ้งเตือนจากนิติบุคคล สถานที่ ${house.site_name || "PSS GO"} 🏢\nขอเรียนเชิญบ้านเลขที่ ${house.house_number} ลงทะเบียนใช้งานระบบพื้นที่\nรหัสเชิญของคุณคือ: ${member.invite_code}\n\nกรุณากดลิงก์นี้เพื่อดำเนินการ:\nhttps://liff.line.me/${process.env.NEXT_PUBLIC_LIFF_ID || "1234567890-AbcdEfgh"}?inviteCode=${member.invite_code}`)}`}
                                                 target="_blank"
                                                 title="แชร์โค้ดไปที่ LINE"
                                                 className="p-0.5 relative z-10"

@@ -20,13 +20,13 @@ export default async function ProviderRevenuesPage() {
         <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">บิลลิ่งโครงการ (รายได้ Provider)</h1>
+              <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">บิลลิ่งสถานที่ (รายได้ Provider)</h1>
               <span className="px-3 py-1 bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs font-bold rounded-full uppercase tracking-wider">
                 Billing
               </span>
             </div>
             <p className="text-zinc-500 dark:text-zinc-400">
-              จดบันทึกรายได้และการซื้อแพ็กเกจของโครงการ เพื่อผูกขีดจำกัดปริมาณรถของระบบ
+              จดบันทึกรายได้และการซื้อแพ็กเกจของสถานที่ เพื่อผูกขีดจำกัดปริมาณรถของระบบ
             </p>
           </div>
           <Link
@@ -36,7 +36,7 @@ export default async function ProviderRevenuesPage() {
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
             </svg>
-            <span className="relative z-10">ออกบิลเรียกเก็บโครงการ</span>
+            <span className="relative z-10">ออกบิลเรียกเก็บสถานที่</span>
           </Link>
         </div>
 
@@ -65,7 +65,7 @@ export default async function ProviderRevenuesPage() {
               <thead>
                 <tr className="bg-zinc-50/80 dark:bg-zinc-900/50 border-b border-zinc-200 dark:border-zinc-800">
                   <th className="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-widest pl-8">วันที่รับชำระ</th>
-                  <th className="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-widest">โครงการ (Site)</th>
+                  <th className="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-widest">สถานที่ (Site)</th>
                   <th className="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-widest">แพ็กเกจ</th>
                   <th className="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-widest">รอบบิล</th>
                   <th className="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-widest">สถานะ</th>

@@ -17,7 +17,7 @@ export async function POST(req: Request) {
 หน้าหลักและภาพรวม:
 - หน้า Dashboard (ภาพรวม): /
 การจัดการสถานที่ตั้งและองค์กร:
-- โครงการ / สถานที่ (Sites): /sites
+- สถานที่ / สถานที่ (Sites): /sites
 - โซน (Zones): /zones
 - ผู้ให้บริการ (Providers): /providers
 โครงสร้างพื้นฐานและฮาร์ดแวร์:

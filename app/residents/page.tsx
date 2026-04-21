@@ -80,7 +80,7 @@ export default async function ResidentsPage() {
                             </svg>
                             </div>
                             <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-lg">ยังไม่มีข้อมูลบ้านในระบบ</p>
-                            <p className="text-zinc-400 dark:text-zinc-500 text-sm mt-1 mb-6">บันทึกข้อมูลลูกบ้านและทะเบียนรถเพื่อให้อนุญาตเข้าออกโครงการอัตโนมัติ</p>
+                            <p className="text-zinc-400 dark:text-zinc-500 text-sm mt-1 mb-6">บันทึกข้อมูลลูกบ้านและทะเบียนรถเพื่อให้อนุญาตเข้าออกสถานที่อัตโนมัติ</p>
                             <Link href="/residents/add" className="text-blue-600 hover:text-blue-700 font-bold border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20 px-4 py-2 rounded-lg transition-colors">
                                 + เพิ่มข้อมูลบ้านแรก
                             </Link>

@@ -47,7 +47,7 @@ export default function AddPackagePage() {
 
                 <div className="space-y-2">
                     <label htmlFor="maxVehicles" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                      ขีดจำกัดจำนวนรถในโครงการ <span className="text-rose-500">*</span>
+                      ขีดจำกัดจำนวนรถในสถานที่ <span className="text-rose-500">*</span>
                     </label>
                     <input
                       type="number"
@@ -58,7 +58,7 @@ export default function AddPackagePage() {
                       placeholder="เช่น 100"
                       className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all font-medium"
                     />
-                    <p className="text-xs text-zinc-500 dark:text-zinc-400 pl-1">ปริมาณรถสูงสุดของโครงการที่เลือกใช้แพ็กเกจนี้</p>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400 pl-1">ปริมาณรถสูงสุดของสถานที่ที่เลือกใช้แพ็กเกจนี้</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

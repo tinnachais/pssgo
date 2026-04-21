@@ -56,14 +56,14 @@ export default async function EditNewsPage(props: { params: Promise<{ id: string
 
                         <div className="space-y-6">
                             <div>
-                                <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">โครงการเป้าหมาย (Site) <span className="text-rose-500">*</span></label>
+                                <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">สถานที่เป้าหมาย (Site) <span className="text-rose-500">*</span></label>
                                 <select 
                                     name="siteId" 
                                     required 
                                     defaultValue={news.site_id}
                                     className="w-full bg-slate-50 dark:bg-[#18181b] border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white text-sm rounded-xl focus:ring-orange-500 focus:border-orange-500 focus:bg-white dark:focus:bg-zinc-900 transition-all block p-3.5 shadow-sm"
                                 >
-                                    <option value="">-- เลือกโครงการ --</option>
+                                    <option value="">-- เลือกสถานที่ --</option>
                                     {sites.map(s => (
                                         <option key={s.id} value={s.id}>{s.name}</option>
                                     ))}

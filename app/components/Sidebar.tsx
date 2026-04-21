@@ -8,15 +8,15 @@ import { setSelectedSite } from "@/app/actions/site-selection";
 import Image from "next/image";
 
 const allLinks = [
-    { id: "topology", name: "ผังโครงการ", href: "/topology", icon: "M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" },
-    { id: "site-map", name: "แผนที่โครงการ", href: "/site-map", icon: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" },
+    { id: "topology", name: "ผังสถานที่", href: "/topology", icon: "M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" },
+    { id: "site-map", name: "แผนที่สถานที่", href: "/site-map", icon: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" },
     { id: "monitor", name: "รายการเข้าออก", href: "/monitor", icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" },
     {
       id: "sites",
       name: "ที่จอดรถ",
       icon: "M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
       children: [
-        { name: "โครงการ", href: "/sites" },
+        { name: "สถานที่", href: "/sites" },
         { name: "โซน", href: "/zones" },
         { name: "จุดบริการ", href: "/gates" },
       ]
@@ -149,7 +149,7 @@ export default function Sidebar({ user, sites = [], selectedSiteId }: { user?: a
         {sites && sites.length > 0 && (
           <div className="mb-6 px-1">
             <label className="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-2">
-              ระบุโครงการ
+              ระบุสถานที่
             </label>
             <div className="relative">
               <select

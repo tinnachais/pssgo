@@ -70,7 +70,7 @@ export default async function EditPackagePage({ params }: { params: Promise<{ id
 
                 <div className="space-y-2">
                     <label htmlFor="maxVehicles" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                      ขีดจำกัดจำนวนรถในโครงการ <span className="text-rose-500">*</span>
+                      ขีดจำกัดจำนวนรถในสถานที่ <span className="text-rose-500">*</span>
                     </label>
                     <input
                       type="number"

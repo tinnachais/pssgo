@@ -29,7 +29,7 @@ export default async function SiteDetailsPage(props: { params: Promise<{ id: str
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                กลับไปหน้าโครงการ
+                กลับไปหน้าสถานที่
             </Link>
             <div className="flex items-center gap-4">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 font-bold text-3xl flex-shrink-0">
@@ -60,7 +60,7 @@ export default async function SiteDetailsPage(props: { params: Promise<{ id: str
 
         <div className="bg-white dark:bg-[#121212] rounded-3xl shadow-sm border border-zinc-200 dark:border-zinc-800/80 p-8 md:p-10 ring-1 ring-zinc-900/5 dark:ring-white/5 relative overflow-hidden group mt-8">
             <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-                แก้ไขข้อมูลโครงการ
+                แก้ไขข้อมูลสถานที่
             </h2>
             <form action={async (formData) => {
                 "use server";
@@ -69,7 +69,7 @@ export default async function SiteDetailsPage(props: { params: Promise<{ id: str
                 
                 <div className="space-y-2">
                     <label htmlFor="providerId" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                    นิติบุคคลที่ดูแลโครงการ <span className="text-rose-500">*</span>
+                    นิติบุคคลที่ดูแลสถานที่ <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                         <select
@@ -94,7 +94,7 @@ export default async function SiteDetailsPage(props: { params: Promise<{ id: str
 
                 <div className="space-y-2">
                     <label htmlFor="name" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                    ชื่อโครงการ <span className="text-rose-500">*</span>
+                    ชื่อสถานที่ <span className="text-rose-500">*</span>
                     </label>
                     <input
                     type="text"
@@ -108,7 +108,7 @@ export default async function SiteDetailsPage(props: { params: Promise<{ id: str
                 
                 <div className="space-y-2">
                     <label htmlFor="address" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                    ที่อยู่ / รายละเอียดของโครงการ
+                    ที่อยู่ / รายละเอียดของสถานที่
                     </label>
                     <textarea
                     name="address"
@@ -141,13 +141,13 @@ export default async function SiteDetailsPage(props: { params: Promise<{ id: str
                         />
                         <p className="text-xs text-amber-600 dark:text-amber-500 font-medium mt-1.5 flex items-start gap-1">
                             <svg className="w-4 h-4 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                            <span><strong className="block mb-0.5">ข้อควรระวัง:</strong>การตั้งจำนวนรถต่อบ้าน ควรคำนวณให้สัมพันธ์กับแพ็กเกจโครงการ (เช่น ถ้าแพ็กเกจให้ 500 คัน บ้านมี 100 หลัง ไม่ควรตั้งให้เกินบ้านละ 5 คัน)</span>
+                            <span><strong className="block mb-0.5">ข้อควรระวัง:</strong>การตั้งจำนวนรถต่อบ้าน ควรคำนวณให้สัมพันธ์กับแพ็กเกจสถานที่ (เช่น ถ้าแพ็กเกจให้ 500 คัน บ้านมี 100 หลัง ไม่ควรตั้งให้เกินบ้านละ 5 คัน)</span>
                         </p>
                     </div>
                 
                 <div className="space-y-2">
                     <label htmlFor="contactLink" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                    ลิงก์ติดต่อเจ้าหน้าที่โครงการ (เช่น LINE OA)
+                    ลิงก์ติดต่อเจ้าหน้าที่สถานที่ (เช่น LINE OA)
                     </label>
                     <input
                     type="url"
