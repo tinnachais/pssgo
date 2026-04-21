@@ -92,6 +92,20 @@ export default async function AddResidentPage() {
                     className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-lg font-bold text-zinc-900 dark:text-white uppercase placeholder:text-zinc-400 placeholder:font-normal placeholder:lowercase focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
                     />
                 </div>
+
+                <div className="space-y-2">
+                    <label htmlFor="maxVehicles" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                    โควต้ารถ (ใส่เฉพาะกรณีสถานที่ตั้งโควต้าเป็น 0)
+                    </label>
+                    <input
+                    type="number"
+                    name="maxVehicles"
+                    id="maxVehicles"
+                    min="1"
+                    placeholder="ปล่อยว่างเพื่อยึดตามค่าสถานที่"
+                    className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm font-medium text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                    />
+                </div>
                 
                 <div className="pt-4 flex items-center gap-3">
                     <button

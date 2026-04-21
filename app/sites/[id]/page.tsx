@@ -162,13 +162,13 @@ export default async function SiteDetailsPage(props: { params: Promise<{ id: str
                         name="maxVehicles"
                         id="maxVehicles"
                         required
-                        min="1"
-                        defaultValue={site.max_vehicles || 1}
+                        min="0"
+                        defaultValue={site.max_vehicles}
                         className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all font-medium"
                         />
                         <p className="text-xs text-amber-600 dark:text-amber-500 font-medium mt-1.5 flex items-start gap-1">
                             <svg className="w-4 h-4 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                            <span><strong className="block mb-0.5">ข้อควรระวัง:</strong>การตั้งจำนวนรถต่อบ้าน ควรคำนวณให้สัมพันธ์กับแพ็กเกจสถานที่ (เช่น ถ้าแพ็กเกจให้ 500 คัน บ้านมี 100 หลัง ไม่ควรตั้งให้เกินบ้านละ 5 คัน)</span>
+                            <span><strong className="block mb-0.5">ข้อควรระวัง:</strong>การตั้งจำนวนรถต่อบ้าน ควรคำนวณให้สัมพันธ์กับแพ็กเกจ (ใส่เลข 0 เพื่อไปกำหนดแยกตามแต่ละผู้เช่า/ร้าน/บริษัทเอง)</span>
                         </p>
                     </div>
                 

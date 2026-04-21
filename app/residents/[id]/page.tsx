@@ -62,18 +62,35 @@ export default async function ResidentDetailsPage(props: { params: Promise<{ id:
             }} className="space-y-6 relative z-10">
                 <input type="hidden" name="siteId" value={resident.site_id || ""} />
 
-                <div className="space-y-2">
-                    <label htmlFor="houseNumber" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                    รหัสสถานที่ / ห้อง <span className="text-rose-500">*</span>
-                    </label>
-                    <input
-                    type="text"
-                    name="houseNumber"
-                    id="houseNumber"
-                    required
-                    defaultValue={resident.house_number}
-                    className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all font-medium"
-                    />
+                <div className="space-y-4">
+                    <div className="space-y-2">
+                        <label htmlFor="houseNumber" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                        รหัสสถานที่ / ห้อง <span className="text-rose-500">*</span>
+                        </label>
+                        <input
+                        type="text"
+                        name="houseNumber"
+                        id="houseNumber"
+                        required
+                        defaultValue={resident.house_number}
+                        className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all font-medium"
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label htmlFor="maxVehicles" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                        โควต้ารถ (ใส่เฉพาะกรณีสถานที่ตั้งโควต้าเป็น 0)
+                        </label>
+                        <input
+                        type="number"
+                        name="maxVehicles"
+                        id="maxVehicles"
+                        min="1"
+                        defaultValue={resident.max_vehicles || ''}
+                        placeholder="ปล่อยว่างเพื่อยึดตามค่าสถานที่"
+                        className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm font-medium text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                        />
+                    </div>
                 </div>
 
                 <div className="pt-4 flex items-center gap-3">

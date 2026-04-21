@@ -150,7 +150,15 @@ export async function getLiffProfileData(lineUserId: string) {
         } else {
             siteLimitQuery = await query(`SELECT max_vehicles, max_residents FROM sites LIMIT 1`);
         }
-        const maxVehicles = (siteLimitQuery.rows.length > 0 && siteLimitQuery.rows[0].max_vehicles) ? siteLimitQuery.rows[0].max_vehicles : 1;
+        let maxVehicles = 1;
+        if (siteLimitQuery.rows.length > 0) {
+            const siteMax = siteLimitQuery.rows[0].max_vehicles;
+            if (siteMax === 0) {
+                maxVehicles = resident.max_vehicles || 1;
+            } else {
+                maxVehicles = siteMax || 1;
+            }
+        }
         const maxResidents = (siteLimitQuery.rows.length > 0 && siteLimitQuery.rows[0].max_residents) ? siteLimitQuery.rows[0].max_residents : 2;
 
         const familyMembersQuery = await query("SELECT id, owner_name, line_user_id, line_display_name, line_picture_url, is_active, created_at, invite_code FROM residents WHERE parent_id = $1 ORDER BY created_at DESC", [resident.id]);
@@ -254,7 +262,15 @@ export async function linkLineAccount(formData: FormData) {
              } else {
                  siteLimitQuery = await query(`SELECT max_vehicles FROM sites LIMIT 1`);
              }
-             const maxVehicles = (siteLimitQuery.rows.length > 0 && siteLimitQuery.rows[0].max_vehicles) ? siteLimitQuery.rows[0].max_vehicles : 1;
+             let maxVehicles = 1;
+             if (siteLimitQuery.rows.length > 0) {
+                 const siteMax = siteLimitQuery.rows[0].max_vehicles;
+                 if (siteMax === 0) {
+                     maxVehicles = resident.max_vehicles || 1;
+                 } else {
+                     maxVehicles = siteMax || 1;
+                 }
+             }
              
              const vehicleCountQuery = await query(`SELECT COUNT(*) as count FROM vehicles WHERE house_number = $1 AND is_active = true`, [resident.house_number]);
              const currentVehicles = parseInt(vehicleCountQuery.rows[0].count, 10);
@@ -359,7 +375,7 @@ export async function linkLineAccount(formData: FormData) {
 
 export async function generateFamilyInvite(ownerId: number, memberName: string) {
     try {
-        const ownerRes = await query("SELECT house_number, is_owner, site_id FROM residents WHERE id = $1 AND is_active = true", [ownerId]);
+        const ownerRes = await query("SELECT house_number, is_owner, site_id, max_vehicles FROM residents WHERE id = $1 AND is_active = true", [ownerId]);
         if (ownerRes.rows.length === 0 || !ownerRes.rows[0].is_owner) {
             return { success: false, message: "อนุญาตเฉพาะเจ้าบ้านเท่านั้น" };
         }
@@ -374,7 +390,15 @@ export async function generateFamilyInvite(ownerId: number, memberName: string) 
         } else {
             limitQuery = await query(`SELECT max_vehicles FROM sites LIMIT 1`);
         }
-        const maxLimit = (limitQuery.rows.length > 0 && limitQuery.rows[0].max_vehicles) ? limitQuery.rows[0].max_vehicles : 1;
+        let maxLimit = 1;
+        if (limitQuery.rows.length > 0) {
+            const siteMax = limitQuery.rows[0].max_vehicles;
+            if (siteMax === 0) {
+                maxLimit = ownerRes.rows[0].max_vehicles || 1;
+            } else {
+                maxLimit = siteMax || 1;
+            }
+        }
         
         const familyCountQuery = await query("SELECT COUNT(*) FROM residents WHERE parent_id = $1 OR id = $1", [ownerId]);
         const currentCount = parseInt(familyCountQuery.rows[0].count, 10);
