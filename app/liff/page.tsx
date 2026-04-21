@@ -815,8 +815,8 @@ export default function LiffProfilePage() {
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                           </svg>
                       </div>
-                      <h2 className="text-lg font-bold mb-2">เฉพาะเจ้าบ้านเท่านั้น</h2>
-                      <p className="text-slate-500 text-sm mb-6">ฟีเจอร์นี้สงวนสิทธิ์สำหรับเจ้าบ้าน เพื่อความปลอดภัยของข้อมูล</p>
+                      <h2 className="text-lg font-bold mb-2">เฉพาะผู้ดูแลเท่านั้น</h2>
+                      <p className="text-slate-500 text-sm mb-6">ฟีเจอร์นี้สงวนสิทธิ์สำหรับผู้ดูแล เพื่อความปลอดภัยของข้อมูล</p>
                       <button onClick={() => setView('menu')} className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl transition-colors">
                           กลับเมนูหลัก
                       </button>
@@ -912,8 +912,8 @@ export default function LiffProfilePage() {
                                   <div className="flex items-center gap-3">
                                       <img src={profileData?.resident?.line_picture_url || "https://via.placeholder.com/150"} className="w-10 h-10 rounded-full object-cover shadow-sm bg-white" />
                                       <div>
-                                          <p className="text-sm font-bold leading-tight">{profileData?.resident?.line_display_name || "เจ้าบ้าน"}</p>
-                                          <p className="text-xs text-slate-500">เจ้าของบ้าน (คุณ)</p>
+                                          <p className="text-sm font-bold leading-tight">{profileData?.resident?.line_display_name || "ผู้ดูแล"}</p>
+                                          <p className="text-xs text-slate-500">ผู้ดูแล (คุณ)</p>
                                       </div>
                                   </div>
                               </div>

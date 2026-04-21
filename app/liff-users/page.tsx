@@ -81,7 +81,7 @@ export default async function LiffUsersPage() {
                                                 </div>
                                                 <div className="text-xs text-zinc-500 dark:text-zinc-400">
                                                     {user.site_name ? (
-                                                        <>{user.site_name} {user.is_owner ? ' (เจ้าบ้าน)' : ' (ผู้ใช้ประจำ)'}</>
+                                                        <>{user.site_name} {user.is_owner ? ' (ผู้ดูแล)' : ' (ผู้ใช้ประจำ)'}</>
                                                     ) : (
                                                         <span className="text-blue-500 font-medium bg-blue-50 dark:bg-blue-500/10 px-2 py-0.5 rounded-md">ผู้ใช้บริการทั่วไป</span>
                                                     )}

@@ -116,7 +116,7 @@ export default async function ResidentDetailsPage(props: { params: Promise<{ id:
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                         <label htmlFor="ownerName" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                        {resident.is_owner ? 'ชื่อ-นามสกุล / เจ้าบ้าน' : 'ชื่อสมาชิก'} <span className="text-zinc-400 font-normal">(ตัวเลือก)</span>
+                        {resident.is_owner ? 'ชื่อ-นามสกุล / ผู้ดูแล' : 'ชื่อสมาชิก'} <span className="text-zinc-400 font-normal">(ตัวเลือก)</span>
                         </label>
                         <input
                         type="text"

@@ -72,7 +72,7 @@ export default function HouseRow({ house }: { house: any }) {
                             <div className="flex-1 flex flex-col min-w-0">
                                 <div className="flex flex-wrap items-center gap-2 mb-1.5">
                                     {member.is_owner ? (
-                                        <span className="text-[10px] font-bold text-blue-700 bg-blue-100 dark:bg-blue-900 dark:text-blue-300 px-2.5 py-0.5 rounded-full border border-blue-200 dark:border-blue-800">เจ้าบ้าน</span>
+                                        <span className="text-[10px] font-bold text-blue-700 bg-blue-100 dark:bg-blue-900 dark:text-blue-300 px-2.5 py-0.5 rounded-full border border-blue-200 dark:border-blue-800">ผู้ดูแล</span>
                                     ) : (
                                         <span className="text-[10px] font-bold text-pink-700 bg-pink-100 dark:bg-pink-900 dark:text-pink-300 px-2.5 py-0.5 rounded-full border border-pink-200 dark:border-pink-800">สมาชิกย่อย</span>
                                     )}

@@ -430,7 +430,7 @@ export async function generateFamilyInvite(ownerId: number, memberName: string) 
     try {
         const ownerRes = await query("SELECT house_number, is_owner, site_id, max_vehicles FROM residents WHERE id = $1 AND is_active = true", [ownerId]);
         if (ownerRes.rows.length === 0 || !ownerRes.rows[0].is_owner) {
-            return { success: false, message: "อนุญาตเฉพาะเจ้าบ้านเท่านั้น" };
+            return { success: false, message: "อนุญาตเฉพาะผู้ดูแลเท่านั้น" };
         }
         
         const houseNumber = ownerRes.rows[0].house_number;
@@ -485,7 +485,7 @@ export async function revokeFamilyMember(memberId: number, ownerId: number) {
     try {
         const ownerRes = await query("SELECT is_owner FROM residents WHERE id = $1 AND is_active = true", [ownerId]);
         if (ownerRes.rows.length === 0 || !ownerRes.rows[0].is_owner) {
-            return { success: false, message: "อนุญาตเฉพาะเจ้าบ้านเท่านั้น" };
+            return { success: false, message: "อนุญาตเฉพาะผู้ดูแลเท่านั้น" };
         }
         
         await query("DELETE FROM residents WHERE id = $1 AND parent_id = $2", [memberId, ownerId]);
@@ -519,7 +519,7 @@ export async function deleteLiffVehicle(vehicleId: number, residentId: number) {
         
         let res;
         if (resident.is_owner) {
-             // เจ้าบ้านลบรถทุกคันในบ้านตัวเองได้
+             // ผู้ดูแลลบรถทุกคันในบ้านตัวเองได้
              const vQuery = await query("SELECT license_plate FROM vehicles WHERE id = $1 AND house_number = $2", [vehicleId, resident.house_number]);
              if (vQuery.rows.length > 0) vehicleLicensePlate = vQuery.rows[0].license_plate;
         } else {
