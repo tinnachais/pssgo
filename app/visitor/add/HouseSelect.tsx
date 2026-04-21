@@ -27,7 +27,7 @@ export function HouseSelect({ houses }: { houses: { house: string; isPrivate: bo
         id="houseNumber"
         required
         autoComplete="off"
-        placeholder="ค้นหาตามบ้านเลขที่ (เช่น 99/99)"
+        placeholder="ค้นหาตามสถานที่/ห้อง (เช่น 99/99)"
         value={query}
         onChange={(e) => {
           setQuery(e.target.value);
@@ -66,7 +66,7 @@ export function HouseSelect({ houses }: { houses: { house: string; isPrivate: bo
       )}
       {isOpen && filteredHouses.length === 0 && query && (
          <div className="absolute z-10 mt-1 w-full bg-white dark:bg-zinc-800 rounded-xl shadow-xl border border-zinc-200 dark:border-zinc-700 py-4 text-center">
-            <p className="text-zinc-500 text-sm">ไม่พบบ้านเลขที่ระบบ (สามารถพิมพ์ใส่ลงไปได้เลย)</p>
+            <p className="text-zinc-500 text-sm">ไม่พบรหัสสถานที่/ห้องระบบ (สามารถพิมพ์ใส่ลงไปได้เลย)</p>
          </div>
       )}
     </div>

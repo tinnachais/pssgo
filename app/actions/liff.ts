@@ -329,7 +329,7 @@ export async function linkLineAccount(formData: FormData) {
          } else {
              // ถ้ารถมีอยู่แล้ว เช็คว่าเป็นของบ้านตัวเองหรือไม่
              if (existingVehicle.rows[0].house_number !== resident.house_number) {
-                 return { success: false, message: `ป้ายทะเบียนนี้ถูกลงทะเบียนไว้แล้วโดยบ้านเลขที่ ${existingVehicle.rows[0].house_number} ในสถานที่นี้` };
+                 return { success: false, message: `ป้ายทะเบียนนี้ถูกลงทะเบียนไว้แล้วโดยสถานที่/ห้อง ${existingVehicle.rows[0].house_number} ในสถานที่นี้` };
              }
          }
 

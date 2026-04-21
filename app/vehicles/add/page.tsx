@@ -35,7 +35,7 @@ export default async function AddVehiclePage() {
             <form action={addVehicle} className="space-y-6 relative z-10 max-w-2xl">
                 <div className="space-y-2">
                     <label htmlFor="residentId" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                    เลือกผู้เช่า/ร้าน/บริษัท (บ้านเลขที่และเจ้าของรถ) <span className="text-rose-500">*</span>
+                    เลือกผู้เช่า/ร้าน/บริษัท (รหัสสถานที่/ห้องและเจ้าของรถ) <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                         <select
@@ -47,7 +47,7 @@ export default async function AddVehiclePage() {
                         <option value="">-- เลือกผู้เช่า/ร้าน/บริษัทจากฐานข้อมูล --</option>
                         {activeResidents.map((r:any) => (
                             <option key={r.id} value={r.id}>
-                            บ้านเลขที่ {r.house_number} {r.owner_name ? `(${r.owner_name})` : ''} {r.site_name ? `[${r.site_name}]` : ''}
+                            สถานที่/ห้อง {r.house_number} {r.owner_name ? `(${r.owner_name})` : ''} {r.site_name ? `[${r.site_name}]` : ''}
                             </option>
                         ))}
                         </select>

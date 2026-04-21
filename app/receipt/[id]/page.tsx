@@ -94,7 +94,7 @@ export default async function ReceiptPage({ params }: { params: Promise<{ id: st
                         </div>
                         {visitor.house_number && (
                             <div className="flex justify-between">
-                                <span className="font-bold">บ้านเลขที่:</span>
+                                <span className="font-bold">สถานที่/ห้อง:</span>
                                 <span>{visitor.house_number}</span>
                             </div>
                         )}

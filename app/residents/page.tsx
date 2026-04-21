@@ -49,14 +49,14 @@ export default async function ResidentsPage() {
               <span className="px-3 py-1 bg-blue-100 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 text-xs font-bold rounded-full uppercase tracking-wider">Residents</span>
             </div>
             <p className="text-zinc-500 dark:text-zinc-400">
-              จัดการโปรไฟล์ผู้เช่า/ร้าน/บริษัท และบันทึกทะเบียนรถที่ได้รับอนุญาตให้เข้าออกพื้นที่ (Whitelist) แบบรวมกลุ่มตามบ้านเลขที่
+              จัดการโปรไฟล์ผู้เช่า/ร้าน/บริษัท และบันทึกทะเบียนรถที่ได้รับอนุญาตให้เข้าออกพื้นที่ (Whitelist) แบบรวมกลุ่ม
             </p>
           </div>
           <Link href="/residents/add" className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md shadow-blue-600/20 hover:shadow-lg active:scale-[0.98] flex items-center justify-center gap-2 flex-shrink-0">
             <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
             </svg>
-            เพิ่มข้อมูลบ้านใหม่
+            เพิ่มข้อมูลใหม่
           </Link>
         </div>
 
@@ -65,7 +65,7 @@ export default async function ResidentsPage() {
                 <table className="w-full text-left border-collapse">
                 <thead>
                     <tr className="bg-zinc-50/50 dark:bg-[#1A1A1A]/50 border-b border-zinc-200 dark:border-zinc-800">
-                    <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest leading-relaxed">ข้อมูลผู้เช่า/ร้าน/บริษัทตามบ้านเลขที่</th>
+                    <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest leading-relaxed">ข้อมูลผู้เช่า/ร้าน/บริษัท</th>
                     <th className="px-6 py-5 text-left text-xs font-semibold text-zinc-500 uppercase tracking-widest w-1/2">ยานพาหนะ (ตรวจสอบสิทธิ์เข้าออก)</th>
                     </tr>
                 </thead>
@@ -79,10 +79,10 @@ export default async function ResidentsPage() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                             </svg>
                             </div>
-                            <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-lg">ยังไม่มีข้อมูลบ้านในระบบ</p>
+                            <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-lg">ยังไม่มีข้อมูลในระบบ</p>
                             <p className="text-zinc-400 dark:text-zinc-500 text-sm mt-1 mb-6">บันทึกข้อมูลผู้เช่า/ร้าน/บริษัทและทะเบียนรถเพื่อให้อนุญาตเข้าออกสถานที่อัตโนมัติ</p>
                             <Link href="/residents/add" className="text-blue-600 hover:text-blue-700 font-bold border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20 px-4 py-2 rounded-lg transition-colors">
-                                + เพิ่มข้อมูลบ้านแรก
+                                + เพิ่มข้อมูลแรก
                             </Link>
                         </div>
                         </td>

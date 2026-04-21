@@ -28,7 +28,7 @@ export default async function AddResidentPage() {
             </Link>
             <h1 className="text-3xl font-bold tracking-tight">เพิ่มข้อมูลผู้เช่า/ร้าน/บริษัท</h1>
             <p className="text-zinc-500 dark:text-zinc-400 mt-2">
-                บันทึกบ้านเลขที่และผูกข้อมูลเข้ากับสถานที่
+                บันทึกรหัสประจำสถานที่ย่อย หรือเลขที่ห้อง แล้วผูกข้อมูลเข้ากับสถานที่หลัก
             </p>
         </div>
 
@@ -40,7 +40,7 @@ export default async function AddResidentPage() {
 
                 <div className="space-y-2">
                     <label htmlFor="houseNumber" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                    บ้านเลขที่ / รหัสห้อง <span className="text-rose-500">*</span>
+                    รหัสสถานที่ / ห้อง / เลขที่ <span className="text-rose-500">*</span>
                     </label>
                     <input
                     type="text"
@@ -55,7 +55,7 @@ export default async function AddResidentPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                         <label htmlFor="ownerName" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                        ชื่อ-นามสกุล / เจ้าบ้าน <span className="text-zinc-400 font-normal">(ตัวเลือก)</span>
+                        ชื่อ-นามสกุล / ชื่อผู้ติดต่อหลัก <span className="text-zinc-400 font-normal">(ตัวเลือก)</span>
                         </label>
                         <input
                         type="text"

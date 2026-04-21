@@ -154,7 +154,7 @@ export async function addVisitor(formData: FormData) {
   if (houseNumber) {
       const privacyCheck = await query("SELECT privacy_mode FROM residents WHERE house_number = $1 AND privacy_mode = true LIMIT 1", [houseNumber]);
       if (privacyCheck.rows.length > 0) {
-          throw new Error(`บ้านเลขที่ ${houseNumber} เปิดโหมดความเป็นส่วนตัว ไม่อนุญาตให้เข้าพบ (Do Not Disturb)`);
+          throw new Error(`สถานที่/ห้อง ${houseNumber} เปิดโหมดความเป็นส่วนตัว ไม่อนุญาตให้เข้าพบ (Do Not Disturb)`);
       }
   }
 
@@ -205,7 +205,7 @@ export async function addVisitor(formData: FormData) {
     [vehiclePlate || 'UNKNOWN', houseNumber || null, visitorId]
   );
 
-  // ส่งแจ้งเตือน LINE ไปยังผู้เช่า/ร้าน/บริษัทในบ้านเลขที่นั้น
+  // ส่งแจ้งเตือน LINE ไปยังผู้เช่า/ร้าน/บริษัทในรหัสสถานที่/ห้องนั้น
   if (houseNumber) {
      try {
         const notifyRes = await query(

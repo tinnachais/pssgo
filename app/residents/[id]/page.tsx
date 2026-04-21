@@ -35,7 +35,7 @@ export default async function ResidentDetailsPage(props: { params: Promise<{ id:
                     </svg>
                 </div>
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white line-clamp-1">บ้านเลขที่ {resident.house_number}</h1>
+                    <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white line-clamp-1">{resident.house_number}</h1>
                     <div className="flex items-center gap-3 mt-2">
                         <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border ${resident.is_active ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20' : 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/20'}`}>
                             <span className={`w-1.5 h-1.5 rounded-full ${resident.is_active ? 'bg-emerald-500' : 'bg-rose-500'}`}></span>
@@ -54,7 +54,7 @@ export default async function ResidentDetailsPage(props: { params: Promise<{ id:
         {resident.is_owner && (
         <div className="bg-white dark:bg-[#121212] rounded-3xl shadow-sm border border-zinc-200 dark:border-zinc-800/80 p-8 md:p-10 ring-1 ring-zinc-900/5 dark:ring-white/5 relative overflow-hidden group mt-8">
             <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-                แก้ไขข้อมูลบ้าน (House Data)
+                แก้ไขข้อมูลสถานที่/ห้อง
             </h2>
             <form action={async (formData) => {
                 "use server";
@@ -64,7 +64,7 @@ export default async function ResidentDetailsPage(props: { params: Promise<{ id:
 
                 <div className="space-y-2">
                     <label htmlFor="houseNumber" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                    บ้านเลขที่ / รหัสห้อง <span className="text-rose-500">*</span>
+                    รหัสสถานที่ / ห้อง <span className="text-rose-500">*</span>
                     </label>
                     <input
                     type="text"

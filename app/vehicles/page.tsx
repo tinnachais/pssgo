@@ -67,7 +67,7 @@ export default async function VehiclesPage() {
                     ) : (
                         Object.entries(
                             vehicles.reduce((acc: Record<string, any[]>, v: any) => {
-                                const houseNum = v.house_number || 'ไม่ได้ระบุบ้านเลขที่ (ผู้มาติดต่อ / อื่นๆ)';
+                                const houseNum = v.house_number || 'ไม่ได้ระบุสถานที่/ห้อง (ผู้มาติดต่อ / อื่นๆ)';
                                 if (!acc[houseNum]) acc[houseNum] = [];
                                 acc[houseNum].push(v);
                                 return acc;
@@ -80,7 +80,7 @@ export default async function VehiclesPage() {
                                             <svg className="w-5 h-5 text-rose-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                                             </svg>
-                                            บ้านเลขที่: {house} 
+                                            สถานที่/ห้อง: {house} 
                                             <span className="ml-2 text-xs font-medium text-zinc-500 dark:text-zinc-400 bg-zinc-200 dark:bg-zinc-700 px-2 py-0.5 rounded-full">
                                                 {houseVehicles.length} คัน
                                             </span>

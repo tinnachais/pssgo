@@ -19,7 +19,7 @@ export default function HouseRow({ house }: { house: any }) {
                 </svg>
              </button>
              <div className="text-lg font-black text-zinc-900 dark:text-white flex items-center gap-3">
-                บ้านเลขที่ {house.house_number}
+                {house.house_number}
                 {house.site_name && (
                     <span className="text-[11px] font-bold text-indigo-700 bg-indigo-100 dark:bg-indigo-500/10 dark:text-indigo-400 px-2.5 py-1 rounded-md border border-indigo-200 dark:border-indigo-500/20 shadow-sm">{house.site_name}</span>
                 )}
@@ -100,7 +100,7 @@ export default function HouseRow({ house }: { house: any }) {
                                         <div className="flex items-center gap-1.5 bg-zinc-100 dark:bg-zinc-800/60 px-2 py-0.5 rounded-md text-zinc-600 dark:text-zinc-400">
                                             <span className="font-mono font-bold tracking-wider text-blue-600 dark:text-blue-400 select-all">{member.invite_code}</span>
                                             <a 
-                                                href={`https://line.me/R/msg/text/?${encodeURIComponent(`แจ้งเตือนจากนิติบุคคล สถานที่ ${house.site_name || "PSS GO"} 🏢\nขอเรียนเชิญบ้านเลขที่ ${house.house_number} ลงทะเบียนใช้งานระบบพื้นที่\nรหัสเชิญของคุณคือ: ${member.invite_code}\n\nกรุณากดลิงก์นี้เพื่อดำเนินการ:\nhttps://liff.line.me/${process.env.NEXT_PUBLIC_LIFF_ID || "1234567890-AbcdEfgh"}?inviteCode=${member.invite_code}`)}`}
+                                                href={`https://line.me/R/msg/text/?${encodeURIComponent(`แจ้งเตือนจากนิติบุคคล สถานที่ ${house.site_name || "PSS GO"} 🏢\nขอเรียนเชิญสถานที่รหัส/เลขที่ ${house.house_number} ลงทะเบียนใช้งานระบบ\nรหัสเชิญของคุณคือ: ${member.invite_code}\n\nกรุณากดลิงก์นี้เพื่อดำเนินการ:\nhttps://liff.line.me/${process.env.NEXT_PUBLIC_LIFF_ID || "1234567890-AbcdEfgh"}?inviteCode=${member.invite_code}`)}`}
                                                 target="_blank"
                                                 title="แชร์โค้ดไปที่ LINE"
                                                 className="p-0.5 relative z-10"

@@ -371,7 +371,7 @@ export default function LiffProfilePage() {
           }
       }
 
-      const messageText = `คุณได้รับคำเชิญการมาเยือนที่ ${profileData?.resident?.site_name || 'สถานที่'} (บ้านเลขที่ ${profileData?.resident?.house_number})\nสำหรับ: ${apptName}${mapLinkText}\n\nกรุณากรอกข้อมูลเพื่อความสะดวกรวดเร็วในการเข้าสถานที่ที่ลิงก์นี้:\n${link}`;
+      const messageText = `คุณได้รับคำเชิญการมาเยือนที่ ${profileData?.resident?.site_name || 'สถานที่'} (สถานที่/ห้อง ${profileData?.resident?.house_number})\nสำหรับ: ${apptName}${mapLinkText}\n\nกรุณากรอกข้อมูลเพื่อความสะดวกรวดเร็วในการเข้าสถานที่ที่ลิงก์นี้:\n${link}`;
 
       const footerContents: any[] = [
           {
@@ -620,7 +620,7 @@ export default function LiffProfilePage() {
                   {profileData?.isRegistered && profileData?.resident && (
                       <div className="mt-1 flex flex-col items-center">
                           <p className="text-sm font-bold text-[#06C755]">{profileData.resident.site_name || 'ไม่ระบุสถานที่'}</p>
-                          <p className="text-xs text-slate-500 font-medium mt-0.5">บ้านเลขที่ {profileData.resident.house_number}</p>
+                          <p className="text-xs text-slate-500 font-medium mt-0.5">สถานที่/ห้อง {profileData.resident.house_number}</p>
                       </div>
                   )}
               </div>
@@ -864,7 +864,7 @@ export default function LiffProfilePage() {
                           </div>
                           <div>
                               <div className="text-xs font-bold text-pink-600 mb-0.5">{profileData?.resident?.site_name || 'ไม่ระบุสถานที่'}</div>
-                              <h1 className="text-xl font-bold tracking-tight">สมาชิกบ้านเลขที่ {profileData?.resident?.house_number}</h1>
+                              <h1 className="text-xl font-bold tracking-tight">สมาชิกสถานที่/ห้อง {profileData?.resident?.house_number}</h1>
                               <p className="text-sm text-slate-500">โควต้า: {currentCount} / {totalAllowed} คน</p>
                           </div>
                       </div>
@@ -899,7 +899,7 @@ export default function LiffProfilePage() {
                                           <div>รหัสสำหรับเชิญ: <span className="text-green-700 select-all">{familyResult.inviteCode}</span></div>
                                           
                                           <a 
-                                            href={`https://line.me/R/msg/text/?${encodeURIComponent(`แจ้งเตือนจากเจ้าบ้านเลขที่ ${profileData?.resident?.house_number}\nขอเรียนเชิญคุณเข้าร่วมบ้านใน PSS GO\nรหัสเชิญของคุณคือ: ${familyResult.inviteCode}\n\nกรุณากดลิงก์นี้เพื่อดำเนินการลงทะเบียน:\nhttps://liff.line.me/${process.env.NEXT_PUBLIC_LIFF_ID || "1234567890-AbcdEfgh"}?inviteCode=${familyResult.inviteCode}`)}`}
+                                            href={`https://line.me/R/msg/text/?${encodeURIComponent(`แจ้งเตือนจากเจ้าสถานที่/ห้อง ${profileData?.resident?.house_number}\nขอเรียนเชิญคุณเข้าร่วมบ้านใน PSS GO\nรหัสเชิญของคุณคือ: ${familyResult.inviteCode}\n\nกรุณากดลิงก์นี้เพื่อดำเนินการลงทะเบียน:\nhttps://liff.line.me/${process.env.NEXT_PUBLIC_LIFF_ID || "1234567890-AbcdEfgh"}?inviteCode=${familyResult.inviteCode}`)}`}
                                             target="_blank"
                                             className="w-full py-2 bg-[#06C755] text-white rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-[#05b34c]"
                                           >
@@ -1148,7 +1148,7 @@ export default function LiffProfilePage() {
                                                                       ยกเลิกคำเชิญ
                                                                   </button>
                                                                   <a 
-                                                                      href={`https://line.me/R/msg/text/?${encodeURIComponent(`คุณได้รับคำเชิญการมาเยือนที่ ${profileData?.resident?.site_name || 'สถานที่'} (บ้านเลขที่ ${profileData?.resident?.house_number})\nสำหรับ: ${appt.full_name}\n\nกรุณากรอกข้อมูลเพื่อความสะดวกรวดเร็วในการเข้าสถานที่ที่ลิงก์นี้:\n${isInitialized ? window.location.origin : 'https://pssgo.com'}/visitor/preregister?token=${appt.invite_token}`)}`}
+                                                                      href={`https://line.me/R/msg/text/?${encodeURIComponent(`คุณได้รับคำเชิญการมาเยือนที่ ${profileData?.resident?.site_name || 'สถานที่'} (สถานที่/ห้อง ${profileData?.resident?.house_number})\nสำหรับ: ${appt.full_name}\n\nกรุณากรอกข้อมูลเพื่อความสะดวกรวดเร็วในการเข้าสถานที่ที่ลิงก์นี้:\n${isInitialized ? window.location.origin : 'https://pssgo.com'}/visitor/preregister?token=${appt.invite_token}`)}`}
                                                                       target="_blank"
                                                                       onClick={(e) => e.stopPropagation()}
                                                                       className="text-white bg-[#06C755] hover:bg-[#05b34c] px-3 py-1.5 rounded-lg text-[11px] font-bold shadow-sm transition-all flex items-center gap-1.5 shrink-0"
@@ -1230,7 +1230,7 @@ export default function LiffProfilePage() {
                                       
                                       <div className="w-full">
                                           <a 
-                                              href={`https://line.me/R/msg/text/?${encodeURIComponent(`คุณได้รับคำเชิญการมาเยือนที่ ${profileData?.resident?.site_name || 'สถานที่'} (บ้านเลขที่ ${profileData?.resident?.house_number})\nสำหรับ: ${apptName}\n\nกรุณากรอกข้อมูลเพื่อความสะดวกรวดเร็วในการเข้าสถานที่ที่ลิงก์นี้:\n${isInitialized ? window.location.origin : 'https://pssgo.com'}/visitor/preregister?token=${apptToken}`)}`}
+                                              href={`https://line.me/R/msg/text/?${encodeURIComponent(`คุณได้รับคำเชิญการมาเยือนที่ ${profileData?.resident?.site_name || 'สถานที่'} (สถานที่/ห้อง ${profileData?.resident?.house_number})\nสำหรับ: ${apptName}\n\nกรุณากรอกข้อมูลเพื่อความสะดวกรวดเร็วในการเข้าสถานที่ที่ลิงก์นี้:\n${isInitialized ? window.location.origin : 'https://pssgo.com'}/visitor/preregister?token=${apptToken}`)}`}
                                               target="_blank"
                                               className="w-full bg-[#06C755] hover:bg-[#05b34c] text-white font-bold py-3.5 px-4 rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 text-sm"
                                           >
@@ -1278,7 +1278,7 @@ export default function LiffProfilePage() {
                               </div>
                               <div>
                                   <h1 className="text-xl font-bold tracking-tight">ประวัติเข้าออก</h1>
-                                  <p className="text-sm text-slate-500">ยานพาหนะของบ้านเลขที่ {profileData?.resident?.house_number}</p>
+                                  <p className="text-sm text-slate-500">ยานพาหนะของสถานที่/ห้อง {profileData?.resident?.house_number}</p>
                               </div>
                           </div>
 
@@ -1374,7 +1374,7 @@ export default function LiffProfilePage() {
 
                   <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200 mb-6 text-center shadow-inner">
                       <div className="text-sm font-bold text-[#06C755] mb-0.5">{profileData.resident.site_name || 'ไม่ระบุสถานที่'}</div>
-                      <div className="text-xs text-slate-500 mb-1">บ้านเลขที่</div>
+                      <div className="text-xs text-slate-500 mb-1">รหัสสถานที่/ห้อง</div>
                       <div className="text-3xl font-black text-slate-800">{profileData.resident.house_number}</div>
                   </div>
 
@@ -1575,7 +1575,7 @@ export default function LiffProfilePage() {
                           {result?.message}
                           {result?.success && result?.data && (
                               <div className="mt-2 pt-2 border-t border-[#06C755]/20 text-slate-600 font-normal space-y-1">
-                                <div>บ้านเลขที่: <span className="font-bold text-slate-800">{result?.data.houseNumber}</span></div>
+                                <div>สถานที่/ห้อง: <span className="font-bold text-slate-800">{result?.data.houseNumber}</span></div>
                                 <div>ทะเบียน: <span className="font-bold text-slate-800">{result?.data.licensePlate}</span></div>
                               </div>
                           )}

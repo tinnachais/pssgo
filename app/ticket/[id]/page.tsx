@@ -62,7 +62,7 @@ export default async function TicketPage({ params }: { params: Promise<{ id: str
                 <div className="w-full mt-1">
                     {visitor.house_number && (
                         <div className="w-full text-[12px] flex justify-between font-bold border-b border-black/50 border-dotted pb-0.5 mb-1.5">
-                            <span>บ้านเลขที่:</span>
+                            <span>สถานที่/ห้อง:</span>
                             <span>{visitor.house_number}</span>
                         </div>
                     )}
