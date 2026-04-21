@@ -39,7 +39,7 @@ export default async function RootLayout({
   const hasSession = cookieStore.has("pssgo_session");
   const headersList = await headers();
   const pathname = headersList.get("x-pathname") || "";
-  const isLiff = pathname.startsWith("/liff");
+  const isLiff = pathname === "/liff" || pathname.startsWith("/liff/");
   const isPreregister = pathname.startsWith("/visitor/preregister");
   const isWebPay = pathname.startsWith("/webpay");
   const isTicket = pathname.startsWith("/ticket");
