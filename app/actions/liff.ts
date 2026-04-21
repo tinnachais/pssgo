@@ -405,7 +405,7 @@ export async function generateFamilyInvite(ownerId: number, memberName: string) 
         const currentCount = parseInt(familyCountQuery.rows[0].count, 10);
         
         if (currentCount >= maxLimit) {
-             return { success: false, message: `ไม่สามารถเพิ่มชาวบ้านได้เกินโควต้า (${maxLimit} คนต่อบ้าน ตามจำนวนรถ)` };
+             return { success: false, message: `ไม่สามารถเพิ่มผู้ใช้ประจำได้เกินโควต้า (${maxLimit} คน ตามจำนวนรถ)` };
         }
 
         const inviteCode = "PSS-FAM-" + crypto.randomBytes(3).toString("hex").toUpperCase();
@@ -419,7 +419,7 @@ export async function generateFamilyInvite(ownerId: number, memberName: string) 
 
         await query(
             "INSERT INTO residents (house_number, license_plate, invite_code, owner_name, is_owner, parent_id) VALUES ($1, $2, $3, $4, $5, $6)",
-            [houseNumber, `สมาชิกร่วมบ้าน-${crypto.randomBytes(3).toString("hex")}`, inviteCode, memberName, false, ownerId]
+            [houseNumber, `ผู้ใช้ประจำ-${crypto.randomBytes(3).toString("hex")}`, inviteCode, memberName, false, ownerId]
         );
         
         return { success: true, message: "สร้างลิงก์เชิญสำเร็จ", inviteCode };

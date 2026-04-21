@@ -687,7 +687,7 @@ export default function LiffProfilePage() {
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                           </svg>
                       </div>
-                      <span className="text-[12px] font-semibold text-slate-700 text-center leading-tight tracking-tight">สมาชิกบ้าน</span>
+                      <span className="text-[12px] font-semibold text-slate-700 text-center leading-tight tracking-tight">ผู้ใช้ประจำ</span>
                   </div>
 
                   {/* Icon 6: Visitors */}
@@ -867,7 +867,7 @@ export default function LiffProfilePage() {
                           </div>
                           <div>
                               <div className="text-xs font-bold text-pink-600 mb-0.5">{profileData?.resident?.site_name || 'ไม่ระบุสถานที่'}</div>
-                              <h1 className="text-xl font-bold tracking-tight">สมาชิกสถานที่/ห้อง {profileData?.resident?.house_number}</h1>
+                              <h1 className="text-xl font-bold tracking-tight">ผู้ใช้ประจำสถานที่/ห้อง {profileData?.resident?.house_number}</h1>
                               <p className="text-sm text-slate-500">โควต้า: {currentCount} / {totalAllowed} คน</p>
                           </div>
                       </div>
@@ -877,7 +877,7 @@ export default function LiffProfilePage() {
                           <div className="flex gap-2">
                               <input 
                                   type="text"
-                                  placeholder="ชื่อสมาชิก"
+                                  placeholder="ชื่อผู้ใช้ประจำ"
                                   value={newMemberName}
                                   onChange={(e) => setNewMemberName(e.target.value)}
                                   disabled={isSubmitting || isLimitReached}
@@ -892,7 +892,7 @@ export default function LiffProfilePage() {
                               </button>
                           </div>
                           {isLimitReached && (
-                              <p className="text-xs text-rose-500 mt-2 font-medium">เพิ่มสมาชิกครบเต็มจำนวนโควต้าแล้ว</p>
+                              <p className="text-xs text-rose-500 mt-2 font-medium">เพิ่มผู้ใช้ประจำครบเต็มจำนวนโควต้าแล้ว</p>
                           )}
                           {familyResult && (
                               <div className={`mt-3 p-3 rounded-xl text-xs font-bold ${familyResult.success ? 'bg-green-50 text-green-600 border border-green-100' : 'bg-red-50 text-red-600 border border-red-100'}`}>
@@ -902,7 +902,7 @@ export default function LiffProfilePage() {
                                           <div>รหัสสำหรับเชิญ: <span className="text-green-700 select-all">{familyResult.inviteCode}</span></div>
                                           
                                           <a 
-                                            href={`https://line.me/R/msg/text/?${encodeURIComponent(`แจ้งเตือนจากเจ้าสถานที่/ห้อง ${profileData?.resident?.house_number}\nขอเรียนเชิญคุณเข้าร่วมบ้านใน PSS GO\nรหัสเชิญของคุณคือ: ${familyResult.inviteCode}\n\nกรุณากดลิงก์นี้เพื่อดำเนินการลงทะเบียน:\nhttps://liff.line.me/${process.env.NEXT_PUBLIC_LIFF_ID || "1234567890-AbcdEfgh"}?inviteCode=${familyResult.inviteCode}`)}`}
+                                            href={`https://line.me/R/msg/text/?${encodeURIComponent(`แจ้งเตือนจากเจ้าสถานที่/ห้อง ${profileData?.resident?.house_number}\nขอเรียนเชิญคุณเป็นผู้ใช้ประจำใน PSS GO\nรหัสเชิญของคุณคือ: ${familyResult.inviteCode}\n\nกรุณากดลิงก์นี้เพื่อดำเนินการลงทะเบียน:\nhttps://liff.line.me/${process.env.NEXT_PUBLIC_LIFF_ID || "1234567890-AbcdEfgh"}?inviteCode=${familyResult.inviteCode}`)}`}
                                             target="_blank"
                                             className="w-full py-2 bg-[#06C755] text-white rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-[#05b34c]"
                                           >
@@ -918,7 +918,7 @@ export default function LiffProfilePage() {
                       </form>
 
                       <div>
-                          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3 block">รายชื่อสมาชิก</h3>
+                          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3 block">รายชื่อผู้ใช้ประจำ</h3>
                           <div className="space-y-3">
                               {/* The Owner */}
                               <div className="bg-slate-50 border border-slate-100 rounded-xl p-3 flex items-center justify-between">
@@ -967,7 +967,7 @@ export default function LiffProfilePage() {
                                                   รอผู้ใช้งานกดรับคำเชิญ
                                               </div>
                                               <a 
-                                                  href={`https://line.me/R/msg/text/?${encodeURIComponent(`แจ้งเตือนจากเจ้าสถานที่/ห้อง ${profileData?.resident?.house_number}\nขอเรียนเชิญคุณเข้าร่วมบ้านใน PSS GO\nรหัสเชิญของคุณคือ: ${member.invite_code}\n\nกรุณากดลิงก์นี้เพื่อดำเนินการลงทะเบียน:\nhttps://liff.line.me/${process.env.NEXT_PUBLIC_LIFF_ID || "1234567890-AbcdEfgh"}?inviteCode=${member.invite_code}`)}`}
+                                                  href={`https://line.me/R/msg/text/?${encodeURIComponent(`แจ้งเตือนจากเจ้าสถานที่/ห้อง ${profileData?.resident?.house_number}\nขอเรียนเชิญคุณเป็นผู้ใช้ประจำใน PSS GO\nรหัสเชิญของคุณคือ: ${member.invite_code}\n\nกรุณากดลิงก์นี้เพื่อดำเนินการลงทะเบียน:\nhttps://liff.line.me/${process.env.NEXT_PUBLIC_LIFF_ID || "1234567890-AbcdEfgh"}?inviteCode=${member.invite_code}`)}`}
                                                   target="_blank"
                                                   className="bg-[#06C755]/10 text-[#06C755] hover:bg-[#06C755]/20 text-[10px] font-bold px-3 py-1 rounded border border-[#06C755]/30 flex items-center gap-1 transition-colors"
                                               >
