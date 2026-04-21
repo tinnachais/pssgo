@@ -121,7 +121,7 @@ export async function getLiffProfileData(lineUserId: string) {
 
         if (!resident.site_lat || !resident.site_lng || !resident.site_contact_link) {
             // Fallback to first site if site_id is missing or site has no lat/lng/contact
-            const fallbackSite = await query("SELECT lat, lng, name as site_name, contact_link FROM sites WHERE lat IS NOT NULL AND lat != '' AND lng IS NOT NULL AND lng != '' ORDER BY id ASC LIMIT 1");
+            const fallbackSite = await query("SELECT lat, lng, name as site_name, contact_link FROM sites WHERE lat IS NOT NULL AND lng IS NOT NULL ORDER BY id ASC LIMIT 1");
             if (fallbackSite.rows.length > 0) {
                 resident.site_lat = resident.site_lat || fallbackSite.rows[0].lat;
                 resident.site_lng = resident.site_lng || fallbackSite.rows[0].lng;
@@ -356,6 +356,7 @@ export async function linkLineAccount(formData: FormData) {
 
     revalidatePath("/residents");
     revalidatePath("/vehicles");
+    revalidatePath("/liff");
 
     return { 
         success: true, 
