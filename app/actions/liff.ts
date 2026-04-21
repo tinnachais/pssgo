@@ -159,7 +159,7 @@ export async function getLiffProfileData(lineUserId: string) {
                 maxVehicles = siteMax || 1;
             }
         }
-        const maxResidents = (siteLimitQuery.rows.length > 0 && siteLimitQuery.rows[0].max_residents) ? siteLimitQuery.rows[0].max_residents : 2;
+        const maxResidents = maxVehicles;
 
         const familyMembersQuery = await query("SELECT id, owner_name, line_user_id, line_display_name, line_picture_url, is_active, created_at, invite_code FROM residents WHERE parent_id = $1 ORDER BY created_at DESC", [resident.id]);
         const familyMembers = familyMembersQuery.rows;

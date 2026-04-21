@@ -839,7 +839,7 @@ export default function LiffProfilePage() {
           );
       }
 
-      const totalAllowed = profileData?.maxResidents || 2;
+      const totalAllowed = profileData?.maxResidents || profileData?.maxVehicles || 1;
       const currentFamily = profileData?.familyMembers || [];
       // Current count includes the owner themselves
       const currentCount = currentFamily.length + 1;
