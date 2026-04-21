@@ -132,6 +132,21 @@ export default async function SiteDetailsPage(props: { params: Promise<{ id: str
                     className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all font-medium"
                     />
                 </div>
+
+                <div className="space-y-2">
+                    <label htmlFor="type" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                    ประเภทของสถานที่ <span className="text-rose-500">*</span>
+                    </label>
+                    <select
+                    name="type"
+                    id="type"
+                    defaultValue={site.type || 'PRIVATE'}
+                    className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all font-medium appearance-none"
+                    >
+                        <option value="PRIVATE">ส่วนตัว (หมู่บ้าน, คอนโด, โฮมออฟฟิศ)</option>
+                        <option value="PUBLIC">สาธารณะ (ลานจอดรถ, ห้างสรรพสินค้า, ตลาด)</option>
+                    </select>
+                </div>
                 
                 <div className="space-y-2">
                     <label htmlFor="address" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
