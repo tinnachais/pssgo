@@ -207,7 +207,7 @@ export async function addSite(formData: FormData) {
 
           await query(
             "INSERT INTO residents (site_id, house_number, phone_number, owner_name, license_plate, invite_code) VALUES ($1, $2, $3, $4, $5, $6)", 
-            [siteId, 'นิติบุคคล', provider.phone_number || null, ownerName, `รอลงทะเบียน-${Date.now()}`, inviteCode]
+            [siteId, provider.name, provider.phone_number || null, ownerName, `รอลงทะเบียน-${Date.now()}`, inviteCode]
           );
       }
   }

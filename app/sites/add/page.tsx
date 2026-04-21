@@ -160,7 +160,7 @@ export default async function AddSitePage() {
                         </div>
                         <div className="flex flex-col">
                             <span className="text-sm font-semibold text-zinc-900 dark:text-white">สร้างข้อมูลเริ่มต้นอัตโนมัติ</span>
-                            <span className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">ระบบจะสร้าง โซนหลัก, ประตูหลัก, และนำข้อมูลผู้ให้บริการมาสร้างเป็นบ้านนิติบุคคลให้อัตโนมัติ เพื่อให้พร้อมใช้งานทันที</span>
+                            <span className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">ระบบจะสร้าง โซนหลัก, ประตูหลัก, และนำข้อมูลผู้ให้บริการมาบันทึกเป็นผู้เช่า/ร้าน/บริษัท ให้อัตโนมัติ เพื่อให้สถานที่พร้อมใช้งานทันที</span>
                         </div>
                     </label>
                 </div>
