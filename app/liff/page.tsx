@@ -609,8 +609,14 @@ export default function LiffProfilePage() {
                   <h1 className="text-xl font-bold text-slate-800 tracking-tight">สวัสดี, {profile?.displayName || 'ผู้เช่า/ร้าน/บริษัท'}</h1>
                   {profileData?.isRegistered && profileData?.resident && (
                       <div className="mt-1 flex flex-col items-center">
-                          <p className="text-sm font-bold text-[#06C755]">{profileData.resident.site_name || 'ไม่ระบุสถานที่'}</p>
-                          <p className="text-xs text-slate-500 font-medium mt-0.5">สถานที่/ห้อง {profileData.resident.house_number}</p>
+                          {profileData.resident.house_number?.startsWith("ผู้ใช้บริการ-") ? (
+                              <p className="text-xs font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full mt-1 border border-blue-100 shadow-sm">ผู้ใช้บริการทั่วไป</p>
+                          ) : (
+                              <>
+                                  <p className="text-sm font-bold text-[#06C755]">{profileData.resident.site_name || 'ไม่ระบุสถานที่'}</p>
+                                  <p className="text-xs text-slate-500 font-medium mt-0.5">สถานที่/ห้อง {profileData.resident.house_number}</p>
+                              </>
+                          )}
                       </div>
                   )}
               </div>
