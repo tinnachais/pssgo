@@ -8,15 +8,6 @@ import { getLiffNews, markNewsAsRead } from "@/app/actions/news";
 import logoPic from "@/public/logo.png";
 import PublicSitesMap from "@/app/components/PublicSitesMap";
 
-function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
-  const R = 6371; // Radius of the earth in km
-  const dLat = (lat2 - lat1) * (Math.PI / 180);
-  const dLon = (lon2 - lon1) * (Math.PI / 180);
-  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c; // Distance in km
-}
-
 export default function LiffProfilePage() {
   const { profile, liffObject } = useLiff();
   const [inviteCode, setInviteCode] = useState("");
@@ -193,34 +184,33 @@ export default function LiffProfilePage() {
       setIsLoadingNews(false);
   };
 
-  const loadPublicSites = async () => {
+  const loadPublicSites = () => {
       setIsLoadingSites(true);
-      const rows = await getPublicSites();
       
-      if (navigator.geolocation && rows.length > 0) {
+      const fetchSites = async (lat?: number, lng?: number) => {
+          const rows = await getPublicSites(lat, lng);
+          if (lat && lng && rows && rows.length > 0) {
+              rows.sort((a: any, b: any) => (a.distance || Infinity) - (b.distance || Infinity));
+          }
+          setPublicSites(rows || []);
+          setIsLoadingSites(false);
+      };
+
+      if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(
               (position) => {
                   const lat = position.coords.latitude;
                   const lng = position.coords.longitude;
                   setUserLocation({lat, lng});
-                  
-                  const sorted = rows.map(r => {
-                      if (!r.lat || !r.lng) return { ...r, distance: Infinity };
-                      return { ...r, distance: getDistance(lat, lng, parseFloat(r.lat), parseFloat(r.lng)) };
-                  }).sort((a,b) => a.distance - b.distance);
-                  
-                  setPublicSites(sorted);
-                  setIsLoadingSites(false);
+                  fetchSites(lat, lng);
               },
               (error) => {
-                  setPublicSites(rows);
-                  setIsLoadingSites(false);
+                  fetchSites();
               },
               { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
           );
       } else {
-          setPublicSites(rows || []);
-          setIsLoadingSites(false);
+          fetchSites();
       }
   };
 

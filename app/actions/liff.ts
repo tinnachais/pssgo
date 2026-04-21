@@ -556,12 +556,59 @@ export async function deleteLiffVehicle(vehicleId: number, residentId: number) {
     }
 }
 
-export async function getPublicSites() {
+function getHaversineDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+  const R = 6371; // Radius of the earth in km
+  const dLat = (lat2 - lat1) * (Math.PI / 180);
+  const dLon = (lon2 - lon1) * (Math.PI / 180);
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c; 
+}
+
+export async function getPublicSites(userLat?: number, userLng?: number) {
     try {
         const res = await query(
             "SELECT id, name, address, lat, lng FROM sites WHERE type = 'PUBLIC' AND is_active = true AND lat IS NOT NULL AND lng IS NOT NULL"
         );
-        return res.rows;
+        let sites = res.rows;
+
+        if (userLat && userLng && sites.length > 0) {
+            const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+            let usedGoogleMaps = false;
+            
+            if (apiKey) {
+                const destinations = sites.map(s => `${s.lat},${s.lng}`).join('|');
+                const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${userLat},${userLng}&destinations=${destinations}&key=${apiKey}`;
+                try {
+                    const gmRes = await fetch(url);
+                    const gmData = await gmRes.json();
+                    if (gmData.status === 'OK' && gmData.rows && gmData.rows.length > 0) {
+                        const elements = gmData.rows[0].elements;
+                        sites = sites.map((site, index) => {
+                            let distance = Infinity;
+                            if (elements[index] && elements[index].status === 'OK') {
+                                distance = elements[index].distance.value / 1000; // convert meters to km
+                            } else {
+                                distance = getHaversineDistance(userLat, userLng, parseFloat(site.lat), parseFloat(site.lng));
+                            }
+                            return { ...site, distance };
+                        });
+                        usedGoogleMaps = true;
+                    }
+                } catch (e) {
+                    console.error("Distance Matrix error", e);
+                }
+            }
+            
+            if (!usedGoogleMaps) {
+                 sites = sites.map((site) => ({
+                     ...site, 
+                     distance: getHaversineDistance(userLat, userLng, parseFloat(site.lat), parseFloat(site.lng))
+                 }));
+            }
+        }
+
+        return sites;
     } catch (e) {
         console.error("Failed to get public sites", e);
         return [];
