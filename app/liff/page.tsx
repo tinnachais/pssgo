@@ -8,6 +8,15 @@ import { getLiffNews, markNewsAsRead } from "@/app/actions/news";
 import logoPic from "@/public/logo.png";
 import PublicSitesMap from "@/app/components/PublicSitesMap";
 
+function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+  const R = 6371; // Radius of the earth in km
+  const dLat = (lat2 - lat1) * (Math.PI / 180);
+  const dLon = (lon2 - lon1) * (Math.PI / 180);
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c; // Distance in km
+}
+
 export default function LiffProfilePage() {
   const { profile, liffObject } = useLiff();
   const [inviteCode, setInviteCode] = useState("");
@@ -53,6 +62,7 @@ export default function LiffProfilePage() {
 
   const [publicSites, setPublicSites] = useState<any[]>([]);
   const [isLoadingSites, setIsLoadingSites] = useState(false);
+  const [userLocation, setUserLocation] = useState<{lat: number, lng: number} | null>(null);
 
   const [apptName, setApptName] = useState("");
   const [apptType, setApptType] = useState<"ONCE" | "RANGE">("ONCE");
@@ -186,8 +196,32 @@ export default function LiffProfilePage() {
   const loadPublicSites = async () => {
       setIsLoadingSites(true);
       const rows = await getPublicSites();
-      setPublicSites(rows || []);
-      setIsLoadingSites(false);
+      
+      if (navigator.geolocation && rows.length > 0) {
+          navigator.geolocation.getCurrentPosition(
+              (position) => {
+                  const lat = position.coords.latitude;
+                  const lng = position.coords.longitude;
+                  setUserLocation({lat, lng});
+                  
+                  const sorted = rows.map(r => {
+                      if (!r.lat || !r.lng) return { ...r, distance: Infinity };
+                      return { ...r, distance: getDistance(lat, lng, parseFloat(r.lat), parseFloat(r.lng)) };
+                  }).sort((a,b) => a.distance - b.distance);
+                  
+                  setPublicSites(sorted);
+                  setIsLoadingSites(false);
+              },
+              (error) => {
+                  setPublicSites(rows);
+                  setIsLoadingSites(false);
+              },
+              { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+          );
+      } else {
+          setPublicSites(rows || []);
+          setIsLoadingSites(false);
+      }
   };
 
   useEffect(() => {
@@ -794,7 +828,14 @@ export default function LiffProfilePage() {
                                                   </svg>
                                               </div>
                                               <div>
-                                                  <h3 className="font-bold text-slate-800 leading-tight">{site.name}</h3>
+                                                  <div className="flex items-center gap-2 flex-wrap">
+                                                      <h3 className="font-bold text-slate-800 leading-tight">{site.name}</h3>
+                                                      {site.distance && site.distance < Infinity && (
+                                                          <span className="text-[10px] font-bold bg-[#14b8a6]/10 text-[#14b8a6] px-2 py-0.5 rounded-md border border-[#14b8a6]/20 whitespace-nowrap">
+                                                              {site.distance.toFixed(1)} กม.
+                                                          </span>
+                                                      )}
+                                                  </div>
                                                   <p className="text-xs text-slate-500 mt-1 line-clamp-2">{site.address || 'ไม่มีรายละเอียดที่อยู่'}</p>
                                               </div>
                                           </div>
