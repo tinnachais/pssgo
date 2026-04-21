@@ -582,28 +582,10 @@ export default function LiffProfilePage() {
   }
 
   // --- Validate Expiration ---
-  if (profileData?.isExpired) {
-      return (
-          <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-slate-50">
-              <div className="bg-white p-8 rounded-2xl shadow-lg border border-rose-100 text-center max-w-sm">
-                  <div className="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-5">
-                      <svg className="w-10 h-10 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                      </svg>
-                  </div>
-                  <h2 className="text-xl font-black text-slate-800 mb-2">ระงับการให้บริการชั่วคราว</h2>
-                  <p className="text-sm text-slate-500 leading-relaxed max-w-xs mx-auto mb-8">
-                      ระบบสถานที่ของท่านยังไม่พร้อมใช้งาน หรือหมดอายุการใช้งานแล้ว กรุณาติดต่อนิติบุคคลเพื่อดำเนินการต่ออายุครับ
-                  </p>
-                  {profileData?.resident?.site_contact_link && (
-                      <a href={profileData.resident.site_contact_link} className="block w-full text-center bg-indigo-600 hover:bg-indigo-700 transition-colors font-bold py-3.5 px-4 rounded-xl text-white shadow-md shadow-indigo-600/20">
-                          ติดต่อเจ้าหน้าที่
-                      </a>
-                  )}
-              </div>
-          </div>
-      );
-  }
+  // Temporarily disabled expiration check
+  // if (profileData?.isExpired) {
+  // ...
+  // }
 
   // --- iOS Style Home Menu View ---
   if (view === 'menu') {
