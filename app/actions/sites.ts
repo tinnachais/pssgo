@@ -169,6 +169,10 @@ export async function addSite(formData: FormData) {
       // 2. Create default Gate
       await query("INSERT INTO gates (site_id, name) VALUES ($1, $2)", [siteId, 'ประตูหลัก']);
       
+      // Ensure providers table has these columns before querying
+      await query("ALTER TABLE providers ADD COLUMN IF NOT EXISTS contact_name TEXT DEFAULT NULL");
+      await query("ALTER TABLE providers ADD COLUMN IF NOT EXISTS phone_number TEXT DEFAULT NULL");
+      
       // 3. Create Resident using Provider Info
       const pRes = await query("SELECT name, phone_number, contact_name FROM providers WHERE id = $1", [parseInt(providerId, 10)]);
       if (pRes.rows.length > 0) {
