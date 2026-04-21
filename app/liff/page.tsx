@@ -77,7 +77,7 @@ export default function LiffProfilePage() {
   useEffect(() => {
     try {
         const savedView = localStorage.getItem('pssgo_liff_view') as any;
-        if (savedView === 'menu' || savedView === 'profile' || savedView === 'family' || savedView === 'appointment' || savedView === 'access' || savedView === 'news') {
+        if (['menu', 'profile', 'family', 'appointment', 'access', 'news', 'parking_map'].includes(savedView)) {
             setView(savedView);
         }
         
