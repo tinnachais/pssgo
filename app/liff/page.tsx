@@ -819,34 +819,34 @@ export default function LiffProfilePage() {
                                       <h3 className="font-bold text-slate-800 text-sm mt-4">สถานที่ทั้งหมด</h3>
                                       <div className="space-y-3">
                                           {publicSites.map((site: any) => (
-                                      <div key={site.id} className="bg-slate-50 border border-slate-100 rounded-2xl p-4 relative flex flex-col gap-3">
-                                          <div className="flex items-start gap-3">
-                                              <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#14b8a6] to-[#0f766e] flex items-center justify-center text-white shadow-sm flex-shrink-0">
-                                                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <div key={site.id} className="bg-white shadow-sm border border-slate-100 rounded-2xl p-3 flex items-center justify-between gap-3 relative">
+                                          <div className="flex items-center gap-3 flex-grow min-w-0">
+                                              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#14b8a6] to-[#0f766e] flex items-center justify-center text-white shadow-sm flex-shrink-0">
+                                                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                                   </svg>
                                               </div>
-                                              <div>
-                                                  <div className="flex items-center gap-2 flex-wrap">
-                                                      <h3 className="font-bold text-slate-800 leading-tight">{site.name}</h3>
+                                              <div className="flex flex-col min-w-0 flex-grow">
+                                                  <div className="flex items-center gap-1.5 flex-wrap">
+                                                      <h3 className="font-bold text-sm text-slate-800 leading-tight truncate">{site.name}</h3>
                                                       {site.distance && site.distance < Infinity && (
-                                                          <span className="text-[10px] font-bold bg-[#14b8a6]/10 text-[#14b8a6] px-2 py-0.5 rounded-md border border-[#14b8a6]/20 whitespace-nowrap">
+                                                          <span className="text-[10px] font-bold bg-[#14b8a6]/10 text-[#14b8a6] px-1.5 py-0.5 rounded-md border border-[#14b8a6]/20 whitespace-nowrap">
                                                               {site.distance.toFixed(1)} กม.
                                                           </span>
                                                       )}
                                                   </div>
-                                                  <p className="text-xs text-slate-500 mt-1 line-clamp-2">{site.address || 'ไม่มีรายละเอียดที่อยู่'}</p>
+                                                  <p className="text-[11px] text-slate-500 mt-0.5 truncate">{site.address || 'ไม่มีรายละเอียดที่อยู่'}</p>
                                               </div>
                                           </div>
                                           <button 
                                               onClick={() => window.location.href = `https://www.google.com/maps/dir/?api=1&destination=${site.lat},${site.lng}`}
-                                              className="w-full bg-[#14b8a6] text-white font-bold py-3 rounded-xl hover:bg-[#0f766e] active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-2"
+                                              className="flex-shrink-0 bg-[#14b8a6]/10 text-[#0f766e] hover:bg-[#14b8a6]/20 w-10 h-10 rounded-xl transition-colors flex items-center justify-center active:scale-95"
+                                              title="นำทางด้วย Google Maps"
                                           >
                                               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                                               </svg>
-                                              เปิดนำทาง (Google Maps)
                                           </button>
                                       </div>
                                   ))}
