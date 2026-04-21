@@ -13,17 +13,17 @@ export default function AIChatbot() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
-  // Hide completely on /liff pages
-  if (pathname?.startsWith('/liff')) {
-    return null;
-  }
-
   // Auto scroll to bottom
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages]);
+
+  // Hide completely on /liff pages (not /liff-users)
+  if (pathname === '/liff' || pathname?.startsWith('/liff/')) {
+    return null;
+  }
 
   return (
     <>
