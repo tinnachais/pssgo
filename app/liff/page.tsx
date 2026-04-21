@@ -6,6 +6,7 @@ import { linkLineAccount, analyzeCarImage, getLiffProfileData, generateFamilyInv
 import { getResidentAppointments, createVisitorInvite, cancelVisitorInvite } from "@/app/actions/visitors";
 import { getLiffNews, markNewsAsRead } from "@/app/actions/news";
 import logoPic from "@/public/logo.png";
+import PublicSitesMap from "@/app/components/PublicSitesMap";
 
 export default function LiffProfilePage() {
   const { profile, liffObject } = useLiff();
@@ -771,13 +772,19 @@ export default function LiffProfilePage() {
                               <p className="text-sm font-medium text-slate-500 mt-4">กำลังโหลดแผนที่...</p>
                           </div>
                       ) : (
-                          <div className="space-y-4 flex-grow">
+                          <div className="space-y-4 flex-grow flex flex-col">
                               {publicSites.length === 0 ? (
                                   <div className="bg-slate-50 rounded-2xl p-6 text-center border border-slate-100">
                                       <p className="text-slate-500 font-medium text-sm">ยังไม่มีจุดจอดรถสาธารณะที่เปิดให้บริการในขณะนี้</p>
                                   </div>
                               ) : (
-                                  publicSites.map((site: any) => (
+                                  <>
+                                      <div className="w-full h-[350px] relative z-0">
+                                          <PublicSitesMap sites={publicSites} />
+                                      </div>
+                                      <h3 className="font-bold text-slate-800 text-sm mt-4">สถานที่ทั้งหมด</h3>
+                                      <div className="space-y-3">
+                                          {publicSites.map((site: any) => (
                                       <div key={site.id} className="bg-slate-50 border border-slate-100 rounded-2xl p-4 relative flex flex-col gap-3">
                                           <div className="flex items-start gap-3">
                                               <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#14b8a6] to-[#0f766e] flex items-center justify-center text-white shadow-sm flex-shrink-0">
@@ -801,7 +808,9 @@ export default function LiffProfilePage() {
                                               เปิดนำทาง (Google Maps)
                                           </button>
                                       </div>
-                                  ))
+                                  ))}
+                                  </div>
+                              </>
                               )}
                           </div>
                       )}
