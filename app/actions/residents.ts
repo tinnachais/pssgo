@@ -7,7 +7,7 @@ import { cookies } from "next/headers";
 
 import { sendLineMessage, generateResidentFlexMessage } from "@/lib/line";
 
-// ดึงข้อมูลลูกบ้านทั้งหมด พร้อม ID รถที่ผูกติดอยู่
+// ดึงข้อมูลผู้เช่า/ร้าน/บริษัททั้งหมด พร้อม ID รถที่ผูกติดอยู่
 export async function getResidents() {
   // Ensure basic info and relationship columns exist
   await query("ALTER TABLE residents ADD COLUMN IF NOT EXISTS owner_name VARCHAR(150)");
@@ -114,7 +114,7 @@ export async function getResident(id: number) {
 
 import crypto from "crypto";
 
-// เพิ่มลูกบ้านใหม่พร้อมป้ายทะเบียน
+// เพิ่มผู้เช่า/ร้าน/บริษัทใหม่พร้อมป้ายทะเบียน
 export async function addResident(formData: FormData) {
   const houseNumber = formData.get("houseNumber") as string;
   const lpInput = formData.get("licensePlate") as string;
@@ -143,7 +143,7 @@ export async function addResident(formData: FormData) {
 
   await query("ALTER TABLE vehicles ADD COLUMN IF NOT EXISTS resident_id INT DEFAULT NULL");
 
-  // นำป้ายทะเบียนที่ลูกบ้านเพิ่ม ไปใส่ไว้ในตารางยานพาหนะรวมศูนย์ด้วย
+  // นำป้ายทะเบียนที่ผู้เช่า/ร้าน/บริษัทเพิ่ม ไปใส่ไว้ในตารางยานพาหนะรวมศูนย์ด้วย
   if (!licensePlate.startsWith("รอลงทะเบียน-")) {
     await query(
       "INSERT INTO vehicles (license_plate, house_number, resident_id) VALUES ($1, $2, $3)",
@@ -206,7 +206,7 @@ export async function updateHouseData(id: number, formData: FormData) {
   redirect("/residents");
 }
 
-// เปิด/ปิด สถานะรถของลูกบ้าน
+// เปิด/ปิด สถานะรถของผู้เช่า/ร้าน/บริษัท
 export async function toggleResidentStatus(id: number, isActive: boolean) {
   await query("UPDATE residents SET is_active = $1 WHERE id = $2", [isActive, id]);
   revalidatePath("/residents");

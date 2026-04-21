@@ -26,7 +26,7 @@ export default async function ResidentDetailsPage(props: { params: Promise<{ id:
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                กลับไปหน้าข้อมูลลูกบ้าน
+                กลับไปหน้าข้อมูลผู้เช่า/ร้าน/บริษัท
             </Link>
             <div className="flex items-center gap-4">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-500 to-cyan-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/20 font-bold text-2xl flex-shrink-0">

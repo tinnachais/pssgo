@@ -238,7 +238,7 @@ export default function SimulatorClient({ parkingFees, specialDays = [] }: { par
             <input type="checkbox" className="w-5 h-5 text-sky-600 rounded" checked={hasStamp} onChange={e => setHasStamp(e.target.checked)} />
             <div>
               <div className="text-sm font-bold text-sky-900 dark:text-sky-400">ใช้ E-Stamp?</div>
-              <div className="text-xs text-sky-700 dark:text-sky-500">จำลองกรณีลูกบ้านสแกนอนุมัติแล้ว</div>
+              <div className="text-xs text-sky-700 dark:text-sky-500">จำลองกรณีผู้เช่า/ร้าน/บริษัทสแกนอนุมัติแล้ว</div>
             </div>
           </label>
         </div>

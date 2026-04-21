@@ -123,7 +123,7 @@ export default async function SitesPage() {
                                         <span className="text-sm font-black text-blue-700 dark:text-blue-300">{site.total_houses || 0}</span>
                                     </div>
                                     <div className="flex flex-col items-center px-2 py-1 bg-pink-50 dark:bg-pink-900/20 rounded-lg border border-pink-100 dark:border-pink-800/50 min-w-[60px]">
-                                        <span className="text-xs text-pink-600 dark:text-pink-400 font-semibold mb-0.5">ลูกบ้าน</span>
+                                        <span className="text-xs text-pink-600 dark:text-pink-400 font-semibold mb-0.5">ผู้เช่า/ร้าน/บริษัท</span>
                                         <span className="text-sm font-black text-pink-700 dark:text-pink-300 flex items-baseline gap-0.5">
                                             {site.total_residents || 0}
                                         </span>

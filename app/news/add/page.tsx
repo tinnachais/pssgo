@@ -27,7 +27,7 @@ export default async function AddNewsPage() {
                         สร้างประกาศใหม่
                     </h1>
                     <p className="text-slate-500 dark:text-slate-400 mt-2 text-sm font-medium">
-                        ประกาศจะถูกแสดงไปยังลูกบ้านในสถานที่ที่ระบุผ่านหน้าแอปพลิเคชัน LINE
+                        ประกาศจะถูกแสดงไปยังผู้เช่า/ร้าน/บริษัทในสถานที่ที่ระบุผ่านหน้าแอปพลิเคชัน LINE
                     </p>
                 </div>
 

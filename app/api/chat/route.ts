@@ -27,7 +27,7 @@ export async function POST(req: Request) {
 การจัดการบุคคลผู้ใช้งาน:
 - บทบาทและสิทธิ์ (Roles): /roles
 - พนักงาน (Employees): /employees
-- ลูกบ้าน / ผู้พักอาศัย (Residents): /residents
+- ผู้เช่า/ร้าน/บริษัท / ผู้พักอาศัย (Residents): /residents
 - ผู้มาติดต่อ (Visitor): /visitor
 การจัดการยานพาหนะ:
 - บริหารจัดการยานพาหนะรวม: /vehicles

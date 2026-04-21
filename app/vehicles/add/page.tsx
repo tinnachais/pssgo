@@ -25,7 +25,7 @@ export default async function AddVehiclePage() {
             </Link>
             <h1 className="text-3xl font-bold tracking-tight">ลงทะเบียนยานพาหนะใหม่</h1>
             <p className="text-zinc-500 dark:text-zinc-400 mt-2">
-                เพิ่มข้อมูลยานพาหนะ ทะเบียนรถ โดยระบุลูกบ้านเจ้าของรถ
+                เพิ่มข้อมูลยานพาหนะ ทะเบียนรถ โดยระบุผู้เช่า/ร้าน/บริษัทเจ้าของรถ
             </p>
         </div>
 
@@ -35,7 +35,7 @@ export default async function AddVehiclePage() {
             <form action={addVehicle} className="space-y-6 relative z-10 max-w-2xl">
                 <div className="space-y-2">
                     <label htmlFor="residentId" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                    เลือกลูกบ้าน (บ้านเลขที่และเจ้าของรถ) <span className="text-rose-500">*</span>
+                    เลือกผู้เช่า/ร้าน/บริษัท (บ้านเลขที่และเจ้าของรถ) <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                         <select
@@ -44,7 +44,7 @@ export default async function AddVehiclePage() {
                         required
                         className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-rose-500/50 focus:border-rose-500 transition-all font-medium"
                         >
-                        <option value="">-- เลือกลูกบ้านจากฐานข้อมูล --</option>
+                        <option value="">-- เลือกผู้เช่า/ร้าน/บริษัทจากฐานข้อมูล --</option>
                         {activeResidents.map((r:any) => (
                             <option key={r.id} value={r.id}>
                             บ้านเลขที่ {r.house_number} {r.owner_name ? `(${r.owner_name})` : ''} {r.site_name ? `[${r.site_name}]` : ''}

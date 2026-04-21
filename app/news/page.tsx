@@ -28,7 +28,7 @@ export default async function NewsPage() {
                             </h1>
                         </div>
                         <p className="text-slate-500 dark:text-slate-400 mt-2 text-sm font-medium">
-                            จัดการประกาศและส่งข่าวสารไปยังลูกบ้านผ่าน LINE LIFF
+                            จัดการประกาศและส่งข่าวสารไปยังผู้เช่า/ร้าน/บริษัทผ่าน LINE LIFF
                         </p>
                     </div>
 

@@ -20,8 +20,8 @@ function walk(dir, callback) {
 walk(path.join(__dirname, 'app'), (filepath) => {
   fs.readFile(filepath, 'utf8', (err, data) => {
     if (err) throw err;
-    if (data.includes('โครงการ')) {
-      const result = data.replace(/โครงการ/g, 'สถานที่');
+    if (data.includes('ลูกบ้าน')) {
+      const result = data.replace(/ลูกบ้าน/g, 'ผู้เช่า/ร้าน/บริษัท');
       fs.writeFile(filepath, result, 'utf8', (err) => {
         if (err) throw err;
         console.log('Replaced in:', filepath);

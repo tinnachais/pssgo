@@ -22,7 +22,7 @@ export default async function ParkTypesPage() {
               <span className="px-3 py-1 bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 text-xs font-bold rounded-full uppercase tracking-wider">Park Types</span>
             </div>
             <p className="text-zinc-500 dark:text-zinc-400">
-              กำหนดหมวดหมู่ประเภทการจอด เช่น ผู้มาติดต่อ (Visitor), ลูกบ้าน (Resident)
+              กำหนดหมวดหมู่ประเภทการจอด เช่น ผู้มาติดต่อ (Visitor), ผู้เช่า/ร้าน/บริษัท (Resident)
             </p>
           </div>
           <Link href="/settings/park-types/add" className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md shadow-amber-600/20 hover:shadow-lg active:scale-[0.98] flex items-center justify-center gap-2 flex-shrink-0">

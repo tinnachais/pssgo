@@ -199,7 +199,7 @@ export async function linkLineAccount(formData: FormData) {
       return { success: false, message: "ข้อมูลไม่ครบถ้วน กรุณาลองใหม่" };
     }
 
-    // 1. ค้นหาลูกบ้านจาก Invite Code 
+    // 1. ค้นหาผู้เช่า/ร้าน/บริษัทจาก Invite Code 
     const res = await query(
       `SELECT id, house_number, license_plate, line_user_id, site_id FROM residents WHERE invite_code = $1 AND is_active = true`,
       [inviteCode]
@@ -313,9 +313,9 @@ export async function linkLineAccount(formData: FormData) {
                  }
              }
 
-             // Map default park_type "ลูกบ้าน" to park_type_id in DB
+             // Map default park_type "ผู้เช่า/ร้าน/บริษัท" to park_type_id in DB
              let parkTypeId: number | null = null;
-             const parkQuery = await query(`SELECT id FROM park_types WHERE name ILIKE '%ลูกบ้าน%' OR name ILIKE '%Resident%' OR code ILIKE '%RES%' LIMIT 1`);
+             const parkQuery = await query(`SELECT id FROM park_types WHERE name ILIKE '%ผู้เช่า/ร้าน/บริษัท%' OR name ILIKE '%Resident%' OR code ILIKE '%RES%' LIMIT 1`);
              if (parkQuery.rows.length > 0) {
                  parkTypeId = parkQuery.rows[0].id;
              }
@@ -333,7 +333,7 @@ export async function linkLineAccount(formData: FormData) {
              }
          }
 
-         // อัปเดตรูปแบบที่แสดงผลหน้าแรก (รวมจังหวัด) ของลูกบ้านให้เป็นคันล่าสุดที่เพิ่ม
+         // อัปเดตรูปแบบที่แสดงผลหน้าแรก (รวมจังหวัด) ของผู้เช่า/ร้าน/บริษัทให้เป็นคันล่าสุดที่เพิ่ม
          const residentPlateDisplay = detectedProvince && detectedProvince !== "N/A" ? `${detectedPlate} ${detectedProvince}` : detectedPlate;
          await query("UPDATE residents SET license_plate = $1 WHERE id = $2", [residentPlateDisplay, resident.id]);
     }
@@ -367,7 +367,7 @@ export async function generateFamilyInvite(ownerId: number, memberName: string) 
         const houseNumber = ownerRes.rows[0].house_number;
         const siteId = ownerRes.rows[0].site_id;
 
-        // ดึงโควต้า "จำนวนรถสูงสุดต่อบ้าน" มาใช้เป็นจำนวนลูกบ้านสูงสุดต่อบ้านด้วยเลย
+        // ดึงโควต้า "จำนวนรถสูงสุดต่อบ้าน" มาใช้เป็นจำนวนผู้เช่า/ร้าน/บริษัทสูงสุดต่อบ้านด้วยเลย
         let limitQuery;
         if (siteId) {
             limitQuery = await query(`SELECT max_vehicles FROM sites WHERE id = $1`, [siteId]);
@@ -411,7 +411,7 @@ export async function revokeFamilyMember(memberId: number, ownerId: number) {
         }
         
         await query("DELETE FROM residents WHERE id = $1 AND parent_id = $2", [memberId, ownerId]);
-        return { success: true, message: "ยกเลิกข้อมูลลูกบ้านสำเร็จ" };
+        return { success: true, message: "ยกเลิกข้อมูลผู้เช่า/ร้าน/บริษัทสำเร็จ" };
     } catch (err: any) {
         return { success: false, message: "การลบล้มเหลว: " + err.message };
     }

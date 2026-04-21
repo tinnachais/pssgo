@@ -24,9 +24,9 @@ export default async function AddResidentPage() {
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                กลับไปหน้าข้อมูลลูกบ้าน
+                กลับไปหน้าข้อมูลผู้เช่า/ร้าน/บริษัท
             </Link>
-            <h1 className="text-3xl font-bold tracking-tight">เพิ่มข้อมูลลูกบ้าน</h1>
+            <h1 className="text-3xl font-bold tracking-tight">เพิ่มข้อมูลผู้เช่า/ร้าน/บริษัท</h1>
             <p className="text-zinc-500 dark:text-zinc-400 mt-2">
                 บันทึกบ้านเลขที่และผูกข้อมูลเข้ากับสถานที่
             </p>

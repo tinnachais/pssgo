@@ -83,7 +83,7 @@ export default async function VehicleDetailsPage(props: { params: Promise<{ id: 
                 
                 <div className="space-y-2">
                     <label htmlFor="residentId" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                    เลือกลูกบ้าน (บ้านเลขที่และเจ้าของรถ) <span className="text-rose-500">*</span>
+                    เลือกผู้เช่า/ร้าน/บริษัท (บ้านเลขที่และเจ้าของรถ) <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                         <select
@@ -93,7 +93,7 @@ export default async function VehicleDetailsPage(props: { params: Promise<{ id: 
                         defaultValue={vehicle.resident_id || ''}
                         className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-rose-500/50 focus:border-rose-500 transition-all font-medium"
                         >
-                        <option value="">-- เลือกลูกบ้านจากฐานข้อมูล --</option>
+                        <option value="">-- เลือกผู้เช่า/ร้าน/บริษัทจากฐานข้อมูล --</option>
                         {activeResidents.map((r:any) => (
                             <option key={r.id} value={r.id}>
                             บ้านเลขที่ {r.house_number} {r.owner_name ? `(${r.owner_name})` : ''} {r.site_name ? `[${r.site_name}]` : ''}

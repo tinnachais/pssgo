@@ -121,7 +121,7 @@ export default function SimulatorClient({ gates = [] }: { gates?: any[] }) {
                     className="w-full rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 px-5 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all font-semibold"
                   >
                     <option value="VISITOR">ผู้มาติดต่อ (Visitor)</option>
-                    <option value="RESIDENT">ลูกบ้าน (Resident)</option>
+                    <option value="RESIDENT">ผู้เช่า/ร้าน/บริษัท (Resident)</option>
                   </select>
                 </div>
               </div>

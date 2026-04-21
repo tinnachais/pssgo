@@ -205,7 +205,7 @@ export async function addVisitor(formData: FormData) {
     [vehiclePlate || 'UNKNOWN', houseNumber || null, visitorId]
   );
 
-  // ส่งแจ้งเตือน LINE ไปยังลูกบ้านในบ้านเลขที่นั้น
+  // ส่งแจ้งเตือน LINE ไปยังผู้เช่า/ร้าน/บริษัทในบ้านเลขที่นั้น
   if (houseNumber) {
      try {
         const notifyRes = await query(
@@ -222,7 +222,7 @@ export async function addVisitor(formData: FormData) {
                 liffUrl,
                 siteName
             );
-            // ส่งหาลูกบ้านทุกคนในบ้านที่ผูก LINE ไว้
+            // ส่งหาผู้เช่า/ร้าน/บริษัททุกคนในบ้านที่ผูก LINE ไว้
             for (const r of notifyRes.rows) {
                 await sendLineMessage(r.line_user_id, messages);
             }
@@ -241,7 +241,7 @@ export async function checkoutVisitor(id: number) {
   const visitorRes = await query("SELECT full_name, purpose, house_number, vehicle_plate, vehicle_province, vehicle_color, e_stamp, image_url, invite_token, card_type FROM visitors WHERE id = $1", [id]);
   
   if (visitorRes.rows.length > 0 && !visitorRes.rows[0].e_stamp) {
-      return { success: false, message: "ไม่อนุญาตให้ออก: ต้องได้รับการประทับตรา (E-Stamp) จากลูกบ้านก่อน" };
+      return { success: false, message: "ไม่อนุญาตให้ออก: ต้องได้รับการประทับตรา (E-Stamp) จากผู้เช่า/ร้าน/บริษัทก่อน" };
   }
 
   await query("UPDATE visitors SET status = 'OUT', check_out_time = CURRENT_TIMESTAMP WHERE id = $1", [id]);
@@ -462,7 +462,7 @@ export async function confirmVisitorIn(id: number) {
           [visitor.vehicle_plate || 'UNKNOWN', visitor.house_number || null, id]
       );
 
-      // แจ้งเตือนลูกบ้านเมื่อแขกนัดหมายมาถึง
+      // แจ้งเตือนผู้เช่า/ร้าน/บริษัทเมื่อแขกนัดหมายมาถึง
       if (visitor.house_number) {
          try {
             const notifyRes = await query("SELECT r.line_user_id, s.name as site_name FROM residents r LEFT JOIN sites s ON r.site_id = s.id WHERE r.house_number = $1 AND r.is_active = true AND r.line_user_id IS NOT NULL", [visitor.house_number]);

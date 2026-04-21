@@ -124,7 +124,7 @@ export default async function WebPayPage({ params }: { params: Promise<{ id: str
     // KIOSK AUTO-CHECKOUT LOGIC: If checking WebPay yields 0 fee, but they are lacking e_stamp_date (not stamped yet)
     // we explicitly grant them the time they stayed + buffer limit automatically by updating the DB!
     if (fee === 0 && !visitor.e_stamp_date && visitor.check_in_time) {
-        // อัปเดตเฉพาะ e_stamp_date เพื่อใช้เก็บเป็นเวลาเริ่มนับ Buffer Time โดยไม่เปลี่ยนค่า e_stamp (เพราะไม่ใช่การประทับตราจากลูกบ้าน)
+        // อัปเดตเฉพาะ e_stamp_date เพื่อใช้เก็บเป็นเวลาเริ่มนับ Buffer Time โดยไม่เปลี่ยนค่า e_stamp (เพราะไม่ใช่การประทับตราจากผู้เช่า/ร้าน/บริษัท)
         await query("UPDATE visitors SET e_stamp_date = CURRENT_TIMESTAMP WHERE id = $1", [visitorId]);
         visitor.e_stamp_date = new Date(); // Re-assign for local re-calculation
         const recalcData = calculateFeeData();

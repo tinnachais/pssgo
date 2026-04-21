@@ -111,7 +111,7 @@ export default function LiveMonitorClient({ initialLogs, initialStats }: { initi
             <div className="text-[11px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-1">รถเข้า (วันนี้)</div>
             <div className="text-3xl font-black text-zinc-900 dark:text-white font-mono mb-2">{stats.total_in}</div>
             <div className="flex items-center gap-3 text-[10px] font-bold text-zinc-500 bg-zinc-100 dark:bg-zinc-800/50 px-3 py-1 rounded-full">
-                <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>ลูกบ้าน: {stats.in_resident || 0}</span>
+                <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>ผู้เช่า/ร้าน/บริษัท: {stats.in_resident || 0}</span>
                 <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>ผู้มาติดต่อ: {stats.in_visitor || 0}</span>
             </div>
          </div>
@@ -122,7 +122,7 @@ export default function LiveMonitorClient({ initialLogs, initialStats }: { initi
             <div className="text-[11px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-1">รถออก (วันนี้)</div>
             <div className="text-3xl font-black text-zinc-900 dark:text-white font-mono mb-2">{stats.total_out}</div>
             <div className="flex items-center gap-3 text-[10px] font-bold text-zinc-500 bg-zinc-100 dark:bg-zinc-800/50 px-3 py-1 rounded-full">
-                <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>ลูกบ้าน: {stats.out_resident || 0}</span>
+                <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>ผู้เช่า/ร้าน/บริษัท: {stats.out_resident || 0}</span>
                 <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>ผู้มาติดต่อ: {stats.out_visitor || 0}</span>
             </div>
          </div>
@@ -133,7 +133,7 @@ export default function LiveMonitorClient({ initialLogs, initialStats }: { initi
             <div className="text-[11px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-1">รอดำเนินการ / คงค้าง</div>
             <div className="text-3xl font-black text-zinc-900 dark:text-white font-mono mb-2">{stats.currently_inside}</div>
             <div className="flex items-center gap-3 text-[10px] font-bold text-zinc-500 bg-zinc-100 dark:bg-zinc-800/50 px-3 py-1 rounded-full">
-                <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>ลูกบ้าน: {stats.inside_resident || 0}</span>
+                <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>ผู้เช่า/ร้าน/บริษัท: {stats.inside_resident || 0}</span>
                 <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>ผู้มาติดต่อ: {stats.inside_visitor || 0}</span>
             </div>
          </div>
@@ -213,7 +213,7 @@ export default function LiveMonitorClient({ initialLogs, initialStats }: { initi
                                 {isResident ? (
                                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400 rounded-md text-[11px] font-black tracking-widest uppercase border border-blue-200 dark:border-blue-500/30">
                                         <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
-                                        {log.park_type_name || 'ลูกบ้าน'}
+                                        {log.park_type_name || 'ผู้เช่า/ร้าน/บริษัท'}
                                     </span>
                                 ) : isVisitor ? (
                                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400 rounded-md text-[11px] font-black tracking-widest uppercase border border-amber-200 dark:border-amber-500/30">

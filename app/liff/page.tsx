@@ -13,7 +13,7 @@ export default function LiffProfilePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   
-  // สถานะตรวจสอบข้อมูลลูกบ้านที่มีอยู่แล้ว
+  // สถานะตรวจสอบข้อมูลผู้เช่า/ร้าน/บริษัทที่มีอยู่แล้ว
   const [isCheckingProfile, setIsCheckingProfile] = useState(true);
   const [profileData, setProfileData] = useState<any>(null);
   const [showAddCarForm, setShowAddCarForm] = useState(false);
@@ -331,7 +331,7 @@ export default function LiffProfilePage() {
   };
 
   const handleRevokeFamily = async (memberId: number) => {
-      if (!confirm("ยืนยันการยกเลิกสิทธิ์ลูกบ้านรายนี้?")) return;
+      if (!confirm("ยืนยันการยกเลิกสิทธิ์ผู้เช่า/ร้าน/บริษัทรายนี้?")) return;
       
       const res = await revokeFamilyMember(memberId, profileData.resident.id);
       if (res.success) {
@@ -616,7 +616,7 @@ export default function LiffProfilePage() {
                     <span className="font-extrabold text-xl tracking-tight text-slate-800">PSS GO</span>
                   </div>
                   <img src={profile?.pictureUrl || "https://via.placeholder.com/150"} alt="Profile" className="w-[88px] h-[88px] rounded-full border-4 border-white shadow-md mb-3 object-cover" />
-                  <h1 className="text-xl font-bold text-slate-800 tracking-tight">สวัสดี, {profile?.displayName || 'ลูกบ้าน'}</h1>
+                  <h1 className="text-xl font-bold text-slate-800 tracking-tight">สวัสดี, {profile?.displayName || 'ผู้เช่า/ร้าน/บริษัท'}</h1>
                   {profileData?.isRegistered && profileData?.resident && (
                       <div className="mt-1 flex flex-col items-center">
                           <p className="text-sm font-bold text-[#06C755]">{profileData.resident.site_name || 'ไม่ระบุสถานที่'}</p>
@@ -870,7 +870,7 @@ export default function LiffProfilePage() {
                       </div>
 
                       <form onSubmit={handleInviteFamily} className="mb-6">
-                          <label className="block text-xs font-bold text-slate-600 mb-2">เชิญลูกบ้านเพิ่ม</label>
+                          <label className="block text-xs font-bold text-slate-600 mb-2">เชิญผู้เช่า/ร้าน/บริษัทเพิ่ม</label>
                           <div className="flex gap-2">
                               <input 
                                   type="text"
@@ -1561,7 +1561,7 @@ export default function LiffProfilePage() {
                   </div>
                   <div className="flex items-center justify-between mb-4">
                       <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
-                          {profileData?.isRegistered ? 'เพิ่มรถคันใหม่' : 'ลงทะเบียนผูกบัญชีลูกบ้าน'}
+                          {profileData?.isRegistered ? 'เพิ่มรถคันใหม่' : 'ลงทะเบียนผูกบัญชีผู้เช่า/ร้าน/บริษัท'}
                       </h2>
                       {profileData?.isRegistered && (
                           <button onClick={() => setShowAddCarForm(false)} className="text-xs font-bold text-slate-500 hover:text-slate-800">

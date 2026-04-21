@@ -132,7 +132,7 @@ export default function ParkingFeeForm({ initialData, parkTypes = [], revenueTyp
               <input
                 type="text" required
                 value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})}
-                placeholder="เช่น ผู้มาติดต่อทั่วไป, ลูกบ้านรายเดือน"
+                placeholder="เช่น ผู้มาติดต่อทั่วไป, ผู้เช่า/ร้าน/บริษัทรายเดือน"
                 className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all"
               />
             </div>
@@ -237,7 +237,7 @@ export default function ParkingFeeForm({ initialData, parkTypes = [], revenueTyp
 
             <div className="space-y-2 bg-sky-50/50 dark:bg-sky-500/5 p-4 rounded-2xl border border-sky-100 dark:border-sky-500/10">
               <label className="block text-sm font-semibold text-sky-900 dark:text-sky-400">เมื่อ E-Stamp (ได้จอดฟรี X ชั่วโมง)</label>
-              <p className="text-xs text-sky-700/70 dark:text-sky-500/70 mb-3">เมื่อลูกบ้านสแกน QR อนุมัติการเข้าพบ</p>
+              <p className="text-xs text-sky-700/70 dark:text-sky-500/70 mb-3">เมื่อผู้เช่า/ร้าน/บริษัทสแกน QR อนุมัติการเข้าพบ</p>
               <div className="flex items-center gap-2">
                 <input
                   type="number" min="0" value={formData.free_hours_with_stamp} onChange={e => setFormData({...formData, free_hours_with_stamp: Number(e.target.value)})}
@@ -417,7 +417,7 @@ export default function ParkingFeeForm({ initialData, parkTypes = [], revenueTyp
           {formData.is_subscription && (
             <div className="space-y-4 bg-purple-50/50 dark:bg-purple-500/5 p-4 rounded-2xl border border-purple-100 dark:border-purple-500/10 animate-in fade-in duration-300">
               <label className="block text-sm font-semibold text-purple-900 dark:text-purple-400">เหมาจ่ายรายเดือน (บาท/เดือน)</label>
-              <p className="text-xs text-purple-700/70 dark:text-purple-500/70 mb-3">เช่น ค่าเช่าที่จอดรถคันที่ 2 ของลูกบ้าน เดือนละ 1000 บาท</p>
+              <p className="text-xs text-purple-700/70 dark:text-purple-500/70 mb-3">เช่น ค่าเช่าที่จอดรถคันที่ 2 ของผู้เช่า/ร้าน/บริษัท เดือนละ 1000 บาท</p>
               <input
                 type="number" min="0" value={formData.monthly_rate} onChange={e => setFormData({...formData, monthly_rate: e.target.value})}
                 placeholder="เช่น 1500"
