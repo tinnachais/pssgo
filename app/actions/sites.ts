@@ -233,10 +233,15 @@ export async function addSite(formData: FormData) {
       const pkgQuery = await query("SELECT monthly_price FROM packages WHERE id = $1", [parseInt(packageId, 10)]);
       if (pkgQuery.rows.length > 0) {
           const pkg = pkgQuery.rows[0];
-          let amount = parseFloat(pkg.monthly_price);
-          
           let periodStart = new Date();
           let periodEnd = new Date(periodStart.getFullYear(), periodStart.getMonth() + 1, 0, 23, 59, 59, 999);
+          
+          let fullAmount = parseFloat(pkg.monthly_price);
+          let totalDaysInMonth = periodEnd.getDate();
+          let remainingDays = totalDaysInMonth - periodStart.getDate() + 1;
+          
+          let amount = (fullAmount / totalDaysInMonth) * remainingDays;
+          amount = Math.round(amount * 100) / 100; // Pro-rate 2 decimal places
           
           await query(
             "INSERT INTO provider_revenues (site_id, package_id, billing_cycle, amount, status, period_start, period_end) VALUES ($1, $2, $3, $4, $5, $6, $7)",
