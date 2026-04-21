@@ -1604,18 +1604,6 @@ export default function LiffProfilePage() {
 
                   <form onSubmit={handleSubmit} className="space-y-4 text-left">
                     {!profileData?.isRegistered && (
-                        <div>
-                        <label className="block text-sm font-bold text-slate-700 mb-1">รหัสเชิญ (Invite Code)</label>
-                        <p className="text-xs text-slate-500 mb-2">กรุณากรอกรหัสที่คุณได้รับจากนิติบุคคล/ส่วนกลาง เพื่อยืนยันตัวตน</p>
-                        <input 
-                            type="text" 
-                            disabled={result?.success || isSubmitting || isAnalyzing}
-                            value={inviteCode}
-                            onChange={(e) => setInviteCode(e.target.value)}
-                            placeholder="เว้นว่างได้ หากคุณเป็นผู้ใช้บริการทั่วไป"
-                            className="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl focus:ring-[#06C755] focus:border-[#06C755] block p-3.5 transition-colors disabled:opacity-50 font-mono tracking-wider mb-4"
-                        />
-                        
                         <div className="space-y-3 mb-6 bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-left">
                             <h3 className="text-sm font-bold text-slate-700 border-b border-slate-100 pb-2">ข้อมูลส่วนตัว</h3>
                             <div>
@@ -1642,7 +1630,6 @@ export default function LiffProfilePage() {
                                     className="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-lg focus:ring-[#06C755] focus:border-[#06C755] block p-2.5 transition-colors disabled:opacity-50 font-mono"
                                 />
                             </div>
-                        </div>
                         </div>
                     )}
 
@@ -1736,6 +1723,21 @@ export default function LiffProfilePage() {
                         </div>
                     </div>
                     </div>
+                    
+                    {!profileData?.isRegistered && (
+                        <div className="pt-2 border-t border-slate-200 mt-2">
+                            <label className="block text-sm font-bold text-slate-700 mb-1">รหัสเชิญ (Invite Code)</label>
+                            <p className="text-xs text-slate-500 mb-2">หากหน่วยงานของคุณมีรหัสประจำสถานที่ กรุณากรอกรหัสที่คุณได้รับ</p>
+                            <input 
+                                type="text" 
+                                disabled={result?.success || isSubmitting || isAnalyzing}
+                                value={inviteCode}
+                                onChange={(e) => setInviteCode(e.target.value)}
+                                placeholder="เว้นว่างได้ หากคุณเป็นผู้ใช้บริการทั่วไป"
+                                className="w-full bg-white border border-slate-200 text-slate-800 text-sm rounded-xl focus:ring-[#06C755] focus:border-[#06C755] block p-3.5 transition-colors disabled:opacity-50 font-mono tracking-wider"
+                            />
+                        </div>
+                    )}
                     
                     {!result?.success && (
                         <button 
