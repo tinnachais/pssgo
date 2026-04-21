@@ -94,6 +94,46 @@ export default async function ProviderDetailsPage(props: { params: Promise<{ id:
                 </div>
 
                 <div className="space-y-2">
+                    <label htmlFor="contactName" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                    ชื่อผู้ติดต่อ
+                    </label>
+                    <input
+                    type="text"
+                    name="contactName"
+                    id="contactName"
+                    defaultValue={provider.contact_name || ''}
+                    className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-all font-medium"
+                    />
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                        <label htmlFor="phoneNumber" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                        เบอร์โทรศัพท์
+                        </label>
+                        <input
+                        type="tel"
+                        name="phoneNumber"
+                        id="phoneNumber"
+                        defaultValue={provider.phone_number || ''}
+                        className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-all font-medium"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <label htmlFor="email" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                        อีเมล์
+                        </label>
+                        <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        defaultValue={provider.email || ''}
+                        className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-all font-medium"
+                        />
+                    </div>
+                </div>
+
+                <div className="space-y-2">
                     <label htmlFor="invoiceAdvanceDays" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
                     สร้างใบแจ้งหนี้อัตโนมัติล่วงหน้า (วัน)
                     </label>

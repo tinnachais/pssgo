@@ -73,7 +73,11 @@ export default async function ProvidersPage() {
                                 </div>
                                 <div>
                                 <div className="text-sm font-bold text-zinc-900 dark:text-white line-clamp-1">{provider.name}</div>
-                                <div className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5 line-clamp-1">{provider.address || 'ไม่มีข้อมูลที่อยู่'}</div>
+                                <div className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 line-clamp-1">
+                                    {provider.contact_name ? `ผู้ติดต่อ: ${provider.contact_name}` : 'ยังไม่ระบุผู้ติดต่อ'}
+                                    {provider.phone_number && ` • โทร: ${provider.phone_number}`}
+                                </div>
+                                <div className="text-xs text-zinc-400 dark:text-zinc-500 mt-0.5 line-clamp-1">{provider.address || 'ไม่มีข้อมูลที่อยู่'}</div>
                                 </div>
                             </div>
                             </td>

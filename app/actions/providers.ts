@@ -74,6 +74,9 @@ export async function addProvider(formData: FormData) {
   const name = formData.get("name") as string;
   const taxId = formData.get("taxId") as string;
   const address = formData.get("address") as string;
+  const contactName = formData.get("contactName") as string;
+  const phoneNumber = formData.get("phoneNumber") as string;
+  const email = formData.get("email") as string;
   const advanceDaysStr = formData.get("invoiceAdvanceDays") as string;
   const advanceDays = advanceDaysStr ? parseInt(advanceDaysStr, 10) : 7;
 
@@ -82,10 +85,13 @@ export async function addProvider(formData: FormData) {
   }
 
   await query("ALTER TABLE providers ADD COLUMN IF NOT EXISTS invoice_advance_days INT DEFAULT 7");
+  await query("ALTER TABLE providers ADD COLUMN IF NOT EXISTS contact_name TEXT DEFAULT NULL");
+  await query("ALTER TABLE providers ADD COLUMN IF NOT EXISTS phone_number TEXT DEFAULT NULL");
+  await query("ALTER TABLE providers ADD COLUMN IF NOT EXISTS email TEXT DEFAULT NULL");
 
   await query(
-    "INSERT INTO providers (name, tax_id, address, invoice_advance_days) VALUES ($1, $2, $3, $4)",
-    [name, taxId || null, address || null, advanceDays]
+    "INSERT INTO providers (name, tax_id, address, invoice_advance_days, contact_name, phone_number, email) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+    [name, taxId || null, address || null, advanceDays, contactName || null, phoneNumber || null, email || null]
   );
   revalidatePath("/settings/providers");
   redirect("/settings/providers");
@@ -105,6 +111,9 @@ export async function updateProvider(id: number, formData: FormData) {
   const name = formData.get("name") as string;
   const taxId = formData.get("taxId") as string;
   const address = formData.get("address") as string;
+  const contactName = formData.get("contactName") as string;
+  const phoneNumber = formData.get("phoneNumber") as string;
+  const email = formData.get("email") as string;
   const advanceDaysStr = formData.get("invoiceAdvanceDays") as string;
   const advanceDays = advanceDaysStr ? parseInt(advanceDaysStr, 10) : 7;
 
@@ -113,10 +122,13 @@ export async function updateProvider(id: number, formData: FormData) {
   }
 
   await query("ALTER TABLE providers ADD COLUMN IF NOT EXISTS invoice_advance_days INT DEFAULT 7");
+  await query("ALTER TABLE providers ADD COLUMN IF NOT EXISTS contact_name TEXT DEFAULT NULL");
+  await query("ALTER TABLE providers ADD COLUMN IF NOT EXISTS phone_number TEXT DEFAULT NULL");
+  await query("ALTER TABLE providers ADD COLUMN IF NOT EXISTS email TEXT DEFAULT NULL");
 
   await query(
-    "UPDATE providers SET name = $1, tax_id = $2, address = $3, invoice_advance_days = $4 WHERE id = $5",
-    [name, taxId || null, address || null, advanceDays, id]
+    "UPDATE providers SET name = $1, tax_id = $2, address = $3, invoice_advance_days = $4, contact_name = $5, phone_number = $6, email = $7 WHERE id = $8",
+    [name, taxId || null, address || null, advanceDays, contactName || null, phoneNumber || null, email || null, id]
   );
   revalidatePath("/settings/providers");
   redirect("/settings/providers");
