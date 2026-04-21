@@ -8,6 +8,15 @@ import { setSelectedSite } from "@/app/actions/site-selection";
 import Image from "next/image";
 
 const allLinks = [
+    {
+      id: "packages",
+      name: "แพ็กเกจ & บิลลิ่ง",
+      icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4",
+      children: [
+        { name: "ระบบแพ็กเกจ", href: "/packages" },
+        { name: "รายรับ Provider (บิลลิ่ง)", href: "/provider-revenues" },
+      ]
+    },
     { id: "topology", name: "ผังสถานที่", href: "/topology", icon: "M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" },
     { id: "site-map", name: "แผนที่สถานที่", href: "/site-map", icon: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" },
     { id: "monitor", name: "รายการเข้าออก", href: "/monitor", icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" },
@@ -20,15 +29,6 @@ const allLinks = [
         { name: "โซน", href: "/zones" },
         { name: "จุดบริการ", href: "/gates" },
         { name: "ผู้เช่า/ร้าน/บริษัท", href: "/residents" },
-      ]
-    },
-    {
-      id: "packages",
-      name: "แพ็กเกจ & บิลลิ่ง",
-      icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4",
-      children: [
-        { name: "ระบบแพ็กเกจ", href: "/packages" },
-        { name: "รายรับ Provider (บิลลิ่ง)", href: "/provider-revenues" },
       ]
     },
     { id: "vehicles", name: "จัดการรถ", href: "/vehicles", icon: "M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" },
