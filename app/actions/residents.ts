@@ -283,3 +283,57 @@ export async function logResidentAccess(licensePlate: string, houseNumber: strin
 
   revalidatePath("/residents");
 }
+
+// ดึงข้อมูลผู้ใช้งานที่เชื่อมต่อผ่าน LINE LIFF
+export async function getLiffUsers() {
+  const cookieStore = await cookies();
+  const sessionData = cookieStore.get("pssgo_session")?.value;
+  let allowedProviderIds: number[] | null = null;
+  const selectedSiteId = cookieStore.get("pssgo_selected_site_id")?.value;
+
+  if (sessionData) {
+     try {
+       const decoded = JSON.parse(Buffer.from(sessionData, 'base64').toString('utf8'));
+       if (decoded.userId && decoded.userId !== "admin") {
+           const { getUser } = await import("./users");
+           const u = await getUser(Number(decoded.userId));
+           if (u && Array.isArray(u.provider_ids) && u.provider_ids.length > 0) {
+               allowedProviderIds = u.provider_ids;
+           }
+       }
+     } catch (e) {}
+  }
+
+  let queryStr = `
+    SELECT r.*, s.name as site_name,
+      (SELECT json_agg(json_build_object('id', v.id, 'license_plate', v.license_plate, 'province', v.province, 'is_active', v.is_active)) FROM vehicles v WHERE v.resident_id = r.id) as user_vehicles
+    FROM residents r 
+    LEFT JOIN sites s ON r.site_id = s.id
+    WHERE r.line_user_id IS NOT NULL AND r.line_user_id != ''
+  `;
+
+  const params: any[] = [];
+  let paramCount = 1;
+
+  if (selectedSiteId && selectedSiteId !== "all") {
+      queryStr += ` AND r.site_id = $${paramCount}`;
+      params.push(parseInt(selectedSiteId, 10));
+      paramCount++;
+  }
+
+  if (allowedProviderIds && allowedProviderIds.length > 0) {
+      if (allowedProviderIds.length === 1) {
+          queryStr += ` AND s.provider_id = $${paramCount}`;
+          params.push(allowedProviderIds[0]);
+          paramCount++;
+      } else {
+          queryStr += ` AND s.provider_id = ANY($${paramCount})`;
+          params.push(allowedProviderIds);
+          paramCount++;
+      }
+  }
+
+  queryStr += ` ORDER BY r.created_at DESC`;
+  const res = await query(queryStr, params);
+  return res.rows;
+}
