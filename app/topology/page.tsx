@@ -14,11 +14,14 @@ export default async function TopologyPage() {
   let gates: any[] = [];
   let types: any[] = [];
 
-  const { cookies } = await import("next/headers");
+const { cookies } = await import("next/headers");
   const cookieStore = await cookies();
   const sessionData = cookieStore.get("pssgo_session")?.value;
   let allowedProviderIds: number[] | null = null;
+  let allowedSiteIds: number[] | null = null;
   let isAdmin = false;
+  let isLevel3 = false;
+
   if (sessionData) {
       try {
           const decoded = JSON.parse(Buffer.from(sessionData, 'base64').toString('utf8'));
@@ -27,10 +30,22 @@ export default async function TopologyPage() {
           } else if (decoded.userId) {
               const { getUser } = await import("@/app/actions/users");
               const u = await getUser(Number(decoded.userId));
-              if (u && Array.isArray(u.provider_ids) && u.provider_ids.length > 0) {
-                 allowedProviderIds = u.provider_ids;
-              } else {
-                 allowedProviderIds = [];
+              if (u) {
+                  if (u.level === "Level3") {
+                      isLevel3 = true;
+                      allowedSiteIds = Array.isArray(u.site_ids) ? u.site_ids : [];
+                  } else if (u.level === "Level2") {
+                      allowedProviderIds = Array.isArray(u.provider_ids) ? u.provider_ids : [];
+                  } else if (u.level === "Level1") {
+                      isAdmin = true;
+                  } else {
+                      // Fallback for older users without explicit level
+                      if (Array.isArray(u.provider_ids) && u.provider_ids.length > 0) {
+                          allowedProviderIds = u.provider_ids;
+                      } else {
+                          // No explicit permissions, assume restricted
+                      }
+                  }
               }
           }
       } catch (e) {}
@@ -39,10 +54,21 @@ export default async function TopologyPage() {
   try {
     let pQueryStr = "SELECT * FROM providers ORDER BY created_at ASC";
     let pParams: any[] = [];
-    if (!isAdmin && allowedProviderIds) {
-        if (allowedProviderIds.length > 0) {
-             pQueryStr = "SELECT * FROM providers WHERE id = ANY($1::int[]) ORDER BY created_at ASC";
-             pParams = [allowedProviderIds];
+    if (!isAdmin) {
+        if (isLevel3) {
+            if (allowedSiteIds && allowedSiteIds.length > 0) {
+                 pQueryStr = "SELECT * FROM providers WHERE id IN (SELECT provider_id FROM sites WHERE id = ANY($1::int[])) ORDER BY created_at ASC";
+                 pParams = [allowedSiteIds];
+            } else {
+                 pQueryStr = "SELECT * FROM providers WHERE 1=0";
+            }
+        } else if (allowedProviderIds) {
+            if (allowedProviderIds.length > 0) {
+                 pQueryStr = "SELECT * FROM providers WHERE id = ANY($1::int[]) ORDER BY created_at ASC";
+                 pParams = [allowedProviderIds];
+            } else {
+                 pQueryStr = "SELECT * FROM providers WHERE 1=0";
+            }
         } else {
              pQueryStr = "SELECT * FROM providers WHERE 1=0";
         }
@@ -52,7 +78,28 @@ export default async function TopologyPage() {
   } catch (err) {}
 
   try {
-    const sRes = await query("SELECT * FROM sites ORDER BY created_at ASC");
+    let sQueryStr = "SELECT * FROM sites ORDER BY created_at ASC";
+    let sParams: any[] = [];
+    if (!isAdmin) {
+        if (isLevel3) {
+            if (allowedSiteIds && allowedSiteIds.length > 0) {
+                 sQueryStr = "SELECT * FROM sites WHERE id = ANY($1::int[]) ORDER BY created_at ASC";
+                 sParams = [allowedSiteIds];
+            } else {
+                 sQueryStr = "SELECT * FROM sites WHERE 1=0";
+            }
+        } else if (allowedProviderIds) {
+            if (allowedProviderIds.length > 0) {
+                 sQueryStr = "SELECT * FROM sites WHERE provider_id = ANY($1::int[]) ORDER BY created_at ASC";
+                 sParams = [allowedProviderIds];
+            } else {
+                 sQueryStr = "SELECT * FROM sites WHERE 1=0";
+            }
+        } else {
+             sQueryStr = "SELECT * FROM sites WHERE 1=0";
+        }
+    }
+    const sRes = await query(sQueryStr, sParams);
     sites = sRes.rows;
   } catch (err) {}
 
@@ -73,7 +120,7 @@ export default async function TopologyPage() {
 
   return (
     <div className="min-h-full font-sans selection:bg-blue-500/30">
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <main className="w-full px-4 sm:px-6 lg:px-8 py-10">
         <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <h1 className="text-3xl font-bold tracking-tight mb-2 flex items-center gap-3">

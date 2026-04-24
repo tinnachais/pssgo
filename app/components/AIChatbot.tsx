@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useChat } from 'ai/react';
 import { type Message } from 'ai';
@@ -50,8 +50,8 @@ export default function AIChatbot() {
               <Bot size={20} className="text-white" />
             </div>
             <div>
-              <h3 className="font-semibold text-sm">PSS GO AI Assistant</h3>
-              <p className="text-xs text-blue-100">ผู้ช่วยส่วนตัวของคุณ</p>
+              <h3 className="font-semibold text-sm">GP AI Assistant</h3>
+              <p className="text-xs text-blue-100">à¸œà¸¹à¹‰à¸Šà¹ˆà¸§à¸¢à¸ªà¹ˆà¸§à¸™à¸•à¸±à¸§à¸‚à¸­à¸‡à¸„à¸¸à¸“</p>
             </div>
           </div>
           <button
@@ -69,8 +69,8 @@ export default function AIChatbot() {
               <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mb-4">
                 <Bot size={32} className="text-blue-600 dark:text-blue-400" />
               </div>
-              <h4 className="font-semibold text-gray-700 dark:text-zinc-300 mb-1">สวัสดีครับ!</h4>
-              <p className="text-sm">ผมคือผู้ช่วย AI ประจำระบบ PSS GO<br/>มีอะไรให้ผมช่วยแนะนำหรือสอนการใช้งานไหมครับ?</p>
+              <h4 className="font-semibold text-gray-700 dark:text-zinc-300 mb-1">à¸ªà¸§à¸±à¸ªà¸”à¸µà¸„à¸£à¸±à¸š!</h4>
+              <p className="text-sm">à¸œà¸¡à¸„à¸·à¸­à¸œà¸¹à¹‰à¸Šà¹ˆà¸§à¸¢ AI à¸›à¸£à¸°à¸ˆà¸³à¸£à¸°à¸šà¸š GP<br/>à¸¡à¸µà¸­à¸°à¹„à¸£à¹ƒà¸«à¹‰à¸œà¸¡à¸Šà¹ˆà¸§à¸¢à¹à¸™à¸°à¸™à¸³à¸«à¸£à¸·à¸­à¸ªà¸­à¸™à¸à¸²à¸£à¹ƒà¸Šà¹‰à¸‡à¸²à¸™à¹„à¸«à¸¡à¸„à¸£à¸±à¸š?</p>
             </div>
           ) : (
             messages.map((m: Message) => (
@@ -147,7 +147,7 @@ export default function AIChatbot() {
           <input
             className="flex-1 px-4 py-2.5 border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800 dark:text-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 text-sm transition-all shadow-inner"
             value={input}
-            placeholder="พิมพ์คำถามที่นี่..."
+            placeholder="à¸žà¸´à¸¡à¸žà¹Œà¸„à¸³à¸–à¸²à¸¡à¸—à¸µà¹ˆà¸™à¸µà¹ˆ..."
             onChange={handleInputChange}
           />
           <button

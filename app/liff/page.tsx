@@ -1875,7 +1875,7 @@ export default function LiffProfilePage() {
                     {!result?.success && (
                         <button 
                         type="submit" 
-                        disabled={isSubmitting || isAnalyzing || (!profileData?.isRegistered && detectedPlate === '')}
+                        disabled={isSubmitting || isAnalyzing || (profileData?.isRegistered && detectedPlate === '')}
                         className="w-full text-white bg-[#06C755] hover:bg-[#05b34c] focus:ring-4 focus:outline-none focus:ring-[#06C755]/30 font-bold rounded-xl text-md px-5 py-4 text-center mt-6 shadow-lg shadow-[#06C755]/20 disabled:opacity-50 transition-all flex justify-center items-center gap-2"
                         >
                         {isSubmitting ? (

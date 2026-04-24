@@ -3,6 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import dayjs from "dayjs";
 import "dayjs/locale/th";
+import LicensePlateDisplay from "@/app/components/LicensePlateDisplay";
+import DeleteLiffUserButton from "./components/DeleteLiffUserButton";
 
 export const dynamic = "force-dynamic";
 
@@ -14,7 +16,7 @@ export default async function LiffUsersPage() {
 
     return (
         <div className="min-h-full font-sans selection:bg-blue-500/30">
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <main className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
                     <div>
                         <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-center gap-3">
@@ -23,10 +25,10 @@ export default async function LiffUsersPage() {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                                 </svg>
                             </span>
-                            ผู้ใช้บริการ (LINE LIFF)
+                            ผู้ใช้แพลตฟอร์ม (LINE LIFF)
                         </h1>
                         <p className="text-zinc-500 dark:text-zinc-400 mt-2 text-sm">
-                            รายชื่อผู้ที่ลงทะเบียนใช้งานและผูกบัญชี LINE เรียบร้อยแล้ว
+                            ข้อมูลผู้ใช้งานที่ลงทะเบียนผ่าน LINE สำหรับการเข้าออกสถานที่จอดรถ
                         </p>
                     </div>
                 </div>
@@ -36,15 +38,24 @@ export default async function LiffUsersPage() {
                         <table className="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800">
                             <thead className="bg-zinc-50 dark:bg-zinc-800/50">
                                 <tr>
-                                    <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">บัญชี LINE</th>
-                                    <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">ห้อง / สถานที่</th>
+                                    <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">บัญชี LINE / เบอร์ติดต่อ</th>
+                                    <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">ข้อมูลรถ</th>
                                     <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">สถานะ</th>
-                                    <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">วันที่ลงทะเบียน</th>
+                                    <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">จัดการ</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800 bg-white dark:bg-transparent">
                                 {users.length > 0 ? (
-                                    users.map((user: any) => (
+                                    users.map((user: any) => {
+                                        let vehicles = [];
+                                        try {
+                                            const parsed = typeof user.user_vehicles === 'string' ? JSON.parse(user.user_vehicles) : user.user_vehicles;
+                                            if (Array.isArray(parsed)) {
+                                                vehicles = parsed.filter(v => v && v.license_plate);
+                                            }
+                                        } catch (e) {}
+
+                                        return (
                                         <tr key={user.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors group">
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="flex items-center gap-3">
@@ -67,23 +78,27 @@ export default async function LiffUsersPage() {
                                                     </div>
                                                     <div>
                                                         <div className="text-sm font-bold text-zinc-900 dark:text-white">
-                                                            {user.line_display_name || "ไม่ระบุชื่อ"}
+                                                            {user.line_display_name || "ไม่ระบุชื่อ LINE"}
                                                         </div>
                                                         <div className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">
-                                                            {user.owner_name || "ไม่มีชื่อในโปรไฟล์"}
+                                                            {user.phone_number || user.owner_name || "ไม่ระบุเบอร์ติดต่อ"}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
-                                                <div className="text-sm font-semibold text-zinc-900 dark:text-white">
-                                                    {user.house_number}
-                                                </div>
-                                                <div className="text-xs text-zinc-500 dark:text-zinc-400">
-                                                    {user.site_name ? (
-                                                        <>{user.site_name} {user.is_owner ? ' (ผู้ดูแล)' : ' (ผู้ใช้ประจำ)'}</>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {vehicles.length > 0 ? (
+                                                        vehicles.map((v: any) => (
+                                                            <div key={v.id} className="transform scale-[0.65] origin-left -my-3">
+                                                                <LicensePlateDisplay 
+                                                                    licensePlate={v.license_plate} 
+                                                                    province={v.province || 'กรุงเทพมหานคร'} 
+                                                                />
+                                                            </div>
+                                                        ))
                                                     ) : (
-                                                        <span className="text-blue-500 font-medium bg-blue-50 dark:bg-blue-500/10 px-2 py-0.5 rounded-md">ผู้ใช้บริการทั่วไป</span>
+                                                        <span className="text-xs text-zinc-400 italic">ไม่มีข้อมูลรถ</span>
                                                     )}
                                                 </div>
                                             </td>
@@ -93,11 +108,21 @@ export default async function LiffUsersPage() {
                                                     {user.is_active ? 'Active' : 'Disabled'}
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400 font-medium">
-                                                {dayjs(user.created_at).format("D MMM YYYY")}
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                <div className="flex items-center">
+                                                    <Link href={`/liff-users/edit/${user.line_user_id}`}
+className="text-blue-500 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 dark:bg-blue-500/10 dark:hover:bg-blue-500/20 p-2 rounded-xl transition-colors"
+                                                        title="แก้ไขข้อมูล"
+                                                    >
+                                                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                        </svg>
+                                                    </Link>
+                                                    <DeleteLiffUserButton id={user.line_user_id} />
+                                                </div>
                                             </td>
                                         </tr>
-                                    ))
+                                    )})
                                 ) : (
                                     <tr>
                                         <td colSpan={4} className="px-6 py-12 text-center">
@@ -107,8 +132,8 @@ export default async function LiffUsersPage() {
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                                                     </svg>
                                                 </div>
-                                                <h3 className="text-sm font-bold text-zinc-900 dark:text-white mb-1">ไม่พบผู้ใช้บริการ</h3>
-                                                <p className="text-sm text-zinc-500 dark:text-zinc-400">ยังไม่มีผู้ลงทะเบียนผ่าน LINE LIFF ในระบบ</p>
+                                                <h3 className="text-sm font-bold text-zinc-900 dark:text-white mb-1">ไม่พบข้อมูลผู้ใช้แพลตฟอร์ม</h3>
+                                                <p className="text-sm text-zinc-500 dark:text-zinc-400">ยังไม่มีผู้ลงทะเบียนผ่านระบบ LINE LIFF ในระบบ</p>
                                             </div>
                                         </td>
                                     </tr>

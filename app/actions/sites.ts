@@ -151,7 +151,7 @@ export async function addSite(formData: FormData) {
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS contact_link VARCHAR(255)');
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS package_id INT REFERENCES packages(id) ON DELETE SET NULL');
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS api_token VARCHAR(255) UNIQUE');
-  await query("ALTER TABLE sites ADD COLUMN IF NOT EXISTS type VARCHAR(50) DEFAULT 'PRIVATE'");
+  await query("ALTER TABLE sites ADD COLUMN IF NOT EXISTS type VARCHAR(50) DEFAULT 'TIER1_PRIVATE'");
 
   const apiToken = crypto.randomBytes(32).toString('hex');
 
@@ -167,7 +167,7 @@ export async function addSite(formData: FormData) {
       contactLink || null,
       packageId ? parseInt(packageId, 10) : null,
       apiToken,
-      type || 'PRIVATE'
+      type || 'TIER1_PRIVATE'
     ]
   );
   
@@ -306,7 +306,7 @@ export async function updateSite(id: number, formData: FormData) {
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS contact_link VARCHAR(255)');
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS package_id INT REFERENCES packages(id) ON DELETE SET NULL');
   await query('ALTER TABLE sites ADD COLUMN IF NOT EXISTS api_token VARCHAR(255) UNIQUE');
-  await query("ALTER TABLE sites ADD COLUMN IF NOT EXISTS type VARCHAR(50) DEFAULT 'PRIVATE'");
+  await query("ALTER TABLE sites ADD COLUMN IF NOT EXISTS type VARCHAR(50) DEFAULT 'TIER1_PRIVATE'");
 
   const fallbackToken = crypto.randomBytes(32).toString('hex');
 
@@ -323,7 +323,7 @@ export async function updateSite(id: number, formData: FormData) {
       packageId ? parseInt(packageId, 10) : null,
       id,
       fallbackToken,
-      type || 'PRIVATE'
+      type || 'TIER1_PRIVATE'
     ]
   );
   revalidatePath("/sites");

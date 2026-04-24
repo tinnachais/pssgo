@@ -1,4 +1,4 @@
-import { addPackage } from "@/app/actions/packages";
+﻿import { addPackage } from "@/app/actions/packages";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -12,7 +12,7 @@ export default function AddPackagePage() {
             <svg className="w-5 h-5 text-zinc-400 group-hover:text-indigo-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            กลับไปหน้าแพ็กเกจ
+            à¸à¸¥à¸±à¸šà¹„à¸›à¸«à¸™à¹‰à¸²à¹à¸žà¹‡à¸à¹€à¸à¸ˆ
           </Link>
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-500/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
@@ -21,8 +21,8 @@ export default function AddPackagePage() {
               </svg>
             </div>
             <div>
-              <h1 className="text-2xl font-black tracking-tight text-zinc-900 dark:text-white">เพิ่มแพ็กเกจใหม่</h1>
-              <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">กำหนดโครงสร้างราคาและขีดจำกัดสำหรับระบบ PSS GO</p>
+              <h1 className="text-2xl font-black tracking-tight text-zinc-900 dark:text-white">à¹€à¸žà¸´à¹ˆà¸¡à¹à¸žà¹‡à¸à¹€à¸à¸ˆà¹ƒà¸«à¸¡à¹ˆ</h1>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">à¸à¸³à¸«à¸™à¸”à¹‚à¸„à¸£à¸‡à¸ªà¸£à¹‰à¸²à¸‡à¸£à¸²à¸„à¸²à¹à¸¥à¸°à¸‚à¸µà¸”à¸ˆà¸³à¸à¸±à¸”à¸ªà¸³à¸«à¸£à¸±à¸šà¸£à¸°à¸šà¸š GP</p>
             </div>
           </div>
         </div>
@@ -33,21 +33,21 @@ export default function AddPackagePage() {
             <form action={addPackage} className="p-8 md:p-10 space-y-8">
                 <div className="space-y-2">
                     <label htmlFor="name" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                      ชื่อแพ็กเกจ (เช่น Basic, Pro, Enterprise) <span className="text-rose-500">*</span>
+                      à¸Šà¸·à¹ˆà¸­à¹à¸žà¹‡à¸à¹€à¸à¸ˆ (à¹€à¸Šà¹ˆà¸™ Basic, Pro, Enterprise) <span className="text-rose-500">*</span>
                     </label>
                     <input
                       type="text"
                       name="name"
                       id="name"
                       required
-                      placeholder="เช่น Starter Plan"
+                      placeholder="à¹€à¸Šà¹ˆà¸™ Starter Plan"
                       className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all font-medium"
                     />
                 </div>
 
                 <div className="space-y-2">
                     <label htmlFor="maxVehicles" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                      ขีดจำกัดจำนวนรถในสถานที่ <span className="text-rose-500">*</span>
+                      à¸‚à¸µà¸”à¸ˆà¸³à¸à¸±à¸”à¸ˆà¸³à¸™à¸§à¸™à¸£à¸–à¹ƒà¸™à¸ªà¸–à¸²à¸™à¸—à¸µà¹ˆ <span className="text-rose-500">*</span>
                     </label>
                     <input
                       type="number"
@@ -55,16 +55,16 @@ export default function AddPackagePage() {
                       id="maxVehicles"
                       required
                       min="1"
-                      placeholder="เช่น 100"
+                      placeholder="à¹€à¸Šà¹ˆà¸™ 100"
                       className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all font-medium"
                     />
-                    <p className="text-xs text-zinc-500 dark:text-zinc-400 pl-1">ปริมาณรถสูงสุดของสถานที่ที่เลือกใช้แพ็กเกจนี้</p>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400 pl-1">à¸›à¸£à¸´à¸¡à¸²à¸“à¸£à¸–à¸ªà¸¹à¸‡à¸ªà¸¸à¸”à¸‚à¸­à¸‡à¸ªà¸–à¸²à¸™à¸—à¸µà¹ˆà¸—à¸µà¹ˆà¹€à¸¥à¸·à¸­à¸à¹ƒà¸Šà¹‰à¹à¸žà¹‡à¸à¹€à¸à¸ˆà¸™à¸µà¹‰</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                         <label htmlFor="monthlyPrice" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                          ราคารายเดือน (บาท) <span className="text-rose-500">*</span>
+                          à¸£à¸²à¸„à¸²à¸£à¸²à¸¢à¹€à¸”à¸·à¸­à¸™ (à¸šà¸²à¸—) <span className="text-rose-500">*</span>
                         </label>
                         <input
                           type="number"
@@ -73,13 +73,13 @@ export default function AddPackagePage() {
                           id="monthlyPrice"
                           required
                           min="0"
-                          placeholder="เช่น 1000"
+                          placeholder="à¹€à¸Šà¹ˆà¸™ 1000"
                           className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all font-medium"
                         />
                     </div>
                     <div className="space-y-2">
                         <label htmlFor="yearlyPrice" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                          ราคารายปี (บาท) <span className="text-rose-500">*</span>
+                          à¸£à¸²à¸„à¸²à¸£à¸²à¸¢à¸›à¸µ (à¸šà¸²à¸—) <span className="text-rose-500">*</span>
                         </label>
                         <input
                           type="number"
@@ -88,7 +88,7 @@ export default function AddPackagePage() {
                           id="yearlyPrice"
                           required
                           min="0"
-                          placeholder="เช่น 10000"
+                          placeholder="à¹€à¸Šà¹ˆà¸™ 10000"
                           className="w-full rounded-2xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 px-5 py-3.5 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all font-medium"
                         />
                     </div>
@@ -99,13 +99,13 @@ export default function AddPackagePage() {
                         type="submit"
                         className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-8 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md shadow-indigo-600/20 hover:shadow-lg active:scale-[0.98]"
                     >
-                        บันทึกแพ็กเกจ
+                        à¸šà¸±à¸™à¸—à¸¶à¸à¹à¸žà¹‡à¸à¹€à¸à¸ˆ
                     </button>
                     <Link
                         href="/packages"
                         className="bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold py-3.5 px-8 rounded-xl transition-all"
                     >
-                        ยกเลิก
+                        à¸¢à¸à¹€à¸¥à¸´à¸
                     </Link>
                 </div>
             </form>

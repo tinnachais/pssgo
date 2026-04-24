@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useState, useRef, useEffect } from 'react';
@@ -83,11 +83,11 @@ function PreRegisterForm() {
                 setDetectedProvince(res.data.province || "");
                 setDetectedColor(res.data.color || "");
             } else {
-                alert("AI ไม่สามารถอ่านป้ายทะเบียนได้ กรุณากรอกด้วยตัวเอง");
+                alert("AI à¹„à¸¡à¹ˆà¸ªà¸²à¸¡à¸²à¸£à¸–à¸­à¹ˆà¸²à¸™à¸›à¹‰à¸²à¸¢à¸—à¸°à¹€à¸šà¸µà¸¢à¸™à¹„à¸”à¹‰ à¸à¸£à¸¸à¸“à¸²à¸à¸£à¸­à¸à¸”à¹‰à¸§à¸¢à¸•à¸±à¸§à¹€à¸­à¸‡");
             }
           } catch (err: any) {
             console.error("Compression/Upload Error:", err);
-            alert("เกิดข้อผิดพลาดในการวิเคราะห์รูปภาพ");
+            alert("à¹€à¸à¸´à¸”à¸‚à¹‰à¸­à¸œà¸´à¸”à¸žà¸¥à¸²à¸”à¹ƒà¸™à¸à¸²à¸£à¸§à¸´à¹€à¸„à¸£à¸²à¸°à¸«à¹Œà¸£à¸¹à¸›à¸ à¸²à¸ž");
           } finally {
             setIsAnalyzing(false);
           }
@@ -114,17 +114,17 @@ function PreRegisterForm() {
             if (result.success) {
                 setIsSuccess(true);
             } else {
-                alert(result.message || 'เกิดข้อผิดพลาด');
+                alert(result.message || 'à¹€à¸à¸´à¸”à¸‚à¹‰à¸­à¸œà¸´à¸”à¸žà¸¥à¸²à¸”');
             }
         } catch (err) {
-            alert('เกิดข้อผิดพลาดในการส่งข้อมูล');
+            alert('à¹€à¸à¸´à¸”à¸‚à¹‰à¸­à¸œà¸´à¸”à¸žà¸¥à¸²à¸”à¹ƒà¸™à¸à¸²à¸£à¸ªà¹ˆà¸‡à¸‚à¹‰à¸­à¸¡à¸¹à¸¥');
         } finally {
             setIsSubmitting(false);
         }
     };
 
     if (isLoading) {
-        return <div className="min-h-screen bg-[#F4F4F4] flex items-center justify-center">กำลังตรวจสอบข้อมูล...</div>;
+        return <div className="min-h-screen bg-[#F4F4F4] flex items-center justify-center">à¸à¸³à¸¥à¸±à¸‡à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸šà¸‚à¹‰à¸­à¸¡à¸¹à¸¥...</div>;
     }
 
     if (!inviteData) {
@@ -136,8 +136,8 @@ function PreRegisterForm() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </div>
-                    <h2 className="text-xl font-bold text-slate-800 mb-2">ลิงก์ไม่ถูกต้อง หรือหมดอายุ</h2>
-                    <p className="text-sm text-slate-500">ลิงก์คำเชิญนี้ถูกใช้งานไปแล้ว หรือไม่มีอยู่จริงในระบบ กรุณาติดต่อผู้ให้คำเชิญ</p>
+                    <h2 className="text-xl font-bold text-slate-800 mb-2">à¸¥à¸´à¸‡à¸à¹Œà¹„à¸¡à¹ˆà¸–à¸¹à¸à¸•à¹‰à¸­à¸‡ à¸«à¸£à¸·à¸­à¸«à¸¡à¸”à¸­à¸²à¸¢à¸¸</h2>
+                    <p className="text-sm text-slate-500">à¸¥à¸´à¸‡à¸à¹Œà¸„à¸³à¹€à¸Šà¸´à¸à¸™à¸µà¹‰à¸–à¸¹à¸à¹ƒà¸Šà¹‰à¸‡à¸²à¸™à¹„à¸›à¹à¸¥à¹‰à¸§ à¸«à¸£à¸·à¸­à¹„à¸¡à¹ˆà¸¡à¸µà¸­à¸¢à¸¹à¹ˆà¸ˆà¸£à¸´à¸‡à¹ƒà¸™à¸£à¸°à¸šà¸š à¸à¸£à¸¸à¸“à¸²à¸•à¸´à¸”à¸•à¹ˆà¸­à¸œà¸¹à¹‰à¹ƒà¸«à¹‰à¸„à¸³à¹€à¸Šà¸´à¸</p>
                 </div>
             </div>
         );
@@ -152,8 +152,8 @@ function PreRegisterForm() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                         </svg>
                     </div>
-                    <h2 className="text-xl font-bold text-slate-800 mb-2">ลงทะเบียนเรียบร้อย</h2>
-                    <p className="text-sm text-slate-500 mb-6">กรุณาแจ้ง รปภ. ว่าลงทะเบียนล่วงหน้าเรียบร้อยแล้ว เมื่อถึงป้อมหน้าสถานที่</p>
+                    <h2 className="text-xl font-bold text-slate-800 mb-2">à¸¥à¸‡à¸—à¸°à¹€à¸šà¸µà¸¢à¸™à¹€à¸£à¸µà¸¢à¸šà¸£à¹‰à¸­à¸¢</h2>
+                    <p className="text-sm text-slate-500 mb-6">à¸à¸£à¸¸à¸“à¸²à¹à¸ˆà¹‰à¸‡ à¸£à¸›à¸ . à¸§à¹ˆà¸²à¸¥à¸‡à¸—à¸°à¹€à¸šà¸µà¸¢à¸™à¸¥à¹ˆà¸§à¸‡à¸«à¸™à¹‰à¸²à¹€à¸£à¸µà¸¢à¸šà¸£à¹‰à¸­à¸¢à¹à¸¥à¹‰à¸§ à¹€à¸¡à¸·à¹ˆà¸­à¸–à¸¶à¸‡à¸›à¹‰à¸­à¸¡à¸«à¸™à¹‰à¸²à¸ªà¸–à¸²à¸™à¸—à¸µà¹ˆ</p>
                 </div>
             </div>
         );
@@ -169,54 +169,54 @@ function PreRegisterForm() {
                         </svg>
                     </div>
                     <div className="bg-sky-500 text-white text-xs font-bold px-3 py-1 rounded-full -mt-7 z-20 shadow-sm border-2 border-slate-50">
-                        คำเชิญพิเศษ
+                        à¸„à¸³à¹€à¸Šà¸´à¸à¸žà¸´à¹€à¸¨à¸©
                     </div>
-                    <h1 className="text-2xl font-bold tracking-tight mt-4 text-center">ลงทะเบียนล่วงหน้า</h1>
+                    <h1 className="text-2xl font-bold tracking-tight mt-4 text-center">à¸¥à¸‡à¸—à¸°à¹€à¸šà¸µà¸¢à¸™à¸¥à¹ˆà¸§à¸‡à¸«à¸™à¹‰à¸²</h1>
                     <p className="text-sm text-slate-500 text-center mt-2 px-6">
-                        กรุณากรอกข้อมูลของท่านเพื่อความสะดวกรวดเร็วในการแลกบัตรเข้าสถานที่
+                        à¸à¸£à¸¸à¸“à¸²à¸à¸£à¸­à¸à¸‚à¹‰à¸­à¸¡à¸¹à¸¥à¸‚à¸­à¸‡à¸—à¹ˆà¸²à¸™à¹€à¸žà¸·à¹ˆà¸­à¸„à¸§à¸²à¸¡à¸ªà¸°à¸”à¸§à¸à¸£à¸§à¸”à¹€à¸£à¹‡à¸§à¹ƒà¸™à¸à¸²à¸£à¹à¸¥à¸à¸šà¸±à¸•à¸£à¹€à¸‚à¹‰à¸²à¸ªà¸–à¸²à¸™à¸—à¸µà¹ˆ
                     </p>
                 </div>
 
                 <div className="bg-white rounded-[24px] shadow-xl shadow-slate-200/50 p-6 border border-slate-100">
                     {inviteData?.expected_in_time && (
                         <div className="mb-4 bg-sky-50 border border-sky-100 p-3 rounded-xl text-sm text-sky-800 break-words">
-                            <span className="font-bold">วันที่เข้ามา:</span> {new Date(inviteData.expected_in_time).toLocaleString('th-TH')}
+                            <span className="font-bold">à¸§à¸±à¸™à¸—à¸µà¹ˆà¹€à¸‚à¹‰à¸²à¸¡à¸²:</span> {new Date(inviteData.expected_in_time).toLocaleString('th-TH')}
                         </div>
                     )}
                     <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
                         <div>
-                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">ชื่อ - นามสกุล ผู้ติดต่อ<span className="text-red-500 ml-1">*</span></label>
+                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">à¸Šà¸·à¹ˆà¸­ - à¸™à¸²à¸¡à¸ªà¸à¸¸à¸¥ à¸œà¸¹à¹‰à¸•à¸´à¸”à¸•à¹ˆà¸­<span className="text-red-500 ml-1">*</span></label>
                             <input 
                                 type="text"
                                 name="fullName"
                                 defaultValue={inviteData?.full_name || ''}
                                 required
-                                placeholder="เชน: สมชาย ใจดี"
+                                placeholder="à¹€à¸Šà¸™: à¸ªà¸¡à¸Šà¸²à¸¢ à¹ƒà¸ˆà¸”à¸µ"
                                 className="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 p-3.5 outline-none font-medium transition-all"
                             />
                         </div>
                         <div>
-                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">เบอร์โทรศัพท์ติดต่อ</label>
+                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">à¹€à¸šà¸­à¸£à¹Œà¹‚à¸—à¸£à¸¨à¸±à¸žà¸—à¹Œà¸•à¸´à¸”à¸•à¹ˆà¸­</label>
                             <input 
                                 type="tel"
                                 name="phoneNumber"
-                                placeholder="เช่น: 0812345678"
+                                placeholder="à¹€à¸Šà¹ˆà¸™: 0812345678"
                                 className="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 p-3.5 outline-none font-medium transition-all"
                             />
                         </div>
                         <div>
-                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">ติดต่อเรื่อง / ธุระ<span className="text-red-500 ml-1">*</span></label>
+                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">à¸•à¸´à¸”à¸•à¹ˆà¸­à¹€à¸£à¸·à¹ˆà¸­à¸‡ / à¸˜à¸¸à¸£à¸°<span className="text-red-500 ml-1">*</span></label>
                             <input 
                                 type="text"
                                 name="purpose"
                                 defaultValue={inviteData?.purpose || ''}
                                 required
-                                placeholder="เช่น: ส่งพัสดุ, ต่อเติมบ้าน, ซ่อมแอร์"
+                                placeholder="à¹€à¸Šà¹ˆà¸™: à¸ªà¹ˆà¸‡à¸žà¸±à¸ªà¸”à¸¸, à¸•à¹ˆà¸­à¹€à¸•à¸´à¸¡à¸šà¹‰à¸²à¸™, à¸‹à¹ˆà¸­à¸¡à¹à¸­à¸£à¹Œ"
                                 className="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 p-3.5 outline-none font-medium transition-all"
                             />
                         </div>
                         <div>
-                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">อัปโหลดรูปรถ (เติมข้อมูลอัตโนมัติ)</label>
+                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">à¸­à¸±à¸›à¹‚à¸«à¸¥à¸”à¸£à¸¹à¸›à¸£à¸– (à¹€à¸•à¸´à¸¡à¸‚à¹‰à¸­à¸¡à¸¹à¸¥à¸­à¸±à¸•à¹‚à¸™à¸¡à¸±à¸•à¸´)</label>
                             <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-200 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors relative overflow-hidden group">
                                 <div className="flex flex-col items-center justify-center pt-5 pb-6 px-4 text-center">
                                     {isAnalyzing ? (
@@ -230,54 +230,54 @@ function PreRegisterForm() {
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                                         </svg>
                                     )}
-                                    <p className="mb-1 text-sm text-slate-500"><span className="font-semibold text-sky-600">กดเพื่อถ่ายรูป</span> บริเวณหน้ารถ</p>
-                                    <p className="text-xs text-slate-400">ระบบ AI จะอ่านทะเบียนรถให้อัตโนมัติ</p>
+                                    <p className="mb-1 text-sm text-slate-500"><span className="font-semibold text-sky-600">à¸à¸”à¹€à¸žà¸·à¹ˆà¸­à¸–à¹ˆà¸²à¸¢à¸£à¸¹à¸›</span> à¸šà¸£à¸´à¹€à¸§à¸“à¸«à¸™à¹‰à¸²à¸£à¸–</p>
+                                    <p className="text-xs text-slate-400">à¸£à¸°à¸šà¸š AI à¸ˆà¸°à¸­à¹ˆà¸²à¸™à¸—à¸°à¹€à¸šà¸µà¸¢à¸™à¸£à¸–à¹ƒà¸«à¹‰à¸­à¸±à¸•à¹‚à¸™à¸¡à¸±à¸•à¸´</p>
                                 </div>
                                 <input type="file" className="hidden" accept="image/*" onChange={handleImageChange} disabled={isAnalyzing} />
                             </label>
                         </div>
                         <div className="grid grid-cols-2 gap-3">
                             <div>
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">ทะเบียนรถ</label>
+                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">à¸—à¸°à¹€à¸šà¸µà¸¢à¸™à¸£à¸–</label>
                                 <input 
                                     type="text"
                                     value={detectedPlate}
                                     onChange={(e) => setDetectedPlate(e.target.value)}
-                                    placeholder="กข 1234"
+                                    placeholder="à¸à¸‚ 1234"
                                     className="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 p-3.5 outline-none font-medium transition-all uppercase placeholder:normal-case"
                                 />
                             </div>
                             <div>
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">จังหวัด</label>
+                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">à¸ˆà¸±à¸‡à¸«à¸§à¸±à¸”</label>
                                 <input 
                                     type="text"
                                     value={detectedProvince}
                                     onChange={(e) => setDetectedProvince(e.target.value)}
-                                    placeholder="กรุงเทพมหานคร"
+                                    placeholder="à¸à¸£à¸¸à¸‡à¹€à¸—à¸žà¸¡à¸«à¸²à¸™à¸„à¸£"
                                     className="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 p-3.5 outline-none font-medium transition-all uppercase placeholder:normal-case"
                                 />
                             </div>
                         </div>
                         <div>
-                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">สีรถ</label>
+                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">à¸ªà¸µà¸£à¸–</label>
                             <input 
                                 type="text"
                                 value={detectedColor}
                                 onChange={(e) => setDetectedColor(e.target.value)}
-                                placeholder="ขาว"
+                                placeholder="à¸‚à¸²à¸§"
                                 className="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 p-3.5 outline-none font-medium transition-all"
                             />
                         </div>
                         <div className="pt-2">
                            <button type="submit" disabled={isSubmitting} className="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold rounded-xl text-md px-5 py-4 text-center shadow-lg shadow-sky-500/30 transition-all active:scale-[0.98] disabled:opacity-50">
-                              {isSubmitting ? 'กำลังบันทึก...' : 'ยืนยันการลงทะเบียน'}
+                              {isSubmitting ? 'à¸à¸³à¸¥à¸±à¸‡à¸šà¸±à¸™à¸—à¸¶à¸...' : 'à¸¢à¸·à¸™à¸¢à¸±à¸™à¸à¸²à¸£à¸¥à¸‡à¸—à¸°à¹€à¸šà¸µà¸¢à¸™'}
                            </button>
                         </div>
                     </form>
                 </div>
 
                 <div className="mt-8 text-center">
-                    <p className="text-xs text-slate-400 font-medium">ระบบบริหารจัดการผู้มาติดต่อ PSS GO</p>
+                    <p className="text-xs text-slate-400 font-medium">à¸£à¸°à¸šà¸šà¸šà¸£à¸´à¸«à¸²à¸£à¸ˆà¸±à¸”à¸à¸²à¸£à¸œà¸¹à¹‰à¸¡à¸²à¸•à¸´à¸”à¸•à¹ˆà¸­ GP</p>
                 </div>
             </div>
         </div>

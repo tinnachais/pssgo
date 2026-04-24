@@ -8,7 +8,7 @@ import { cookies } from "next/headers";
 import { sendLineMessage, generateResidentFlexMessage } from "@/lib/line";
 
 // ดึงข้อมูลผู้เช่า/ร้าน/บริษัททั้งหมด พร้อม ID รถที่ผูกติดอยู่
-export async function getResidents() {
+export async function getResidents(type?: string) {
   // Ensure basic info and relationship columns exist
   await query("ALTER TABLE residents ADD COLUMN IF NOT EXISTS owner_name VARCHAR(150)");
   await query("ALTER TABLE residents ADD COLUMN IF NOT EXISTS phone_number VARCHAR(50)");
@@ -53,11 +53,11 @@ export async function getResidents() {
   }
 
   let queryStr = `
-    SELECT r.*, s.name as site_name,
+      SELECT r.*, s.name as site_name,
       (SELECT json_agg(json_build_object('id', v.id, 'license_plate', v.license_plate, 'province', v.province, 'is_active', v.is_active)) FROM vehicles v WHERE v.resident_id = r.id) as user_vehicles
-    FROM residents r 
-    LEFT JOIN sites s ON r.site_id = s.id
-    WHERE 1=1
+      FROM residents r 
+      LEFT JOIN sites s ON r.site_id = s.id
+      WHERE 1=1
   `;
   const params: any[] = [];
 
@@ -66,7 +66,14 @@ export async function getResidents() {
       queryStr += ` AND s.provider_id = ANY($${params.length}::int[]) `;
   }
 
-  if (selectedSiteId && selectedSiteId !== "all") {
+  
+    if (type === 'private') {
+        queryStr += ` AND s.type = 'TIER1_PRIVATE'`;
+    } else if (type === 'public') {
+        queryStr += ` AND s.type != 'TIER1_PRIVATE'`;
+    }
+
+    if (selectedSiteId && selectedSiteId !== "all") {
       params.push(parseInt(selectedSiteId, 10));
       queryStr += ` AND r.site_id = $${params.length} `;
   }
@@ -293,7 +300,7 @@ export async function logResidentAccess(licensePlate: string, houseNumber: strin
 }
 
 // ดึงข้อมูลผู้ใช้งานที่เชื่อมต่อผ่าน LINE LIFF
-export async function getLiffUsers() {
+export async function getLiffUsers(type?: string) {
   const cookieStore = await cookies();
   const sessionData = cookieStore.get("pssgo_session")?.value;
   let allowedProviderIds: number[] | null = null;
@@ -313,7 +320,8 @@ export async function getLiffUsers() {
   }
 
   let queryStr = `
-    SELECT r.*, s.name as site_name,
+      SELECT * FROM (
+      SELECT DISTINCT ON (r.line_user_id) r.*, s.name as site_name,
       (SELECT json_agg(json_build_object('id', v.id, 'license_plate', v.license_plate, 'province', v.province, 'is_active', v.is_active)) FROM vehicles v WHERE v.resident_id = r.id) as user_vehicles
     FROM residents r 
     LEFT JOIN sites s ON r.site_id = s.id
@@ -341,7 +349,8 @@ export async function getLiffUsers() {
       }
   }
 
-  queryStr += ` ORDER BY r.created_at DESC`;
+  queryStr += ` ORDER BY r.line_user_id, r.created_at DESC
+      ) as unique_users ORDER BY created_at DESC`;
   const res = await query(queryStr, params);
   return res.rows;
 }
@@ -418,28 +427,46 @@ export async function getLiffUserActivityLogs(lineUserId: string) {
     }
 }
 
-export async function deleteLiffUserAndData(userId: string | number) {
+export async function deleteLiffUserAndData(userId: string) {
     try {
-        const query = require('@/lib/db').query;
-        // Check if user exists in liff_profiles
-        await query("DELETE FROM liff_profiles WHERE line_user_id = $1", [userId.toString()]);
+                // Check if user exists in liff_profiles
+        await query("DELETE FROM liff_profiles WHERE line_user_id = $1", [userId]);
         
         // Remove global vehicle shares
-        await query("DELETE FROM vehicle_shares WHERE line_user_id = $1", [userId.toString()]);
+        await query("DELETE FROM vehicle_shares WHERE line_user_id = $1", [userId]);
         
         // Remove from vehicles if they own global vehicles (only if not linked to any resident maybe?)
         // Currently we just clear line_user_id to keep the vehicle in the system for history
-        await query("UPDATE vehicles SET line_user_id = NULL WHERE line_user_id = $1", [userId.toString()]);
+        await query("UPDATE vehicles SET line_user_id = NULL WHERE line_user_id = $1", [userId]);
         
         // Also remove from residents if they are just a guest
-        await query("UPDATE residents SET line_user_id = NULL, line_display_name = NULL, line_picture_url = NULL WHERE line_user_id = $1", [userId.toString()]);
-        
-        if (typeof userId === 'number') {
-            await query("DELETE FROM residents WHERE id = $1", [userId]);
-        }
+        await query("UPDATE residents SET line_user_id = NULL, line_display_name = NULL, line_picture_url = NULL WHERE line_user_id = $1", [userId]);
 
+        
+        revalidatePath("/liff-users");
         return { success: true };
     } catch (e: any) {
+
         return { success: false, message: e.message };
     }
+}
+
+
+export async function getPlatformUser(lineUserId: string) {
+    const userRes = await query("SELECT line_user_id, line_display_name, line_picture_url, phone_number FROM residents WHERE line_user_id = $1 LIMIT 1", [lineUserId]);
+    const vehiclesRes = await query("SELECT id, license_plate, province, is_active FROM vehicles WHERE line_user_id = $1", [lineUserId]);
+    
+    if (userRes.rows.length === 0) return null;
+    return {
+        ...userRes.rows[0],
+        vehicles: vehiclesRes.rows
+    };
+}
+
+export async function updatePlatformUser(lineUserId: string, data: { phone_number: string }) {
+    if (!lineUserId) throw new Error("Invalid User ID");
+    
+    await query("UPDATE residents SET phone_number = $1 WHERE line_user_id = $2", [data.phone_number, lineUserId]);
+    revalidatePath("/liff-users");
+    revalidatePath(`/liff-users/edit/${lineUserId}`);
 }

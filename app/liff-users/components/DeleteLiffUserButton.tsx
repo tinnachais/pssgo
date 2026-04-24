@@ -2,19 +2,28 @@
 
 import { useState } from "react";
 import { deleteLiffUserAndData } from "@/app/actions/residents";
+import { useRouter } from "next/navigation";
 
-export default function DeleteLiffUserButton({ id }: { id: number }) {
+export default function DeleteLiffUserButton({ id }: { id: string }) {
     const [isDeleting, setIsDeleting] = useState(false);
+    const router = useRouter();
 
     const handleDelete = async () => {
-        if (!confirm("คุณแน่ใจหรือไม่ที่จะลบผู้ใช้นี้? การลบจะทำให้ยานพาหนะและข้อมูลที่เกี่ยวข้องหายไปทั้งหมด")) return;
+        if (!confirm("คุณต้องการเพิกถอนสิทธิ์ผู้ใช้แพลตฟอร์มท่านนี้? ข้อมูลการเชื่อมต่อบัญชี LINE จะถูกลบออก (แต่ข้อมูลลูกบ้านหรือรถจะยังคงอยู่)")) return;
         
         setIsDeleting(true);
         try {
-            await deleteLiffUserAndData(id);
+            const res = await deleteLiffUserAndData(id);
+            if (res && res.success === false) {
+                alert("เกิดข้อผิดพลาด: " + res.message);
+                setIsDeleting(false);
+                return;
+            }
+            alert("ลบข้อมูลสำเร็จ");
+            router.refresh();
         } catch (error) {
             console.error("Failed to delete user", error);
-            alert("เกิดข้อผิดพลาดในการลบผู้ใช้");
+            alert("เกิดข้อผิดพลาดในการลบข้อมูล");
             setIsDeleting(false);
         }
     };
@@ -24,7 +33,7 @@ export default function DeleteLiffUserButton({ id }: { id: number }) {
             onClick={handleDelete}
             disabled={isDeleting}
             className="text-rose-500 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 dark:bg-rose-500/10 dark:hover:bg-rose-500/20 p-2 rounded-xl transition-colors disabled:opacity-50 ml-2"
-            title="ลบผู้ใช้"
+            title="ลบข้อมูล"
         >
             {isDeleting ? (
                 <svg className="animate-spin w-4 h-4 text-rose-500" fill="none" viewBox="0 0 24 24">

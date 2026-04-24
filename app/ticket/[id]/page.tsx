@@ -1,4 +1,4 @@
-import { getVisitor } from "@/app/actions/visitors";
+﻿import { getVisitor } from "@/app/actions/visitors";
 import { query } from "@/lib/db";
 import { notFound } from "next/navigation";
 import TicketPrintAction from "./TicketPrintAction";
@@ -13,7 +13,7 @@ export default async function TicketPage({ params }: { params: Promise<{ id: str
     const visitor = await getVisitor(visitorId);
     if (!visitor) return notFound();
 
-    let siteName = "PSS GO";
+    let siteName = "GP";
     let effectiveSiteId = visitor.site_id;
 
     if (!effectiveSiteId && visitor.house_number) {
@@ -43,7 +43,7 @@ export default async function TicketPage({ params }: { params: Promise<{ id: str
                 <div className="flex flex-row items-center justify-center gap-1.5 w-full mb-1">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src="/logo.png" alt="Logo" className="w-5 h-5 object-contain grayscale" />
-                    <span className="font-black text-[13px] tracking-tight">PSS GO</span>
+                    <span className="font-black text-[13px] tracking-tight">GP</span>
                 </div>
                 
                 <h1 className="text-sm font-black tracking-tighter text-center uppercase border-b border-black pb-1 mb-2 w-full truncate">
@@ -51,23 +51,23 @@ export default async function TicketPage({ params }: { params: Promise<{ id: str
                 </h1>
                 
                 <div className="text-[11px] text-center font-extrabold mb-1 tracking-wider">
-                    บัตรจอดรถ
+                    à¸šà¸±à¸•à¸£à¸ˆà¸­à¸”à¸£à¸–
                 </div>
 
                 <div className="w-full bg-black text-white text-center py-2 my-2 rounded-sm border-2 border-black print:border-none print:border-black">
-                    <div className="text-2xl font-black tracking-widest">{visitor.vehicle_plate || "ไม่ระบุ"}</div>
-                    <div className="text-[10px] font-bold mt-0.5 tracking-wider">{visitor.vehicle_province || "กรุงเทพมหานคร"}</div>
+                    <div className="text-2xl font-black tracking-widest">{visitor.vehicle_plate || "à¹„à¸¡à¹ˆà¸£à¸°à¸šà¸¸"}</div>
+                    <div className="text-[10px] font-bold mt-0.5 tracking-wider">{visitor.vehicle_province || "à¸à¸£à¸¸à¸‡à¹€à¸—à¸žà¸¡à¸«à¸²à¸™à¸„à¸£"}</div>
                 </div>
 
                 <div className="w-full mt-1">
                     {visitor.house_number && (
                         <div className="w-full text-[12px] flex justify-between font-bold border-b border-black/50 border-dotted pb-0.5 mb-1.5">
-                            <span>สถานที่/ห้อง:</span>
+                            <span>à¸ªà¸–à¸²à¸™à¸—à¸µà¹ˆ/à¸«à¹‰à¸­à¸‡:</span>
                             <span>{visitor.house_number}</span>
                         </div>
                     )}
                     <div className="w-full text-[12px] flex justify-between font-bold border-b border-black/50 border-dotted pb-0.5 mb-1.5">
-                        <span>ประเภท:</span>
+                        <span>à¸›à¸£à¸°à¹€à¸ à¸—:</span>
                         <span>{visitor.card_type || "Walk-in"}</span>
                     </div>
                 </div>
@@ -83,12 +83,12 @@ export default async function TicketPage({ params }: { params: Promise<{ id: str
                         <img src={qrUrl} alt="WebPay QR" className="w-[110px] h-[110px] grayscale" />
                     </div>
                     <div className="text-[10px] text-center font-bold tracking-tight mt-2 px-1 leading-tight">
-                        สแกน QR Code นี้<br/>เพื่อเช็คยอดชำระออนไลน์
+                        à¸ªà¹à¸à¸™ QR Code à¸™à¸µà¹‰<br/>à¹€à¸žà¸·à¹ˆà¸­à¹€à¸Šà¹‡à¸„à¸¢à¸­à¸”à¸Šà¸³à¸£à¸°à¸­à¸­à¸™à¹„à¸¥à¸™à¹Œ
                     </div>
                 </div>
 
                 <div className="w-full text-center flex flex-col items-center gap-0.5 mt-2 mb-1">
-                    <div className="text-[10px] font-bold tracking-tight">ไม่ต้องประทับตรากระดาษ</div>
+                    <div className="text-[10px] font-bold tracking-tight">à¹„à¸¡à¹ˆà¸•à¹‰à¸­à¸‡à¸›à¸£à¸°à¸—à¸±à¸šà¸•à¸£à¸²à¸à¸£à¸°à¸”à¸²à¸©</div>
                     <div className="text-[9px] font-bold tracking-tight bg-black text-white px-2 py-0.5 mt-0.5 uppercase">E-Stamp Only</div>
                 </div>
                 
@@ -105,3 +105,4 @@ export default async function TicketPage({ params }: { params: Promise<{ id: str
         </div>
     );
 }
+
