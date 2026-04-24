@@ -345,3 +345,101 @@ export async function getLiffUsers() {
   const res = await query(queryStr, params);
   return res.rows;
 }
+
+
+export async function getLiffUserActivityLogs(lineUserId: string) {
+    if (!lineUserId) return [];
+
+    try {
+        // 1. Registration events
+        const registrations = await query(`
+            SELECT id::text, created_at, 'REGISTER' as type, 
+                   'สมัครใช้งาน/เข้าร่วมสถานที่' as title, 
+                   house_number as detail 
+            FROM residents 
+            WHERE line_user_id = $1
+        `, [lineUserId]);
+
+        // 2. Added vehicles
+        const vehicles = await query(`
+            SELECT rv.id::text, rv.created_at, 'VEHICLE_ADD' as type, 
+                   'เพิ่มทะเบียนรถ' as title, 
+                   v.license_plate as detail
+            FROM resident_vehicles rv
+            JOIN residents r ON rv.resident_id = r.id
+            JOIN vehicles v ON rv.vehicle_id = v.id
+            WHERE r.line_user_id = $1
+        `, [lineUserId]);
+
+        // 3. Shared vehicles
+        const shares = await query(`
+            SELECT vs.id::text, vs.created_at, 'VEHICLE_SHARE' as type, 
+                   'ได้รับสิทธิ์แชร์รถ' as title, 
+                   v.license_plate as detail
+            FROM vehicle_shares vs
+            JOIN vehicles v ON vs.vehicle_id = v.id
+            WHERE vs.line_user_id = $1
+        `, [lineUserId]);
+
+        // 4. Access Logs
+        const accessLogs = await query(`
+            SELECT al.id::text, al.created_at, 'ACCESS' as type, 
+                   CASE WHEN al.action = 'IN' THEN 'เข้าสถานที่' ELSE 'ออกสถานที่' END as title,
+                   al.license_plate || COALESCE(' (' || s.name || ')', '') as detail
+            FROM access_logs al
+            LEFT JOIN sites s ON al.site_id = s.id
+            WHERE al.license_plate IN (
+                SELECT v.license_plate FROM vehicles v
+                JOIN resident_vehicles rv ON v.id = rv.vehicle_id
+                JOIN residents r ON rv.resident_id = r.id
+                WHERE r.line_user_id = $1
+                UNION
+                SELECT v.license_plate FROM vehicles v
+                JOIN vehicle_shares vs ON v.id = vs.vehicle_id
+                WHERE vs.line_user_id = $1
+            )
+            ORDER BY al.created_at DESC
+            LIMIT 100
+        `, [lineUserId]);
+
+        let logs = [
+            ...registrations.rows,
+            ...vehicles.rows,
+            ...shares.rows,
+            ...accessLogs.rows
+        ];
+
+        logs.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        
+        return logs.slice(0, 200);
+    } catch (err: any) {
+        console.error(err);
+        return [];
+    }
+}
+
+export async function deleteLiffUserAndData(userId: string | number) {
+    try {
+        const query = require('@/lib/db').query;
+        // Check if user exists in liff_profiles
+        await query("DELETE FROM liff_profiles WHERE line_user_id = $1", [userId.toString()]);
+        
+        // Remove global vehicle shares
+        await query("DELETE FROM vehicle_shares WHERE line_user_id = $1", [userId.toString()]);
+        
+        // Remove from vehicles if they own global vehicles (only if not linked to any resident maybe?)
+        // Currently we just clear line_user_id to keep the vehicle in the system for history
+        await query("UPDATE vehicles SET line_user_id = NULL WHERE line_user_id = $1", [userId.toString()]);
+        
+        // Also remove from residents if they are just a guest
+        await query("UPDATE residents SET line_user_id = NULL, line_display_name = NULL, line_picture_url = NULL WHERE line_user_id = $1", [userId.toString()]);
+        
+        if (typeof userId === 'number') {
+            await query("DELETE FROM residents WHERE id = $1", [userId]);
+        }
+
+        return { success: true };
+    } catch (e: any) {
+        return { success: false, message: e.message };
+    }
+}
